@@ -17,6 +17,6 @@ defined( 'ABSPATH' ) || exit;
 // Load language files.
 load_plugin_textdomain( 'newspack-plugin', false, dirname( plugin_basename( __FILE__ ) ) . '/languages' );
 
-require_once 'vendor/autoload.php';
+require_once __DIR__ . '/vendor/autoload.php';
 
 Newspack_Multibranded_Site\Initializer::init();
