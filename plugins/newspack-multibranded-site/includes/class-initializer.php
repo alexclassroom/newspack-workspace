@@ -23,6 +23,7 @@ class Initializer {
 		Customizations\ShowPageOnFront::init();
 		Customizations\Logo::init();
 		Customizations\Theme_Colors::init();
+		Customizations\Menus::init();
 	}
 
 }

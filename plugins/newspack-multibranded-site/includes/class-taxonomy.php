@@ -158,6 +158,7 @@ class Taxonomy {
 		Meta\Post_Primary_Brand::init();
 		Meta\Logo::init();
 		Meta\Theme_Colors::init();
+		Meta\Menus::init();
 	}
 
 	/**
