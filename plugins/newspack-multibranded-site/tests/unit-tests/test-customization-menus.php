@@ -33,12 +33,11 @@ class TestMenusCustomization extends WP_UnitTestCase {
 			]
 		);
 
-		Taxonomy::set_primary( $term_without_custom_menus );
+		$this->go_to( get_term_link( $term_without_custom_menus->term_id ) );
 		$logos = get_theme_mod( 'nav_menu_locations' );
 		$this->assertSame( 999, $logos['primary'] );
 
-		Taxonomy::set_primary( $term_with_custom_menus );
-		$this->go_to( '/' ); // Resets the current brand.
+		$this->go_to( get_term_link( $term_with_custom_menus->term_id ) );
 		$logos = get_theme_mod( 'nav_menu_locations' );
 		$this->assertSame( 123, $logos['primary'] );
 	}

@@ -21,11 +21,10 @@ class TestLogoCustomization extends WP_UnitTestCase {
 		$term_with_custom_logo    = $this->factory->term->create_and_get( [ 'taxonomy' => Taxonomy::SLUG ] );
 		add_term_meta( $term_with_custom_logo->term_id, Logo::get_key(), 123 );
 
-		Taxonomy::set_primary( $term_without_custom_logo );
+		$this->go_to( get_term_link( $term_without_custom_logo->term_id ) );
 		$this->assertSame( false, get_theme_mod( 'custom_logo' ) );
 
-		Taxonomy::set_primary( $term_with_custom_logo );
-		$this->go_to( '/' ); // Resets the current brand.
+		$this->go_to( get_term_link( $term_with_custom_logo->term_id ) );
 		$this->assertSame( '123', get_theme_mod( 'custom_logo' ) );
 	}
 }

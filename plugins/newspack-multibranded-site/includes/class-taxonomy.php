@@ -34,13 +34,6 @@ class Taxonomy {
 	const PRIMARY_META_KEY = '_primary_brand';
 
 	/**
-	 * The meta key used to flag the primary brand.
-	 *
-	 * @var string
-	 */
-	const PRIMARY_OPTION_NAME = 'newspack_primary_brand';
-
-	/**
 	 * The current brand, determined depending on the context on WP initiazliation.
 	 *
 	 * @var ?WP_Term
@@ -52,9 +45,11 @@ class Taxonomy {
 	 */
 	public static function init() {
 		add_action( 'setup_theme', [ __CLASS__, 'register_taxonomy' ] );
+		if ( ! wp_using_themes() ) {
+			add_action( 'init', [ __CLASS__, 'register_taxonomy' ] ); // For CLI and tests.
+		}
 		add_action( 'wp', [ __CLASS__, 'determine_current_brand' ] );
 
-		add_action( 'rest_api_init', [ __CLASS__, 'register_options' ] );
 		add_action( 'admin_init', [ __CLASS__, 'register_options' ] );
 	}
 
@@ -68,50 +63,6 @@ class Taxonomy {
 			self::determine_current_brand();
 		}
 		return self::$current_brand;
-	}
-
-	/**
-	 * Get the primary brand.
-	 *
-	 * @return ?WP_Term The primary term. If no term is set as primary, the first term will be returned. If no terms exist, null will be returned.
-	 */
-	public static function get_primary() {
-		$option = get_option( self::PRIMARY_OPTION_NAME );
-		if ( $option ) {
-			$term = get_term( $option );
-			if ( $term instanceof \WP_Term ) {
-				return $term;
-			}
-			// If the option is set but the term doesn't exist, reset the option.
-			delete_option( self::PRIMARY_OPTION_NAME );
-		}
-
-		// if nothing was found, return the first term.
-		$params = array(
-			'taxonomy'   => self::SLUG,
-			'hide_empty' => false,
-			'number'     => 1,
-			'orderby'    => 'term_id',
-			'order'      => 'ASC',
-		);
-		$terms  = get_terms( $params );
-		if ( ! empty( $terms ) && $terms[0] instanceof \WP_Term ) {
-			return $terms[0];
-		}
-	}
-
-	/**
-	 * Sets the primary brand.
-	 *
-	 * @param int|WP_Term $term_or_term_id The term object or the term id.
-	 * @return bool True if the term was set as primary, false otherwise.
-	 */
-	public static function set_primary( $term_or_term_id ) {
-		$term = $term_or_term_id instanceof \WP_Term ? $term_or_term_id : get_term( $term_or_term_id );
-		if ( ! $term instanceof \WP_Term || self::SLUG !== $term->taxonomy ) {
-			return false;
-		}
-		return (bool) update_option( self::PRIMARY_OPTION_NAME, $term->term_id );
 	}
 
 	/**
@@ -162,21 +113,12 @@ class Taxonomy {
 	}
 
 	/**
-	 * Initializes the options
-	 *
-	 * @return void
-	 */
-	public static function register_options() {
-		Options\Primary_Brand::init();
-	}
-
-	/**
 	 * Get the current brand based on a post.
 	 *
-	 * If a post has is of a supported post type and has only one brand, it will return this brand, otherwise it will return the primary brand.
+	 * If a post has is of a supported post type and has only one brand, it will return this brand, otherwise it will return null.
 	 *
 	 * @param int|WP_Post $post_or_post_id The Post object or the post id.
-	 * @return ?WP_Term The current brand for the post. Will only return null if there is no brands created yet.
+	 * @return ?WP_Term The current brand for the post.
 	 */
 	public static function get_current_brand_for_post( $post_or_post_id ) {
 		$post  = $post_or_post_id instanceof \WP_Post ? $post_or_post_id : get_post( $post_or_post_id );
@@ -184,23 +126,21 @@ class Taxonomy {
 		if ( in_array( $post->post_type, self::POST_TYPES, true ) && 1 === count( $terms ) ) {
 			return $terms[0];
 		}
-		return self::get_primary();
 	}
 
 	/**
 	 * Get the current brand based on a term.
 	 *
-	 * If a term is a brand, it will return this brand, otherwise it will return the primary brand.
+	 * If a term is a brand, it will return this brand
 	 *
 	 * @param int|WP_Term $term_or_term_id The Term object or the term id.
-	 * @return ?WP_Term The current brand for the post. Will only return null if there is no brands created yet.
+	 * @return ?WP_Term The current brand for the post.
 	 */
 	public static function get_current_brand_for_term( $term_or_term_id ) {
 		$term = $term_or_term_id instanceof \WP_Term ? $term_or_term_id : get_term( $term_or_term_id );
 		if ( self::SLUG === $term->taxonomy ) {
 			return $term;
 		}
-		return self::get_primary();
 	}
 
 	/**
@@ -214,7 +154,7 @@ class Taxonomy {
 		} elseif ( is_tax() ) {
 			self::$current_brand = self::get_current_brand_for_term( get_queried_object() );
 		} else {
-			self::$current_brand = self::get_primary();
+			self::$current_brand = null;
 		}
 	}
 

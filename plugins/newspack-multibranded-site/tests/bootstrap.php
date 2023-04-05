@@ -28,6 +28,19 @@ function newspack_multibranded_site_manually_load_plugin() {
 
 tests_add_filter( 'muplugins_loaded', 'newspack_multibranded_site_manually_load_plugin' );
 
+tests_add_filter(
+	'newspack_multibranded_site_theme_colors',
+	function() {
+		return [
+			[
+				'theme_mod_name' => 'primary_color',
+				'label'          => 'Primary Color',
+				'default'        => '#00669b',
+			],
+		];
+	}
+);
+
 require_once __DIR__ . '/../vendor/yoast/phpunit-polyfills/phpunitpolyfills-autoload.php';
 
 // Start up the WP testing environment.

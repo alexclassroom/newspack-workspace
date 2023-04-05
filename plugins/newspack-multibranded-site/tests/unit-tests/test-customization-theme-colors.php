@@ -11,29 +11,10 @@ use Newspack_Multibranded_Site\Customizations\Theme_Colors as Theme_Colors_Custo
 
 /**
  * Test the Logo filter.
+ *
+ * NOTE: This class relies on the newspack_multibranded_site_theme_colors filter added in the bootstrap file
  */
 class TestThemeColorsCustomization extends WP_UnitTestCase {
-
-	/**
-	 * Add registered colors as the theme does
-	 *
-	 * @return void
-	 */
-	public function set_up() {
-		parent::set_up();
-		add_filter(
-			'newspack_multibranded_site_theme_colors',
-			function() {
-				return [
-					[
-						'theme_mod_name' => 'primary_color',
-						'label'          => 'Primary Color',
-						'default'        => '#00669b',
-					],
-				];
-			}
-		);
-	}
 
 	/**
 	 * Tests filter theme colors
@@ -52,11 +33,10 @@ class TestThemeColorsCustomization extends WP_UnitTestCase {
 			]
 		);
 
-		Taxonomy::set_primary( $term_without_theme_colors );
+		$this->go_to( get_term_link( $term_without_theme_colors->term_id ) );
 		$this->assertSame( false, get_theme_mod( 'primary_color' ) );
 
-		Taxonomy::set_primary( $term_with_theme_colors );
-		$this->go_to( '/' ); // Resets the current brand.
+		$this->go_to( get_term_link( $term_with_theme_colors->term_id ) );
 		$this->assertSame( '#000000', get_theme_mod( 'primary_color' ) );
 	}
 
@@ -77,14 +57,13 @@ class TestThemeColorsCustomization extends WP_UnitTestCase {
 			]
 		);
 
-		Taxonomy::set_primary( $term_without_theme_colors );
+		$this->go_to( get_term_link( $term_without_theme_colors->term_id ) );
 		$this->assertFalse( Theme_Colors_Customization::current_brand_has_custom_colors() );
 		$this->assertFalse( Theme_Colors_Customization::current_brand_has_custom_colors( [ 'primary_color' ] ) );
 		$this->assertFalse( Theme_Colors_Customization::current_brand_has_custom_colors( [ 'primary_color', 'secondary_color' ] ) );
 		$this->assertFalse( Theme_Colors_Customization::current_brand_has_custom_colors( [ 'secondary_color' ] ) );
 
-		Taxonomy::set_primary( $term_with_theme_colors );
-		$this->go_to( '/' ); // Resets the current brand.
+		$this->go_to( get_term_link( $term_with_theme_colors->term_id ) );
 		$this->assertTrue( Theme_Colors_Customization::current_brand_has_custom_colors() );
 		$this->assertTrue( Theme_Colors_Customization::current_brand_has_custom_colors( [ 'primary_color' ] ) );
 		$this->assertTrue( Theme_Colors_Customization::current_brand_has_custom_colors( [ 'primary_color', 'secondary_color' ] ) );
