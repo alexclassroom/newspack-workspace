@@ -7,6 +7,8 @@
 
 namespace Newspack_Multibranded_Site;
 
+use WP_Term;
+
 /**
  * Class to handle the brands taxonomy
  */
@@ -108,6 +110,9 @@ class Taxonomy {
 		Meta\Logo::init();
 		Meta\Theme_Colors::init();
 		Meta\Menus::init();
+		Meta\User_Primary_Brand::init();
+		Meta\Tag_Primary_Brand::init();
+		Meta\Category_Primary_Brand::init();
 	}
 
 	/**
@@ -135,7 +140,7 @@ class Taxonomy {
 
 		if ( $post_primary_brand ) {
 			$term = get_term( $post_primary_brand, self::SLUG );
-			if ( $term instanceof \WP_Term ) {
+			if ( $term instanceof WP_Term ) {
 				return $term;
 			}
 		}
@@ -150,9 +155,34 @@ class Taxonomy {
 	 * @return ?WP_Term The current brand for the post.
 	 */
 	public static function get_current_brand_for_term( $term_or_term_id ) {
-		$term = $term_or_term_id instanceof \WP_Term ? $term_or_term_id : get_term( $term_or_term_id );
+		$term = $term_or_term_id instanceof WP_Term ? $term_or_term_id : get_term( $term_or_term_id );
 		if ( self::SLUG === $term->taxonomy ) {
 			return $term;
+		}
+		if ( in_array( $term->taxonomy, [ 'category', 'post_tag' ], true ) ) {
+			return self::recursive_search_term_primary_brand( $term );
+		}
+	}
+
+	/**
+	 * Finds the primary brand for a term, searching recursively through ancestors.
+	 *
+	 * @param WP_Term $term The Term.
+	 * @return ?WP_Term The primary brand for the term.
+	 */
+	protected static function recursive_search_term_primary_brand( WP_Term $term ) {
+		$primary_brand = get_term_meta( $term->term_id, self::PRIMARY_META_KEY, true );
+		if ( $primary_brand ) {
+			$brand = get_term( $primary_brand, self::SLUG );
+			if ( $brand instanceof WP_Term ) {
+				return $brand;
+			}
+		}
+		if ( $term->parent ) {
+			$parent = get_term( $term->parent, $term->taxonomy );
+			if ( $parent instanceof WP_Term ) {
+				return self::recursive_search_term_primary_brand( $parent );
+			}
 		}
 	}
 
@@ -170,7 +200,7 @@ class Taxonomy {
 			return;
 		}
 		$brand = get_term( $author_brand, self::SLUG );
-		if ( $brand instanceof \WP_Term ) {
+		if ( $brand instanceof WP_Term ) {
 			return $brand;
 		}
 	}
@@ -183,7 +213,7 @@ class Taxonomy {
 	public static function determine_current_brand() {
 		if ( is_singular() ) {
 			self::$current_brand = self::get_current_brand_for_post( get_queried_object() );
-		} elseif ( is_tax() ) {
+		} elseif ( is_tax() || is_category() || is_tag() ) {
 			self::$current_brand = self::get_current_brand_for_term( get_queried_object() );
 		} elseif ( is_author() ) {
 			self::$current_brand = self::get_current_brand_for_author( get_queried_object_id() );

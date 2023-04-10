@@ -23,8 +23,8 @@ class TestTaxonomy extends WP_UnitTestCase {
 	 * Test get_current_brand_for_post
 	 */
 	public function test_get_current_brand_for_post() {
-		$term1 = $this->factory->term->create_and_get( array( 'taxonomy' => Taxonomy::SLUG ) );
-		$term2 = $this->factory->term->create_and_get( array( 'taxonomy' => Taxonomy::SLUG ) );
+		$brand1 = $this->factory->term->create_and_get( array( 'taxonomy' => Taxonomy::SLUG ) );
+		$brand2 = $this->factory->term->create_and_get( array( 'taxonomy' => Taxonomy::SLUG ) );
 
 		$post     = $this->factory->post->create_and_get( array( 'post_title' => 'Post 1' ) );
 		$page     = $this->factory->post->create_and_get(
@@ -42,16 +42,16 @@ class TestTaxonomy extends WP_UnitTestCase {
 
 		$this->assertSame( null, Taxonomy::get_current_brand_for_post( $post->ID ), 'Null should be returned if none is set' );
 
-		wp_set_post_terms( $post->ID, $term1->term_id, Taxonomy::SLUG );
-		$this->assertSame( $term1->term_id, Taxonomy::get_current_brand_for_post( $post->ID )->term_id, 'Related brand should be returned if ony one is added' );
+		wp_set_post_terms( $post->ID, $brand1->term_id, Taxonomy::SLUG );
+		$this->assertSame( $brand1->term_id, Taxonomy::get_current_brand_for_post( $post->ID )->term_id, 'Related brand should be returned if ony one is added' );
 
-		wp_set_post_terms( $post->ID, [ $term1->term_id, $term2->term_id ], Taxonomy::SLUG );
+		wp_set_post_terms( $post->ID, [ $brand1->term_id, $brand2->term_id ], Taxonomy::SLUG );
 		$this->assertSame( null, Taxonomy::get_current_brand_for_post( $post->ID ), 'Null should be returned if more than on brand is set' );
 
-		wp_set_post_terms( $page->ID, $term2->term_id, Taxonomy::SLUG );
-		$this->assertSame( $term2->term_id, Taxonomy::get_current_brand_for_post( $page->ID )->term_id, 'Related brand should be returned if ony one is added' );
+		wp_set_post_terms( $page->ID, $brand2->term_id, Taxonomy::SLUG );
+		$this->assertSame( $brand2->term_id, Taxonomy::get_current_brand_for_post( $page->ID )->term_id, 'Related brand should be returned if ony one is added' );
 
-		wp_set_post_terms( $other_pt->ID, $term1->term_id, Taxonomy::SLUG );
+		wp_set_post_terms( $other_pt->ID, $brand1->term_id, Taxonomy::SLUG );
 		$this->assertSame( null, Taxonomy::get_current_brand_for_post( $other_pt->ID ), 'Null should be returned for other post types' );
 	}
 
@@ -59,11 +59,11 @@ class TestTaxonomy extends WP_UnitTestCase {
 	 * Test get_current_brand_for_term
 	 */
 	public function test_get_current_brand_for_term() {
-		$term1 = $this->factory->term->create_and_get( array( 'taxonomy' => Taxonomy::SLUG ) );
-		$term2 = $this->factory->term->create_and_get( array( 'taxonomy' => 'category' ) );
+		$brand1 = $this->factory->term->create_and_get( array( 'taxonomy' => Taxonomy::SLUG ) );
+		$brand2 = $this->factory->term->create_and_get( array( 'taxonomy' => 'category' ) );
 
-		$this->assertSame( $term1->term_id, Taxonomy::get_current_brand_for_term( $term1->term_id )->term_id, 'Term should be returned if is a brand' );
-		$this->assertSame( null, Taxonomy::get_current_brand_for_term( $term2->term_id ), 'Null should be returned if other taxonomy' );
+		$this->assertSame( $brand1->term_id, Taxonomy::get_current_brand_for_term( $brand1->term_id )->term_id, 'Term should be returned if is a brand' );
+		$this->assertSame( null, Taxonomy::get_current_brand_for_term( $brand2->term_id ), 'Null should be returned if other taxonomy' );
 	}
 
 	/**
@@ -74,9 +74,24 @@ class TestTaxonomy extends WP_UnitTestCase {
 		$author_with_brand           = $this->factory->user->create_and_get();
 		$author_with_invalid_brand   = $this->factory->user->create_and_get();
 		$author_with_invalid_brand_2 = $this->factory->user->create_and_get();
-		$term1                       = $this->factory->term->create_and_get( array( 'taxonomy' => Taxonomy::SLUG ) );
-		$term2                       = $this->factory->term->create_and_get( array( 'taxonomy' => Taxonomy::SLUG ) );
-		$category                    = $this->factory->term->create_and_get( array( 'taxonomy' => 'category' ) );
+		$brand1                      = $this->factory->term->create_and_get( array( 'taxonomy' => Taxonomy::SLUG ) );
+		$brand2                      = $this->factory->term->create_and_get( array( 'taxonomy' => Taxonomy::SLUG ) );
+		$simple_category             = $this->factory->term->create_and_get( array( 'taxonomy' => 'category' ) );
+		$category_with_brand         = $this->factory->term->create_and_get( array( 'taxonomy' => 'category' ) );
+		$simple_category_child       = $this->factory->term->create_and_get(
+			array(
+				'taxonomy' => 'category',
+				'parent'   => $simple_category->term_id,
+			)
+		);
+		$category_with_brand_child   = $this->factory->term->create_and_get(
+			array(
+				'taxonomy' => 'category',
+				'parent'   => $category_with_brand->term_id,
+			)
+		);
+		$simple_tag                  = $this->factory->term->create_and_get( array( 'taxonomy' => 'post_tag' ) );
+		$tag_with_brand              = $this->factory->term->create_and_get( array( 'taxonomy' => 'post_tag' ) );
 		$post                        = $this->factory->post->create_and_get(
 			array(
 				'post_title'  => 'Post 1',
@@ -102,16 +117,19 @@ class TestTaxonomy extends WP_UnitTestCase {
 			)
 		);
 
-		wp_set_post_terms( $post->ID, $term1->term_id, Taxonomy::SLUG );
-		wp_set_post_terms( $post->ID, $category->term_id, 'category' );
-		wp_set_post_terms( $post_2_brands->ID, [ $term1->term_id, $term2->term_id ], Taxonomy::SLUG );
-		wp_set_post_terms( $post_2_brands_and_primary->ID, [ $term1->term_id, $term2->term_id ], Taxonomy::SLUG );
-		add_post_meta( $post_2_brands_and_primary->ID, Taxonomy::PRIMARY_META_KEY, $term2->term_id );
-		wp_set_post_terms( $post_2_brands->ID, $category->term_id, 'category' );
+		wp_set_post_terms( $post->ID, $brand1->term_id, Taxonomy::SLUG );
+		wp_set_post_terms( $post->ID, $simple_category->term_id, 'category' );
+		wp_set_post_terms( $post_2_brands->ID, [ $brand1->term_id, $brand2->term_id ], Taxonomy::SLUG );
+		wp_set_post_terms( $post_2_brands_and_primary->ID, [ $brand1->term_id, $brand2->term_id ], Taxonomy::SLUG );
+		add_post_meta( $post_2_brands_and_primary->ID, Taxonomy::PRIMARY_META_KEY, $brand2->term_id );
+		wp_set_post_terms( $post_2_brands->ID, $simple_category->term_id, 'category' );
 
-		add_user_meta( $author_with_brand->ID, Taxonomy::PRIMARY_META_KEY, $term1->term_id );
+		add_user_meta( $author_with_brand->ID, Taxonomy::PRIMARY_META_KEY, $brand1->term_id );
 		add_user_meta( $author_with_invalid_brand->ID, Taxonomy::PRIMARY_META_KEY, 999999 );
-		add_user_meta( $author_with_invalid_brand_2->ID, Taxonomy::PRIMARY_META_KEY, $category->term_id );
+		add_user_meta( $author_with_invalid_brand_2->ID, Taxonomy::PRIMARY_META_KEY, $simple_category->term_id );
+
+		add_term_meta( $category_with_brand->term_id, Taxonomy::PRIMARY_META_KEY, $brand1->term_id );
+		add_term_meta( $tag_with_brand->term_id, Taxonomy::PRIMARY_META_KEY, $brand1->term_id );
 
 		// home.
 		$this->go_to( '/' );
@@ -121,17 +139,13 @@ class TestTaxonomy extends WP_UnitTestCase {
 		$this->go_to( '/?s=asd' );
 		$this->assertSame( null, Taxonomy::get_current(), 'Null should be returned if on search' );
 
-		// category archive.
-		$this->go_to( get_term_link( $category ) );
-		$this->assertSame( null, Taxonomy::get_current(), 'Null should be returned if on category archive' );
-
 		// Brand archive.
-		$this->go_to( get_term_link( $term1 ) );
-		$this->assertSame( $term1->term_id, Taxonomy::get_current()->term_id, 'Brand should be returned if on brand archive' );
+		$this->go_to( get_term_link( $brand1 ) );
+		$this->assertSame( $brand1->term_id, Taxonomy::get_current()->term_id, 'Brand should be returned if on brand archive' );
 
 		// Post with one brand.
 		$this->go_to( get_permalink( $post->ID ) );
-		$this->assertSame( $term1->term_id, Taxonomy::get_current()->term_id, 'Brand should be returned if on post with one brand' );
+		$this->assertSame( $brand1->term_id, Taxonomy::get_current()->term_id, 'Brand should be returned if on post with one brand' );
 
 		// Post with two brands.
 		$this->go_to( get_permalink( $post_2_brands->ID ) );
@@ -139,19 +153,42 @@ class TestTaxonomy extends WP_UnitTestCase {
 
 		// Post with two brands and primary.
 		$this->go_to( get_permalink( $post_2_brands_and_primary->ID ) );
-		$this->assertSame( $term2->term_id, Taxonomy::get_current()->term_id, 'Primary brand should be returned if on post with two brands and primary' );
+		$this->assertSame( $brand2->term_id, Taxonomy::get_current()->term_id, 'Primary brand should be returned if on post with two brands and primary' );
 
 		// author archive.
 		$this->go_to( get_author_posts_url( $author_wo_brand->ID ) );
 		$this->assertSame( null, Taxonomy::get_current(), 'Null should be returned if on author archive' );
 
 		$this->go_to( get_author_posts_url( $author_with_brand->ID ) );
-		$this->assertSame( $term1->term_id, Taxonomy::get_current()->term_id, 'Brand should be returned if on author archive when primary brand is set' );
+		$this->assertSame( $brand1->term_id, Taxonomy::get_current()->term_id, 'Brand should be returned if on author archive when primary brand is set' );
 
 		$this->go_to( get_author_posts_url( $author_with_invalid_brand->ID ) );
 		$this->assertSame( null, Taxonomy::get_current(), 'Null should be returned if on author archive when primary brand is invalid' );
 
 		$this->go_to( get_author_posts_url( $author_with_invalid_brand_2->ID ) );
 		$this->assertSame( null, Taxonomy::get_current(), 'Null should be returned if on author archive when primary brand is invalid' );
+
+		// categories and tags.
+		$this->go_to( get_term_link( $simple_category ) );
+		$this->assertSame( null, Taxonomy::get_current(), 'Null should be returned if on category without primary brand' );
+
+		$this->go_to( get_term_link( $simple_tag ) );
+		$this->assertSame( null, Taxonomy::get_current(), 'Null should be returned if on tag without primary brand' );
+
+		// category with brand.
+		$this->go_to( get_term_link( $category_with_brand ) );
+		$this->assertSame( $brand1->term_id, Taxonomy::get_current()->term_id, 'Brand should be returned if on category with brand' );
+
+		// child category of a category with brand.
+		$this->go_to( get_term_link( $category_with_brand_child ) );
+		$this->assertSame( $brand1->term_id, Taxonomy::get_current()->term_id, 'Brand should be returned if on child category of a category with brand' );
+
+		// child category of a category without brand.
+		$this->go_to( get_term_link( $simple_category_child ) );
+		$this->assertSame( null, Taxonomy::get_current(), 'Null should be returned if on child category of a category without brand' );
+
+		// tag with brand.
+		$this->go_to( get_term_link( $tag_with_brand ) );
+		$this->assertSame( $brand1->term_id, Taxonomy::get_current()->term_id, 'Brand should be returned if on tag with brand' );
 	}
 }
