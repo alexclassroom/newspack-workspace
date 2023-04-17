@@ -39,7 +39,10 @@ class Menus {
 			return $nav_menu_locations;
 		}
 		foreach ( $custom_menus as $custom_menu ) {
-			$custom_menu                                    = (array) $custom_menu;
+			$custom_menu = (array) $custom_menu;
+			if ( empty( $custom_menu['menu'] ) ) {
+				continue;
+			}
 			$nav_menu_locations[ $custom_menu['location'] ] = $custom_menu['menu'];
 		}
 
