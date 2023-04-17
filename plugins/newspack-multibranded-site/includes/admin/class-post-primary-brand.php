@@ -43,12 +43,11 @@ class Post_Primary_Brand {
 
 		wp_localize_script(
 			'newspack-post-primary-brand',
-			'newspackPostPrimaryBrand',
+			'newspackPostPrimaryBrandVars',
 			array(
 				'adminURL'     => admin_url( 'admin.php?page=' . Admin::MULTI_BRANDED_PAGE_SLUG ),
 				'taxonomySlug' => Taxonomy::SLUG,
 				'metaKey'      => Taxonomy::PRIMARY_META_KEY,
-				'hasYoast'     => class_exists( 'WPSEO_Primary_Term' ),
 			)
 		);
 	}
