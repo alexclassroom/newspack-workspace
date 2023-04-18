@@ -25,6 +25,7 @@ class Initializer {
 		Customizations\Theme_Colors::init();
 		Customizations\Menus::init();
 		Customizations\Blogname::init();
+		Customizations\PopupsShouldDisplayPrompt::init();
 	}
 
 }
