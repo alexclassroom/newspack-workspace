@@ -33,21 +33,17 @@ const META_KEY = newspackPostPrimaryBrandVars.metaKey;
 const NewspackPostPrimaryBrand = ( { slug } ) => {
 	const { editPost } = useDispatch( 'core/editor' );
 
-	const [ currentPrimaryBrand, setCurrentPrimaryBrand ] = useState( null );
-
-	const { terms, availableTerms } = useSelect(
+	const { terms, availableTerms, primaryBrand } = useSelect(
 		select => {
-			const { getCurrentPost, getEditedPostAttribute } = select( 'core/editor' );
+			const { getEditedPostAttribute } = select( 'core/editor' );
 			const { getTaxonomy, getEntityRecords } = select( coreStore );
 			const _taxonomy = getTaxonomy( slug );
-			const post = getCurrentPost();
-
-			setCurrentPrimaryBrand( post.meta[ META_KEY ] );
+			const meta = getEditedPostAttribute( 'meta' );
 
 			return {
 				terms: _taxonomy ? getEditedPostAttribute( _taxonomy.rest_base ) : EMPTY_ARRAY,
 				availableTerms: getEntityRecords( 'taxonomy', slug, DEFAULT_QUERY ) || EMPTY_ARRAY,
-				taxonomy: _taxonomy,
+				primaryBrand: meta[ META_KEY ],
 			};
 		},
 		[ slug ]
@@ -60,13 +56,12 @@ const NewspackPostPrimaryBrand = ( { slug } ) => {
 
 	const onChangePrimaryBrand = termId => {
 		editPost( { meta: { [ META_KEY ]: termId } } );
-		setCurrentPrimaryBrand( termId );
 	};
 
 	return (
 		<Flex direction="column" gap="4">
 			<div
-				className="editor-post-taxonomies__hierarchical-terms-list"
+				className="editor-primary-brand-selector"
 				tabIndex="0"
 				role="group"
 				aria-label={ __( 'Brands', 'newspack-multibranded-site' ) }
@@ -74,7 +69,7 @@ const NewspackPostPrimaryBrand = ( { slug } ) => {
 				{ terms.length > 1 && (
 					<SelectControl
 						label={ __( 'Primary brand', 'newspack-multibranded-site' ) }
-						value={ currentPrimaryBrand || 0 }
+						value={ primaryBrand || 0 }
 						options={ [
 							{
 								label: __( 'None', 'newspack-multibranded-site' ),
@@ -107,6 +102,9 @@ function customizeSelector( OriginalComponent ) {
 			);
 		}
 		return <OriginalComponent { ...props } />;
+	};
+}
+
 wp.hooks.addFilter(
 	'editor.PostTaxonomyType',
 	'newspack/multibranded-site/brand-selector-filter',
