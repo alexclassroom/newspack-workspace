@@ -107,7 +107,6 @@ function customizeSelector( OriginalComponent ) {
 			);
 		}
 		return <OriginalComponent { ...props } />;
-	};
 }
 wp.hooks.addFilter(
 	'editor.PostTaxonomyType',
