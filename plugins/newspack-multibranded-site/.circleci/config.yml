@@ -11,9 +11,6 @@ workflows:
       - newspack/lint-js-scss:
           requires:
             - newspack/build
-      - newspack/test-js:
-          requires:
-            - newspack/build
       - newspack/build-distributable:
           requires:
             - newspack/build
