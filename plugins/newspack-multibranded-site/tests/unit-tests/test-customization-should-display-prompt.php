@@ -72,6 +72,10 @@ class TestCustomizationShouldDisplayPrompt extends WP_UnitTestCase {
 		$should_display = Popups_Should_Display_Prompt::filter_should_display( true, [ 'id' => $prompt_with_two_brands->ID ] );
 		$this->assertEquals( true, $should_display );
 
+		// If the initial value is false, the return should always be false.
+		$should_display = Popups_Should_Display_Prompt::filter_should_display( false, [ 'id' => $prompt_with_two_brands->ID ] );
+		$this->assertEquals( false, $should_display );
+
 		// Brand 3.
 		$this->go_to( get_term_link( $brand3 ) );
 		$should_display = Popups_Should_Display_Prompt::filter_should_display( true, [ 'id' => $prompt_without_brands->ID ] );

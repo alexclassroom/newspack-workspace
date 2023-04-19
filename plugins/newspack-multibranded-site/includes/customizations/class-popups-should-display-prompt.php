@@ -18,7 +18,7 @@ class Popups_Should_Display_Prompt {
 	 * Initializes
 	 */
 	public static function init() {
-		add_filter( 'newspack_popups_should_display_prompt_additional_checks', [ __CLASS__, 'filter_should_display' ], 10, 2 );
+		add_filter( 'newspack_popups_should_display_prompt', [ __CLASS__, 'filter_should_display' ], 10, 2 );
 	}
 
 	/**
@@ -29,6 +29,10 @@ class Popups_Should_Display_Prompt {
 	 * @return bool Should popup be shown.
 	 */
 	public static function filter_should_display( $should_display, $popup ) {
+		if ( ! $should_display ) {
+			return false; // if the prompt didn't meet previous criteria, don't show it.
+		}
+
 		if ( ! is_array( $popup ) || empty( $popup['id'] ) ) {
 			return $should_display;
 		}
