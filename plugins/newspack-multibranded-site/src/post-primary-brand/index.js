@@ -1,7 +1,6 @@
 /* global newspackPostPrimaryBrandVars */
 
-import { __, _n, _x } from '@wordpress/i18n';
-import { useState } from '@wordpress/element';
+import { __ } from '@wordpress/i18n';
 import { Button, Flex, FlexItem, SelectControl } from '@wordpress/components';
 import { useDispatch, useSelect } from '@wordpress/data';
 import { store as coreStore } from '@wordpress/core-data';
@@ -40,21 +39,21 @@ const NewspackPostPrimaryBrand = ( { slug } ) => {
 			const { getEditedPostAttribute, getCurrentPostType } = select( 'core/editor' );
 			const { getTaxonomy, getEntityRecords } = select( coreStore );
 			const _taxonomy = getTaxonomy( slug );
-			const meta = getEditedPostAttribute( 'meta' );
-			const postType = getCurrentPostType();
+			const _meta = getEditedPostAttribute( 'meta' );
+			const _postType = getCurrentPostType();
 
 			return {
 				terms: _taxonomy ? getEditedPostAttribute( _taxonomy.rest_base ) : EMPTY_ARRAY,
 				availableTerms: getEntityRecords( 'taxonomy', slug, DEFAULT_QUERY ) || EMPTY_ARRAY,
-				primaryBrand: meta[ META_KEY ],
-				postType,
+				primaryBrand: _meta[ META_KEY ],
+				postType: _postType,
 			};
 		},
 		[ slug ]
 	);
 
 	const getTermSelectOptionFromId = id => {
-		const term = availableTerms.find( term => term.id === id );
+		const term = availableTerms.find( t => t.id === id );
 		return term ? { value: term.id, label: term.name } : null;
 	};
 

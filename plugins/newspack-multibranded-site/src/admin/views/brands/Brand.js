@@ -234,6 +234,7 @@ const Brand = ( { brands = [], saveBrand, fetchLogoAttachment } ) => {
 
 			{ Object.keys( menuLocations ).map( location => (
 				<SelectControl
+					key={ location }
 					label={ menuLocations[ location ] }
 					value={ findSelectedMenu( location ) }
 					options={ [
