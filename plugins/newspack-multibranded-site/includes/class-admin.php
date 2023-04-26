@@ -22,6 +22,7 @@ class Admin {
 		Admin\User_Primary_Brand::init();
 		Admin\Cat_Primary_Brand::init();
 		Admin\Post_Primary_Brand::init();
+		Admin\Prompt_Popups::init();
 	}
 
 	/**

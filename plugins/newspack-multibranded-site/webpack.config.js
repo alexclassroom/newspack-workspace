@@ -14,11 +14,12 @@ const path = require( 'path' );
  */
 const admin = path.join( __dirname, 'src/admin' );
 const postPrimaryBrand = path.join( __dirname, 'src/post-primary-brand' );
+const promptBrands = path.join( __dirname, 'src/prompt-brands' );
 
 const webpackConfig = getBaseWebpackConfig(
 	{ WP: true },
 	{
-		entry: { admin, postPrimaryBrand },
+		entry: { admin, postPrimaryBrand, promptBrands },
 		'output-path': path.join( __dirname, 'dist' ),
 	}
 );
