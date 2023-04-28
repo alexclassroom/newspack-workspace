@@ -20,6 +20,7 @@ class Logo {
 	 */
 	public static function init() {
 		add_filter( 'theme_mod_custom_logo', [ __CLASS__, 'filter_logo' ] );
+		add_filter( 'get_custom_logo', [ __CLASS__, 'get_custom_logo' ] );
 	}
 
 	/**
@@ -38,6 +39,23 @@ class Logo {
 			$logo_id = $custom_logo;
 		}
 		return $logo_id;
+	}
+
+	/**
+	 * Filters the html output of the custom logo
+	 *
+	 * @param string $html The custom logo html.
+	 * @return string
+	 */
+	public static function get_custom_logo( $html ) {
+		$brand = Taxonomy::get_current();
+		if ( ! $brand ) {
+			return $html;
+		}
+
+		$html = preg_replace( '|href="[^"]+"|', 'href="' . get_term_link( $brand ) . '"', $html );
+
+		return $html;
 	}
 
 }
