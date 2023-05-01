@@ -11,6 +11,13 @@ use WP_Term;
 
 /**
  * Class to handle the brands taxonomy
+ *
+ * Register the Brands taxonomy and handles the request to determine in which brand we are currently in.
+ *
+ * On the `wp` hook, after the query is performed, we check what's the current brand and store it in the static $current_brand property.
+ * We can't do it earlier in parse_query because we need the queried object to check on it.
+ *
+ * Later on the request, we use the $current_brand property (through get_current_brand method) to determine the current brand.
  */
 class Taxonomy {
 
@@ -46,10 +53,7 @@ class Taxonomy {
 	 * Runs the initialization.
 	 */
 	public static function init() {
-		add_action( 'setup_theme', [ __CLASS__, 'register_taxonomy' ] );
-		if ( ! wp_using_themes() ) {
-			add_action( 'init', [ __CLASS__, 'register_taxonomy' ] ); // For CLI and tests.
-		}
+		add_action( 'init', [ __CLASS__, 'register_taxonomy' ] );
 		add_action( 'wp', [ __CLASS__, 'determine_current_brand' ] );
 	}
 
