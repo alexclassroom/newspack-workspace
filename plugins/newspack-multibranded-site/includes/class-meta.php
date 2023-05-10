@@ -45,10 +45,22 @@ abstract class Meta {
 			},
 		];
 
+		if ( 'post' === static::$type ) {
+			$post_types = static::get_post_types();
+			foreach ( $post_types as $post_type ) {
+				$params['object_subtype'] = $post_type;
+				register_meta(
+					'post',
+					static::get_key(),
+					$params
+				);
+			}
+			return;
+		}
+
 		if ( 'term' === static::$type ) {
 			$params['object_subtype'] = static::get_taxonomy();
 		}
-
 		register_meta(
 			static::$type,
 			static::get_key(),
@@ -63,6 +75,15 @@ abstract class Meta {
 	 */
 	public static function get_taxonomy() {
 		return Taxonomy::SLUG;
+	}
+
+	/**
+	 * Get the post types to register the meta to, if meta type is post
+	 *
+	 * @return array
+	 */
+	public static function get_post_types() {
+		return [];
 	}
 
 	/**

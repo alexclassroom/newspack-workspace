@@ -20,6 +20,8 @@ const DEFAULT_QUERY = {
 
 const EMPTY_ARRAY = [];
 
+const ZERO = 0;
+
 const ADMIN_URL = newspackPostPrimaryBrandVars.adminURL;
 
 const TAXONOMY_SLUG = newspackPostPrimaryBrandVars.taxonomySlug;
@@ -75,7 +77,7 @@ const NewspackPostPrimaryBrand = ( { slug } ) => {
 					{ terms.length > 1 && (
 						<SelectControl
 							label={ __( 'Primary brand', 'newspack-multibranded-site' ) }
-							value={ primaryBrand || 0 }
+							value={ primaryBrand || ZERO }
 							options={ [
 								{
 									label: __( 'None', 'newspack-multibranded-site' ),

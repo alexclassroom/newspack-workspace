@@ -41,6 +41,15 @@ class Post_Primary_Brand extends Meta {
 	}
 
 	/**
+	 * Get the list of post types that should have a primary brand selector.
+	 *
+	 * @return array The list of post type slugs.
+	 */
+	public static function get_post_types() {
+		return Taxonomy::POST_TYPES;
+	}
+
+	/**
 	 * Gets the meta schema
 	 *
 	 * @return array

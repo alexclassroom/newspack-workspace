@@ -9,6 +9,7 @@ namespace Newspack_Multibranded_Site\Admin;
 
 use Newspack_Multibranded_Site\Taxonomy;
 use Newspack_Multibranded_Site\Admin;
+use Newspack_Multibranded_Site\Meta\Post_Primary_Brand as Meta;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -56,7 +57,7 @@ class Post_Primary_Brand {
 				'adminURL'                  => admin_url( 'admin.php?page=' . Admin::MULTI_BRANDED_PAGE_SLUG ),
 				'taxonomySlug'              => Taxonomy::SLUG,
 				'metaKey'                   => Taxonomy::PRIMARY_META_KEY,
-				'postTypesWithPrimaryBrand' => Taxonomy::get_post_types_with_primary_brand(),
+				'postTypesWithPrimaryBrand' => Meta::get_post_types(),
 			)
 		);
 	}
