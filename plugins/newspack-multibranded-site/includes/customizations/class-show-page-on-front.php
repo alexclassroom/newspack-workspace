@@ -38,7 +38,7 @@ class Show_Page_On_Front {
 	 * @return void
 	 */
 	public static function pre_get_posts( &$query ) {
-		if ( ! $query->is_main_query() ) {
+		if ( ! $query->is_main_query() || is_admin() ) {
 			return;
 		}
 
