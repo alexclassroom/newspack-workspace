@@ -1,3 +1,10 @@
+## [1.0.1](https://github.com/Automattic/newspack-multibranded-site/compare/v1.0.0...v1.0.1) (2023-10-11)
+
+
+### Bug Fixes
+
+* update help site URL ([#32](https://github.com/Automattic/newspack-multibranded-site/issues/32)) ([6369b10](https://github.com/Automattic/newspack-multibranded-site/commit/6369b101af36044fb6cf9b4f223fe04fbc8cf767))
+
 # 1.0.0 (2023-08-17)
 
 
