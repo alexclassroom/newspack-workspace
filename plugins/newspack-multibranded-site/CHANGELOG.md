@@ -1,3 +1,10 @@
+# [1.2.0](https://github.com/Automattic/newspack-multibranded-site/compare/v1.1.0...v1.2.0) (2023-11-29)
+
+
+### Features
+
+* trigger new release ([33a173e](https://github.com/Automattic/newspack-multibranded-site/commit/33a173e95674c537ad34a6b4d7b83317a3fa3302))
+
 # [1.1.0](https://github.com/Automattic/newspack-multibranded-site/compare/v1.0.1...v1.1.0) (2023-11-29)
 
 
