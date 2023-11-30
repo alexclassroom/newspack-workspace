@@ -1,3 +1,19 @@
+# [1.1.0](https://github.com/Automattic/newspack-multibranded-site/compare/v1.0.0...v1.1.0) (2023-11-30)
+
+
+### Bug Fixes
+
+* release process ([b42ff85](https://github.com/Automattic/newspack-multibranded-site/commit/b42ff85805ec68782124e56e914d58d2e93f945f))
+* update help site URL ([#32](https://github.com/Automattic/newspack-multibranded-site/issues/32)) ([6369b10](https://github.com/Automattic/newspack-multibranded-site/commit/6369b101af36044fb6cf9b4f223fe04fbc8cf767))
+
+
+### Features
+
+* add auto updater ([#31](https://github.com/Automattic/newspack-multibranded-site/issues/31)) ([86bf6a3](https://github.com/Automattic/newspack-multibranded-site/commit/86bf6a3c8d1f659c4f92bc8d5dd307a061bd6074))
+* change menu position ([0e46fbf](https://github.com/Automattic/newspack-multibranded-site/commit/0e46fbfc8f40251dc927744862ef07e7d1532516))
+* filter posts by brand in admin ([#28](https://github.com/Automattic/newspack-multibranded-site/issues/28)) ([9094911](https://github.com/Automattic/newspack-multibranded-site/commit/9094911de161628deb823e668eb814c4610f6074))
+* trigger new release ([33a173e](https://github.com/Automattic/newspack-multibranded-site/commit/33a173e95674c537ad34a6b4d7b83317a3fa3302))
+
 # [1.2.0](https://github.com/Automattic/newspack-multibranded-site/compare/v1.1.0...v1.2.0) (2023-11-29)
 
 
