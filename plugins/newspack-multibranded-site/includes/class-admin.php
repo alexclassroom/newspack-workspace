@@ -23,6 +23,7 @@ class Admin {
 		Admin\Cat_Primary_Brand::init();
 		Admin\Post_Primary_Brand::init();
 		Admin\Prompt_Popups::init();
+		Admin\Show_Page_On_Front::init();
 		Admin\Filter_Posts::init();
 	}
 

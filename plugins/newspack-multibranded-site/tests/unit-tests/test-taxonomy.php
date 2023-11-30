@@ -204,5 +204,9 @@ class TestTaxonomy extends WP_UnitTestCase {
 		// Brand with page on front.
 		$this->go_to( get_term_link( $brand_with_page_on_front ) );
 		$this->assertSame( $brand_with_page_on_front->term_id, Taxonomy::get_current()->term_id, 'Brand should be returned if on brand with page on front' );
+
+		// Page set to be the front page of a brand.
+		$this->go_to( get_permalink( $page2->ID ) );
+		$this->assertSame( $brand_with_page_on_front->term_id, Taxonomy::get_current()->term_id, 'Page that is set to be used as front page of a brand should load that brand' );
 	}
 }

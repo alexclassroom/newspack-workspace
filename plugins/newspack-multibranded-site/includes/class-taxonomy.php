@@ -7,6 +7,7 @@
 
 namespace Newspack_Multibranded_Site;
 
+use Newspack_Multibranded_Site\Customizations\Show_Page_On_Front;
 use WP_Term;
 
 /**
@@ -161,6 +162,16 @@ class Taxonomy {
 			$term = get_term( $post_primary_brand, self::SLUG );
 			if ( $term instanceof WP_Term ) {
 				return $term;
+			}
+		}
+
+		if ( 'page' === $post->post_type ) {
+			$brand = Show_Page_On_Front::get_brand_page_is_cover_for( $post->ID );
+			if ( $brand ) {
+				$term = get_term( $brand, self::SLUG );
+				if ( $term instanceof WP_Term ) {
+					return $term;
+				}
 			}
 		}
 	}
