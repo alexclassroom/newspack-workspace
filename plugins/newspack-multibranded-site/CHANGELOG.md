@@ -1,3 +1,10 @@
+# [1.3.0](https://github.com/Automattic/newspack-multibranded-site/compare/v1.2.0...v1.3.0) (2024-04-08)
+
+
+### Features
+
+* **ci:** add epic/* release workflow and rename `master` to `trunk` ([#41](https://github.com/Automattic/newspack-multibranded-site/issues/41)) ([290e390](https://github.com/Automattic/newspack-multibranded-site/commit/290e390af56a8af20a90d952c2d6596714a5045c))
+
 # [1.3.0-alpha.1](https://github.com/Automattic/newspack-multibranded-site/compare/v1.2.0...v1.3.0-alpha.1) (2024-02-08)
 
 
