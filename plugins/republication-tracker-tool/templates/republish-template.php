@@ -33,6 +33,11 @@ $republish_post_id = get_query_var( 'republish_post_id' );
 // Get post object.
 $post_object = get_post( $republish_post_id );
 
+// Check if the post object is valid.
+if ( ! $post_object instanceof WP_Post ) {
+	wp_die( esc_html__( 'Invalid post ID.', 'republication-tracker-tool' ) );
+}
+
 $content = $post_object->post_content;
 
 // Remove shortcodes.
