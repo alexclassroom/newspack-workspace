@@ -1,8 +1,19 @@
 .republish-article__content {
 	grid-gap: 2rem;
-	display: grid;
-	grid-template-columns: 1fr 1fr;
+	display: flex;
+	gap: 2rem;
 	margin-top: 2rem;
+}
+
+.republish-article__license,
+.republish-article__info {
+	flex: 1;
+}
+
+@media (max-width: 768px) {
+	.republish-article__content {
+		flex-direction: column;
+	}
 }
 
 .republish-article__info textarea {
