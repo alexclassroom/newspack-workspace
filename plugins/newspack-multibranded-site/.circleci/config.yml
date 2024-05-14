@@ -15,10 +15,6 @@ workflows:
           requires:
             - newspack/build
           archive-name: 'newspack-multibranded-site'
-          filters:
-            branches:
-              only:
-                - trunk
       - newspack/release:
           requires:
             - newspack/build
