@@ -21,6 +21,8 @@ if (shouldPublishOnNPM) {
 }
 
 const getConfig = ({ gitBranchName }) => {
+  const branchType = gitBranchName.split("/")[0];
+
   const config = {
     dryRun: otherArgs.dryRun,
     ci: otherArgs.ci,
@@ -71,6 +73,8 @@ const getConfig = ({ gitBranchName }) => {
               label: `${process.env.CIRCLE_PROJECT_REPONAME}.zip`,
             },
           ],
+          // Only post GH PR comments for alpha, hotfix/*, and release branches.
+          successComment: ["alpha", "hotfix", "release"].includes(branchType),
         },
       ],
     ],
@@ -87,7 +91,6 @@ const getConfig = ({ gitBranchName }) => {
   ]);
 
   // Unless on a hotfix or epic branch, add a commit that updates the files.
-  const branchType = gitBranchName.split("/")[0];
   if (["hotfix", "epic"].indexOf(branchType) === -1) {
     let assets = filesList;
     // These assets should be added to source control after a release.
