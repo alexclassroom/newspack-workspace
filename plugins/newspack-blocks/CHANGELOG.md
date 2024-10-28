@@ -1,3 +1,13 @@
+## [4.3.1](https://github.com/Automattic/newspack-blocks/compare/v4.3.0...v4.3.1) (2024-10-28)
+
+
+### Bug Fixes
+
+* articles block fail to get all inner blocks ([#1878](https://github.com/Automattic/newspack-blocks/issues/1878)) ([c699724](https://github.com/Automattic/newspack-blocks/commit/c699724443ea916379c280fbc6208ecb9a3f5599))
+* deprecate video playlist block ([#1903](https://github.com/Automattic/newspack-blocks/issues/1903)) ([4876de6](https://github.com/Automattic/newspack-blocks/commit/4876de65f2ad2d689ba93507a7a8d041fcc030ba))
+* potential fatal with invalid attribute combo ([#1900](https://github.com/Automattic/newspack-blocks/issues/1900)) ([adf2e9d](https://github.com/Automattic/newspack-blocks/commit/adf2e9d82f90c8b9839f107bd2b4c249ff3045e8))
+* update block classes for the site editor ([#1920](https://github.com/Automattic/newspack-blocks/issues/1920)) ([1a07ad0](https://github.com/Automattic/newspack-blocks/commit/1a07ad0dd88b68122b76f5f86c80d52d842e3c20))
+
 # [4.3.0](https://github.com/Automattic/newspack-blocks/compare/v4.2.4...v4.3.0) (2024-10-28)
 
 
