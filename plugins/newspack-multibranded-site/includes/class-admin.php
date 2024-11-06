@@ -132,6 +132,14 @@ class Admin {
 			'site'           => get_site_url(),
 		);
 
+		wp_localize_script(
+			self::MULTI_BRANDED_PAGE_SLUG,
+			'newspack_urls',
+			[
+				'dashboard' => esc_url( admin_url( 'admin.php?page=' . self::MULTI_BRANDED_PAGE_SLUG ) ),
+				'support'   => esc_url( 'https://help.newspack.com/' ),
+			]
+		);
 		wp_localize_script( self::MULTI_BRANDED_PAGE_SLUG, 'newspack_aux_data', $aux_data );
 
 		\wp_enqueue_script( self::MULTI_BRANDED_PAGE_SLUG );
