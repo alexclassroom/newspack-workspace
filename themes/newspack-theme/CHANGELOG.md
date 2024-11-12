@@ -1,3 +1,10 @@
+## [2.1.2-hotfix-add-parent-theme.1](https://github.com/Automattic/newspack-theme/compare/v2.1.1...v2.1.2-hotfix-add-parent-theme.1) (2024-11-12)
+
+
+### Bug Fixes
+
+* add parent theme to child theme description ([a300c60](https://github.com/Automattic/newspack-theme/commit/a300c605e7df730e168eaffe5b641c44f870ec62))
+
 ## [2.1.1](https://github.com/Automattic/newspack-theme/compare/v2.1.0...v2.1.1) (2024-11-11)
 
 
