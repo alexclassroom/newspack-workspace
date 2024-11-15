@@ -1,3 +1,15 @@
+# [2.3.0-alpha.1](https://github.com/Automattic/newspack-theme/compare/v2.2.0...v2.3.0-alpha.1) (2024-11-15)
+
+
+### Bug Fixes
+
+* make button background styles more specific ([#2407](https://github.com/Automattic/newspack-theme/issues/2407)) ([21f6a4e](https://github.com/Automattic/newspack-theme/commit/21f6a4ed62affb29854b8a8ad17dbfd42ba66cff))
+
+
+### Features
+
+* **author-archive:** replace twitter icon with x ([2f4709a](https://github.com/Automattic/newspack-theme/commit/2f4709a9aa935d53d8e0aac4d205ece1865a96f1))
+
 # [2.2.0](https://github.com/Automattic/newspack-theme/compare/v2.1.1...v2.2.0) (2024-11-12)
 
 
