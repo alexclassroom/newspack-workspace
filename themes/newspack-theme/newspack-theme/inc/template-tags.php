@@ -199,6 +199,7 @@ if ( ! function_exists( 'newspack_author_get_social_links' ) ) :
 			'tumblr',
 			'youtube',
 			'wikipedia',
+			'bluesky',
 		);
 
 		// Create empty string for links.
