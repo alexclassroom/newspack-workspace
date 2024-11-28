@@ -1,3 +1,19 @@
+# [2.4.0-epic-ras-acc.1](https://github.com/Automattic/newspack-theme/compare/v2.3.0...v2.4.0-epic-ras-acc.1) (2024-11-26)
+
+
+### Bug Fixes
+
+* correct linting errors ([d3b74c7](https://github.com/Automattic/newspack-theme/commit/d3b74c73da1d1ff364004ca136190f00d77bc9a2))
+* correct more linting errors ([593c246](https://github.com/Automattic/newspack-theme/commit/593c24677fabba714453d8dc7c3691e759ce0d66))
+* **ras-acc:** clean up merge conflict marker ([#2335](https://github.com/Automattic/newspack-theme/issues/2335)) ([080e0fc](https://github.com/Automattic/newspack-theme/commit/080e0fc1a8e59f70fef23b7a46b11dc6f85bcf11))
+* **ras-acc:** remove redundant checkout styles ([#2350](https://github.com/Automattic/newspack-theme/issues/2350)) ([1f48f20](https://github.com/Automattic/newspack-theme/commit/1f48f2061fe40ea091fb6135444e4ada2be8012e))
+
+
+### Features
+
+* update clamp calculations based on viewport range of 782 - 1280 ([63307ae](https://github.com/Automattic/newspack-theme/commit/63307ae052c72a9eeb753d8f45b4f0e746917991))
+* update Newspack UI variable font sizes for the theme ([212e2fd](https://github.com/Automattic/newspack-theme/commit/212e2fd95201601b77baf4c83e1b11637f045972))
+
 # [2.3.0](https://github.com/Automattic/newspack-theme/compare/v2.2.1...v2.3.0) (2024-11-25)
 
 
@@ -20,6 +36,13 @@
 * add Bluesky to the profile fields ([#2413](https://github.com/Automattic/newspack-theme/issues/2413)) ([a4eb21b](https://github.com/Automattic/newspack-theme/commit/a4eb21b46e15c54c35df6d87bfcca95cb523145e))
 * add Bluesky to the Social Links menu ([#2412](https://github.com/Automattic/newspack-theme/issues/2412)) ([e32f604](https://github.com/Automattic/newspack-theme/commit/e32f6046677945f7b4d1d1c6be2c38945b37a9c3))
 
+
+# [2.3.0-epic-ras-acc.2](https://github.com/Automattic/newspack-theme/compare/v2.3.0-epic-ras-acc.1...v2.3.0-epic-ras-acc.2) (2024-11-20)
+
+### Bug Fixes
+
+* getting translations to load again ([#2411](https://github.com/Automattic/newspack-theme/issues/2411)) ([110b039](https://github.com/Automattic/newspack-theme/commit/110b039b5c7d90b13c98753f8c8146071169b2bd))
+
 # [2.3.0-alpha.2](https://github.com/Automattic/newspack-theme/compare/v2.3.0-alpha.1...v2.3.0-alpha.2) (2024-11-19)
 
 
@@ -29,20 +52,22 @@
 
 ## [2.2.1](https://github.com/Automattic/newspack-theme/compare/v2.2.0...v2.2.1) (2024-11-19)
 
-### Bug Fixes
-
 * getting translations to load again ([#2411](https://github.com/Automattic/newspack-theme/issues/2411)) ([110b039](https://github.com/Automattic/newspack-theme/commit/110b039b5c7d90b13c98753f8c8146071169b2bd))
 
-
-# [2.3.0-alpha.1](https://github.com/Automattic/newspack-theme/compare/v2.2.0...v2.3.0-alpha.1) (2024-11-15)
+# [2.3.0-epic-ras-acc.1](https://github.com/Automattic/newspack-theme/compare/v2.2.0...v2.3.0-epic-ras-acc.1) (2024-11-12)
 
 ### Bug Fixes
 
-* make button background styles more specific ([#2407](https://github.com/Automattic/newspack-theme/issues/2407)) ([21f6a4e](https://github.com/Automattic/newspack-theme/commit/21f6a4ed62affb29854b8a8ad17dbfd42ba66cff))
+* correct linting errors ([d3b74c7](https://github.com/Automattic/newspack-theme/commit/d3b74c73da1d1ff364004ca136190f00d77bc9a2))
+* correct more linting errors ([593c246](https://github.com/Automattic/newspack-theme/commit/593c24677fabba714453d8dc7c3691e759ce0d66))
+* **ras-acc:** clean up merge conflict marker ([#2335](https://github.com/Automattic/newspack-theme/issues/2335)) ([080e0fc](https://github.com/Automattic/newspack-theme/commit/080e0fc1a8e59f70fef23b7a46b11dc6f85bcf11))
+* **ras-acc:** remove redundant checkout styles ([#2350](https://github.com/Automattic/newspack-theme/issues/2350)) ([1f48f20](https://github.com/Automattic/newspack-theme/commit/1f48f2061fe40ea091fb6135444e4ada2be8012e))
+
 
 ### Features
 
-* **author-archive:** replace twitter icon with x ([2f4709a](https://github.com/Automattic/newspack-theme/commit/2f4709a9aa935d53d8e0aac4d205ece1865a96f1))
+* update clamp calculations based on viewport range of 782 - 1280 ([63307ae](https://github.com/Automattic/newspack-theme/commit/63307ae052c72a9eeb753d8f45b4f0e746917991))
+* update Newspack UI variable font sizes for the theme ([212e2fd](https://github.com/Automattic/newspack-theme/commit/212e2fd95201601b77baf4c83e1b11637f045972))
 
 # [2.2.0](https://github.com/Automattic/newspack-theme/compare/v2.1.1...v2.2.0) (2024-11-12)
 
@@ -93,6 +118,14 @@
 
 * add disabled styles ([#2386](https://github.com/Automattic/newspack-theme/issues/2386)) ([2f4d5a7](https://github.com/Automattic/newspack-theme/commit/2f4d5a7c7117d91c2a0eb09784ce599a6948a1c3))
 
+# [2.1.0-epic-ras-acc.4](https://github.com/Automattic/newspack-theme/compare/v2.1.0-epic-ras-acc.3...v2.1.0-epic-ras-acc.4) (2024-10-10)
+
+
+### Features
+
+* add disabled styles ([#2386](https://github.com/Automattic/newspack-theme/issues/2386)) ([2f4d5a7](https://github.com/Automattic/newspack-theme/commit/2f4d5a7c7117d91c2a0eb09784ce599a6948a1c3))
+
+
 ## [2.0.1](https://github.com/Automattic/newspack-theme/compare/v2.0.0...v2.0.1) (2024-10-08)
 
 
@@ -108,6 +141,16 @@
 ### Bug Fixes
 
 * allow active My Account links to be clicked ([#2376](https://github.com/Automattic/newspack-theme/issues/2376)) ([99e0509](https://github.com/Automattic/newspack-theme/commit/99e0509b2e00fc45bf3b2963c89fd638fe118d26))
+* avoid warnings ([#2367](https://github.com/Automattic/newspack-theme/issues/2367)) ([5218a12](https://github.com/Automattic/newspack-theme/commit/5218a1284f2dc1c66e9723dc42915d8afd9aab94))
+* downgrade octokit version to v20 ([#2370](https://github.com/Automattic/newspack-theme/issues/2370)) ([5ac4510](https://github.com/Automattic/newspack-theme/commit/5ac451004e64b1df14439218eedc74610f358540))
+
+# [2.1.0-epic-ras-acc.3](https://github.com/Automattic/newspack-theme/compare/v2.1.0-epic-ras-acc.2...v2.1.0-epic-ras-acc.3) (2024-09-18)
+
+
+### Bug Fixes
+
+* allow active My Account links to be clicked ([#2376](https://github.com/Automattic/newspack-theme/issues/2376)) ([99e0509](https://github.com/Automattic/newspack-theme/commit/99e0509b2e00fc45bf3b2963c89fd638fe118d26))
+
 
 ## [2.0.1-alpha.1](https://github.com/Automattic/newspack-theme/compare/v2.0.0...v2.0.1-alpha.1) (2024-08-30)
 
@@ -122,41 +165,41 @@
 
 ### Bug Fixes
 
-* update dependencies to support `@wordpress/scripts` ([#2318](https://github.com/Automattic/newspack-theme/issues/2318)) ([1ee216c](https://github.com/Automattic/newspack-theme/commit/1ee216cc1815f32d028524a21a9a8a6a09cfab3f))
+* allow active My Account links to be clicked ([#2376](https://github.com/Automattic/newspack-theme/issues/2376)) ([99e0509](https://github.com/Automattic/newspack-theme/commit/99e0509b2e00fc45bf3b2963c89fd638fe118d26))
+
+# [2.1.0-epic-ras-acc.2](https://github.com/Automattic/newspack-theme/compare/v2.1.0-epic-ras-acc.1...v2.1.0-epic-ras-acc.2) (2024-09-04)
 
 
-### BREAKING CHANGES
+### Bug Fixes
 
-* Updates dependencies for compatibility with WordPress 6.6.*, but breaks JS in WordPress 6.5.* and below. If you need support for WP 6.5.*, please do not upgrade to this new major version.
+* avoid warnings ([#2367](https://github.com/Automattic/newspack-theme/issues/2367)) ([5218a12](https://github.com/Automattic/newspack-theme/commit/5218a1284f2dc1c66e9723dc42915d8afd9aab94))
+* downgrade octokit version to v20 ([#2370](https://github.com/Automattic/newspack-theme/issues/2370)) ([5ac4510](https://github.com/Automattic/newspack-theme/commit/5ac451004e64b1df14439218eedc74610f358540))
 
-* chore: refactor for newspack-scripts dependency updates
+# [2.1.0-epic-ras-acc.1](https://github.com/Automattic/newspack-theme/compare/v2.0.0...v2.1.0-epic-ras-acc.1) (2024-08-14)
 
-* refactor: use proxy script for eslint and stylelint scripts
 
-* chore: update newspack-scripts to v5.6.0-alpha.3
+### Bug Fixes
 
-* fix: actually update newspack-scripts to v5.6.0-alpha.3
+* correct linting errors ([d3b74c7](https://github.com/Automattic/newspack-theme/commit/d3b74c73da1d1ff364004ca136190f00d77bc9a2))
+* correct more linting errors ([593c246](https://github.com/Automattic/newspack-theme/commit/593c24677fabba714453d8dc7c3691e759ce0d66))
+* **ras-acc:** clean up merge conflict marker ([#2335](https://github.com/Automattic/newspack-theme/issues/2335)) ([080e0fc](https://github.com/Automattic/newspack-theme/commit/080e0fc1a8e59f70fef23b7a46b11dc6f85bcf11))
+* **ras-acc:** remove redundant checkout styles ([#2350](https://github.com/Automattic/newspack-theme/issues/2350)) ([1f48f20](https://github.com/Automattic/newspack-theme/commit/1f48f2061fe40ea091fb6135444e4ada2be8012e))
 
-* chore: update newspack-scripts to v5.6.0-alpha.4
 
-* fix: semantic-release script
+### Features
 
-* fix: add missing Prettier config files
+* update clamp calculations based on viewport range of 782 - 1280 ([63307ae](https://github.com/Automattic/newspack-theme/commit/63307ae052c72a9eeb753d8f45b4f0e746917991))
+* update Newspack UI variable font sizes for the theme ([212e2fd](https://github.com/Automattic/newspack-theme/commit/212e2fd95201601b77baf4c83e1b11637f045972))
 
-* chore: update newspack-scripts to 5.6.0-alpha.5
+# [2.0.0-epic-ras-acc.1](https://github.com/Automattic/newspack-theme/compare/v1.93.0-epic-ras-acc.1...v2.0.0-epic-ras-acc.1) (2024-08-09)
 
-* chore: update newspack-scripts to v5.6.0-alpha.7
+### Bug Fixes
 
-* fix: reformat SCSS
+* correct linting errors ([d3b74c7](https://github.com/Automattic/newspack-theme/commit/d3b74c73da1d1ff364004ca136190f00d77bc9a2))
+* correct more linting errors ([593c246](https://github.com/Automattic/newspack-theme/commit/593c24677fabba714453d8dc7c3691e759ce0d66))
 
-* chore: update newspack-scripts to v5.6.0-alpha.8
 
-* fix: broken composer lockfile
-
-* chore: bump newspack-scripts to v5.5.2
-
-# [2.0.0-alpha.1](https://github.com/Automattic/newspack-theme/compare/v1.92.0...v2.0.0-alpha.1) (2024-08-02)
-
+# [2.0.0](https://github.com/Automattic/newspack-theme/compare/v1.92.0...v2.0.0) (2024-08-13)
 
 ### Bug Fixes
 
@@ -193,8 +236,75 @@
 
 * chore: bump newspack-scripts to v5.5.2
 
-# [1.92.0](https://github.com/Automattic/newspack-theme/compare/v1.91.0...v1.92.0) (2024-07-30)
 
+# [2.0.0-alpha.1](https://github.com/Automattic/newspack-theme/compare/v1.92.0...v2.0.0-alpha.1) (2024-08-02)
+
+### Bug Fixes
+
+* update dependencies to support `@wordpress/scripts` ([#2318](https://github.com/Automattic/newspack-theme/issues/2318)) ([1ee216c](https://github.com/Automattic/newspack-theme/commit/1ee216cc1815f32d028524a21a9a8a6a09cfab3f))
+
+
+### BREAKING CHANGES
+
+* Updates dependencies for compatibility with WordPress 6.6.*, but breaks JS in WordPress 6.5.* and below. If you need support for WP 6.5.*, please do not upgrade to this new major version.
+
+* chore: refactor for newspack-scripts dependency updates
+
+* refactor: use proxy script for eslint and stylelint scripts
+
+* chore: update newspack-scripts to v5.6.0-alpha.3
+
+* fix: actually update newspack-scripts to v5.6.0-alpha.3
+
+* chore: update newspack-scripts to v5.6.0-alpha.4
+
+* fix: semantic-release script
+
+* fix: add missing Prettier config files
+
+* chore: update newspack-scripts to 5.6.0-alpha.5
+
+* chore: update newspack-scripts to v5.6.0-alpha.7
+
+* fix: reformat SCSS
+
+* chore: update newspack-scripts to v5.6.0-alpha.8
+
+* fix: broken composer lockfile
+
+* chore: bump newspack-scripts to v5.5.2
+
+
+# [1.93.0-epic-ras-acc.1](https://github.com/Automattic/newspack-theme/compare/v1.92.0...v1.93.0-epic-ras-acc.1) (2024-07-31)
+
+### Bug Fixes
+
+* **ras-acc:** clean up merge conflict marker ([#2335](https://github.com/Automattic/newspack-theme/issues/2335)) ([080e0fc](https://github.com/Automattic/newspack-theme/commit/080e0fc1a8e59f70fef23b7a46b11dc6f85bcf11))
+* **ras-acc:** remove redundant checkout styles ([#2350](https://github.com/Automattic/newspack-theme/issues/2350)) ([1f48f20](https://github.com/Automattic/newspack-theme/commit/1f48f2061fe40ea091fb6135444e4ada2be8012e))
+
+### Features
+
+* update clamp calculations based on viewport range of 782 - 1280 ([63307ae](https://github.com/Automattic/newspack-theme/commit/63307ae052c72a9eeb753d8f45b4f0e746917991))
+* update Newspack UI variable font sizes for the theme ([212e2fd](https://github.com/Automattic/newspack-theme/commit/212e2fd95201601b77baf4c83e1b11637f045972))
+
+
+# [1.92.0-epic-ras-acc.2](https://github.com/Automattic/newspack-theme/compare/v1.92.0-epic-ras-acc.1...v1.92.0-epic-ras-acc.2) (2024-07-26)
+
+### Bug Fixes
+
+* **ras-acc:** remove redundant checkout styles ([#2350](https://github.com/Automattic/newspack-theme/issues/2350)) ([1f48f20](https://github.com/Automattic/newspack-theme/commit/1f48f2061fe40ea091fb6135444e4ada2be8012e))
+
+
+# [1.92.0-epic-ras-acc.1](https://github.com/Automattic/newspack-theme/compare/v1.91.0...v1.92.0-epic-ras-acc.1) (2024-07-17)
+
+### Bug Fixes
+
+* **ras-acc:** clean up merge conflict marker ([#2335](https://github.com/Automattic/newspack-theme/issues/2335)) ([080e0fc](https://github.com/Automattic/newspack-theme/commit/080e0fc1a8e59f70fef23b7a46b11dc6f85bcf11))
+* update clamp calculations based on viewport range of 782 - 1280 ([63307ae](https://github.com/Automattic/newspack-theme/commit/63307ae052c72a9eeb753d8f45b4f0e746917991))
+* update Newspack UI variable font sizes for the theme ([212e2fd](https://github.com/Automattic/newspack-theme/commit/212e2fd95201601b77baf4c83e1b11637f045972))
+
+
+# [1.92.0](https://github.com/Automattic/newspack-theme/compare/v1.91.0...v1.92.0) (2024-07-30)
 
 ### Features
 
@@ -223,11 +333,13 @@
 
 ## [1.90.5](https://github.com/Automattic/newspack-theme/compare/v1.90.4...v1.90.5) (2024-07-10)
 
+
 ### Bug Fixes
 
 * remove margin from grid block ([#2342](https://github.com/Automattic/newspack-theme/issues/2342)) ([854794b](https://github.com/Automattic/newspack-theme/commit/854794b5c615a3754f9c3b5352d8880499bee67f))
 
 ## [1.91.0-alpha.2](https://github.com/Automattic/newspack-theme/compare/v1.91.0-alpha.1...v1.91.0-alpha.2) (2024-07-09)
+
 
 ### Bug Fixes
 
@@ -235,17 +347,45 @@
 
 ## [1.90.4](https://github.com/Automattic/newspack-theme/compare/v1.90.3...v1.90.4) (2024-07-09)
 
+
+### Bug Fixes
+
+* correct subtitle order for WP 6.6 ([#2341](https://github.com/Automattic/newspack-theme/issues/2341)) ([e75fa8e](https://github.com/Automattic/newspack-theme/commit/e75fa8ef5ee847f5906704c535cf78bc191f2680))
+
+
+## [1.91.0-epic-ras-acc.2](https://github.com/Automattic/newspack-theme/compare/v1.91.0-epic-ras-acc.1...v1.91.0-epic-ras-acc.2) (2024-07-08)
+
+
+### Bug Fixes
+
+* **ras-acc:** clean up merge conflict marker ([#2335](https://github.com/Automattic/newspack-theme/issues/2335)) ([080e0fc](https://github.com/Automattic/newspack-theme/commit/080e0fc1a8e59f70fef23b7a46b11dc6f85bcf11))
+
+## [1.91.0-epic-ras-acc.1](https://github.com/Automattic/newspack-theme/compare/v1.90.3...v1.91.0-epic-ras-acc.1) (2024-07-03)
+
+
+### Features
+
+* add support for publisher media kit ([#2317](https://github.com/Automattic/newspack-theme/issues/2317)) ([4430264](https://github.com/Automattic/newspack-theme/commit/4430264a924362138b6c31c5e33d9b78123b5378))
+* update clamp calculations based on viewport range of 782 - 1280 ([63307ae](https://github.com/Automattic/newspack-theme/commit/63307ae052c72a9eeb753d8f45b4f0e746917991))
+* update Newspack UI variable font sizes for the theme ([212e2fd](https://github.com/Automattic/newspack-theme/commit/212e2fd95201601b77baf4c83e1b11637f045972))
+
+
+## [1.90.3](https://github.com/Automattic/newspack-theme/compare/v1.90.2...v1.90.3) (2024-07-01)
+
+
 ### Bug Fixes
 
 * correct subtitle order for WP 6.6 ([#2341](https://github.com/Automattic/newspack-theme/issues/2341)) ([e75fa8e](https://github.com/Automattic/newspack-theme/commit/e75fa8ef5ee847f5906704c535cf78bc191f2680))
 
 # [1.91.0-alpha.1](https://github.com/Automattic/newspack-theme/compare/v1.90.3...v1.91.0-alpha.1) (2024-07-05)
 
+
 ### Features
 
 * add support for publisher media kit ([#2317](https://github.com/Automattic/newspack-theme/issues/2317)) ([4430264](https://github.com/Automattic/newspack-theme/commit/4430264a924362138b6c31c5e33d9b78123b5378))
 
 ## [1.90.3](https://github.com/Automattic/newspack-theme/compare/v1.90.2...v1.90.3) (2024-07-01)
+
 
 ### Bug Fixes
 
@@ -278,6 +418,7 @@
 
 # [1.89.0](https://github.com/Automattic/newspack-theme/compare/v1.88.2...v1.89.0) (2024-06-12)
 
+
 ### Bug Fixes
 
 * handle attachement fetch failure ([#2301](https://github.com/Automattic/newspack-theme/issues/2301)) ([6bdffe0](https://github.com/Automattic/newspack-theme/commit/6bdffe0359553999bedb960731b8897933869a7f))
@@ -287,8 +428,8 @@
 
 * add specific css for subscribe pattern 5 and 6 ([#2305](https://github.com/Automattic/newspack-theme/issues/2305)) ([f7cf899](https://github.com/Automattic/newspack-theme/commit/f7cf899be7858a92affdd0a6d8bc668e3f9e1218))
 
-
 # [1.89.0-alpha.2](https://github.com/Automattic/newspack-theme/compare/v1.89.0-alpha.1...v1.89.0-alpha.2) (2024-06-25)
+
 
 ### Bug Fixes
 
@@ -306,12 +447,27 @@
 
 ### Bug Fixes
 
+* dont update option on every request ([3d30e62](https://github.com/Automattic/newspack-theme/commit/3d30e62d26968485bc9aee13b287fd37dad1d031))
 * handle attachement fetch failure ([#2301](https://github.com/Automattic/newspack-theme/issues/2301)) ([6bdffe0](https://github.com/Automattic/newspack-theme/commit/6bdffe0359553999bedb960731b8897933869a7f))
 
 
 ### Features
 
 * add specific css for subscribe pattern 5 and 6 ([#2305](https://github.com/Automattic/newspack-theme/issues/2305)) ([f7cf899](https://github.com/Automattic/newspack-theme/commit/f7cf899be7858a92affdd0a6d8bc668e3f9e1218))
+
+# [1.89.0-epic-ras-acc.2](https://github.com/Automattic/newspack-theme/compare/v1.89.0-epic-ras-acc.1...v1.89.0-epic-ras-acc.2) (2024-05-29)
+
+### Bug Fixes
+
+* dont update option on every request ([3d30e62](https://github.com/Automattic/newspack-theme/commit/3d30e62d26968485bc9aee13b287fd37dad1d031))
+
+# [1.89.0-epic-ras-acc.1](https://github.com/Automattic/newspack-theme/compare/v1.88.1-epic-ras-acc.1...v1.89.0-epic-ras-acc.1) (2024-05-17)
+
+
+### Features
+
+* update clamp calculations based on viewport range of 782 - 1280 ([63307ae](https://github.com/Automattic/newspack-theme/commit/63307ae052c72a9eeb753d8f45b4f0e746917991))
+* update Newspack UI variable font sizes for the theme ([212e2fd](https://github.com/Automattic/newspack-theme/commit/212e2fd95201601b77baf4c83e1b11637f045972))
 
 ## [1.88.2](https://github.com/Automattic/newspack-theme/compare/v1.88.1...v1.88.2) (2024-05-28)
 
@@ -334,6 +490,7 @@
 
 * **homepage-posts:** handle "time ago" format in HBP ([e4e8af5](https://github.com/Automattic/newspack-theme/commit/e4e8af558c9e0e2823b3b9e4c781704cb20237ee))
 * dont update option on every request ([3d30e62](https://github.com/Automattic/newspack-theme/commit/3d30e62d26968485bc9aee13b287fd37dad1d031))
+
 
 # [1.88.0](https://github.com/Automattic/newspack-theme/compare/v1.87.2...v1.88.0) (2024-05-15)
 
