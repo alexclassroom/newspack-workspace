@@ -1,3 +1,17 @@
+# [2.4.0-alpha.1](https://github.com/Automattic/newspack-theme/compare/v2.3.0...v2.4.0-alpha.1) (2024-11-29)
+
+
+### Bug Fixes
+
+* remove translation workaround; the issue is fixed in WP ([#2415](https://github.com/Automattic/newspack-theme/issues/2415)) ([da4efd9](https://github.com/Automattic/newspack-theme/commit/da4efd9adc8f0bbcdf9e29ae193f619a06f06915))
+
+
+### Features
+
+* add Bluesky to the profile fields ([#2413](https://github.com/Automattic/newspack-theme/issues/2413)) ([6651f67](https://github.com/Automattic/newspack-theme/commit/6651f67254d4ccb877e12c3da52067cc10aa470e))
+* add Bluesky to the Social Links menu ([#2412](https://github.com/Automattic/newspack-theme/issues/2412)) ([16a33aa](https://github.com/Automattic/newspack-theme/commit/16a33aa7bcb13182b4610520313be93d8322d956))
+* merge RAS-ACC work into trunk ([#2417](https://github.com/Automattic/newspack-theme/issues/2417)) ([4488d59](https://github.com/Automattic/newspack-theme/commit/4488d59a8ca94675be4f8ec0704be5d66f6c455b))
+
 # [2.4.0-epic-ras-acc.1](https://github.com/Automattic/newspack-theme/compare/v2.3.0...v2.4.0-epic-ras-acc.1) (2024-11-26)
 
 
