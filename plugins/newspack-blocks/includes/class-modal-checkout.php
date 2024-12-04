@@ -132,6 +132,9 @@ final class Modal_Checkout {
 		}
 		add_filter( 'woocommerce_subscriptions_product_limited_for_user', [ __CLASS__, 'subscriptions_product_limited_for_user' ], 10, 3 );
 		add_filter( 'woocommerce_get_privacy_policy_text', [ __CLASS__, 'woocommerce_get_privacy_policy_text' ], 10, 2 );
+
+		// Remove any hooks that aren't supported by the modal checkout.
+		add_action( 'plugins_loaded', [ __CLASS__, 'remove_hooks' ] );
 	}
 
 	/**
@@ -731,6 +734,7 @@ final class Modal_Checkout {
 			'newspack-ui',
 			'newspack-style',
 			'newspack-recaptcha',
+			'newspack-woocommerce-style',
 			// Woo.
 			'woocommerce',
 			'WCPAY',
@@ -740,6 +744,7 @@ final class Modal_Checkout {
 			'wcs-',
 			'stripe',
 			'select2',
+			'selectWoo',
 			// Metorik.
 			'metorik',
 		];
@@ -756,7 +761,7 @@ final class Modal_Checkout {
 		foreach ( $wp_scripts->queue as $handle ) {
 			$allowed = false;
 			foreach ( $allowed_assets as $allowed_asset ) {
-				if ( false !== strpos( $handle, $allowed_asset ) ) {
+				if ( 0 === strpos( $handle, $allowed_asset ) ) {
 					$allowed = true;
 					break;
 				}
@@ -768,7 +773,7 @@ final class Modal_Checkout {
 		foreach ( $wp_styles->queue as $handle ) {
 			$allowed = false;
 			foreach ( $allowed_assets as $allowed_asset ) {
-				if ( false !== strpos( $handle, $allowed_asset ) ) {
+				if ( 0 === strpos( $handle, $allowed_asset ) ) {
 					$allowed = true;
 					break;
 				}
@@ -776,6 +781,64 @@ final class Modal_Checkout {
 			if ( ! $allowed ) {
 				wp_dequeue_style( $handle );
 			}
+		}
+	}
+
+	/**
+	 * Remove any hooks that may not work nicely with the modal checkout.
+	 */
+	public static function remove_hooks() {
+		if ( ! self::is_modal_checkout() ) {
+			return;
+		}
+
+		$remove_list = [];
+
+		// reCaptcha for WooCommerce.
+		if ( class_exists( 'I13_Woo_Recpatcha' ) ) {
+			global $i13_woo_recpatcha;
+			array_push(
+				$remove_list,
+				[
+					'hook'     => 'woocommerce_review_order_before_payment',
+					'callback' => array( $i13_woo_recpatcha, 'i13woo_extra_checkout_fields' ),
+				],
+				[
+					'hook'     => 'woocommerce_after_checkout_validation',
+					'callback' => array( $i13_woo_recpatcha, 'i13_woocomm_validate_checkout_captcha' ),
+				],
+				[
+					'hook'     => 'woocommerce_pay_order_before_submit',
+					'callback' => array( $i13_woo_recpatcha, 'i13woo_extra_checkout_fields' ),
+				],
+				[
+					'hook'     => 'woocommerce_review_order_before_submit',
+					'callback' => array( $i13_woo_recpatcha, 'i13woo_extra_checkout_fields' ),
+				],
+				[
+					'hook'     => 'woocommerce_pay_order_before_submit',
+					'callback' => array( $i13_woo_recpatcha, 'i13woo_extra_checkout_fields_pay_order' ),
+				],
+				[
+					'hook'     => 'woocommerce_proceed_to_checkout',
+					'callback' => array( $i13_woo_recpatcha, 'i13_woocommerce_payment_request_btn_captcha' ),
+				],
+				[
+					'hook'     => 'wp_head',
+					'callback' => array( $i13_woo_recpatcha, 'i13_add_header_metadata' ),
+				]
+			);
+		}
+		/**
+		 * Filters the hooks to remove from the modal checkout.
+		 *
+		 * @param string[] $remove_list Array of hooks to remove.
+		 */
+		$remove_list = apply_filters( 'newspack_blocks_modal_checkout_remove_hooks', $remove_list );
+
+		foreach ( $remove_list as $remove ) {
+			$priority = has_action( $remove['hook'], $remove['callback'] );
+			remove_action( $remove['hook'], $remove['callback'], $priority );
 		}
 	}
 
