@@ -1,3 +1,10 @@
+## [4.5.1](https://github.com/Automattic/newspack-blocks/compare/v4.5.0...v4.5.1) (2024-12-09)
+
+
+### Bug Fixes
+
+* **modal-checkout:** remove any body outline ([#1994](https://github.com/Automattic/newspack-blocks/issues/1994)) ([75d5ad1](https://github.com/Automattic/newspack-blocks/commit/75d5ad1c651ab1218863b9443f02130d07ca3dae))
+
 # [4.5.0](https://github.com/Automattic/newspack-blocks/compare/v4.4.0...v4.5.0) (2024-12-09)
 
 
