@@ -1,4 +1,4 @@
-/* eslint-disable no-console */
+/* eslint-disable no-console, @typescript-eslint/no-var-requires */
 
 const { basename, resolve } = require( 'path' );
 const { stat, readFile } = require( 'fs-extra' );

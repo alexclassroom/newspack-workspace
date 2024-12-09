@@ -42,11 +42,7 @@ if ( ! function_exists( 'newspack_setup' ) ) :
 		 * If you're building a theme based on Newspack Theme, use a find and replace
 		 * to change 'newspack' to the name of your theme in all the template files.
 		 */
-		if ( version_compare( $GLOBALS['wp_version'], '6.7', '<' ) ) {
-			load_theme_textdomain( 'newspack', get_template_directory() . '/languages' );
-		} else {
-			load_textdomain( 'newspack', get_template_directory() . '/languages/' . determine_locale() . '.mo' );
-		}
+		load_theme_textdomain( 'newspack', get_template_directory() . '/languages' );
 
 		// Add default posts and comments RSS feed links to head.
 		add_theme_support( 'automatic-feed-links' );
