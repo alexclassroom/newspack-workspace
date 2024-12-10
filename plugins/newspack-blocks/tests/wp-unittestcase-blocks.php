@@ -58,6 +58,7 @@ class CoAuthors_Plus_Mock { // phpcs:ignore
 		$guest_author = get_post( $value );
 		if ( $guest_author ) {
 			$guest_author->type = 'guest-author';
+			$guest_author->user_nicename = $guest_author->post_name;
 			return $guest_author;
 		}
 
