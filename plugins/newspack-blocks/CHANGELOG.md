@@ -1,3 +1,10 @@
+## [4.5.8](https://github.com/Automattic/newspack-blocks/compare/v4.5.7...v4.5.8) (2025-02-03)
+
+
+### Bug Fixes
+
+* **checkout-button:** handle missing saved product ([#2038](https://github.com/Automattic/newspack-blocks/issues/2038)) ([b251f99](https://github.com/Automattic/newspack-blocks/commit/b251f999a2dd71a5c6aedfeb3bf9d03bef24e3f4))
+
 ## [4.5.7](https://github.com/Automattic/newspack-blocks/compare/v4.5.6...v4.5.7) (2025-01-31)
 
 
