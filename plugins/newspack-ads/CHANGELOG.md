@@ -1,3 +1,10 @@
+# [3.4.0](https://github.com/Automattic/newspack-ads/compare/v3.3.2...v3.4.0) (2025-03-04)
+
+
+### Features
+
+* update brand colours ([#937](https://github.com/Automattic/newspack-ads/issues/937)) ([92b7835](https://github.com/Automattic/newspack-ads/commit/92b7835a29ae1103c503e7baead0b44f99367220))
+
 ## [3.3.2](https://github.com/Automattic/newspack-ads/compare/v3.3.1...v3.3.2) (2025-01-20)
 
 
