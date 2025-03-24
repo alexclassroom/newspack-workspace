@@ -17,6 +17,7 @@ class Initializer {
 	public static function init() {
 		Budgets::init();
 		Fields::init();
+		Search::init();
 		API::init();
 		Admin::init();
 	}

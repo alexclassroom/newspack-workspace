@@ -7,6 +7,7 @@
 
 namespace Newspack_Story_Budget;
 
+use Newspack_Story_Budget\Fields\Abstract_Field;
 use Newspack_Story_Budget\Fields\Editable_Field;
 use Newspack_Story_Budget\Fields\Read_Only_Field;
 use Newspack_Story_Budget\Fields\Statuses;
@@ -28,6 +29,10 @@ class Fields {
 	public static function init() {
 		\add_action( 'init', [ __CLASS__, 'register_fields' ] );
 		\add_action( 'save_post', [ __CLASS__, 'on_post_update' ] );
+
+		// Add custom columns for fields that should be displayed in the admin list table.
+		\add_filter( 'manage_post_posts_columns', [ __CLASS__, 'wp_posts_columns' ] );
+		\add_action( 'manage_post_posts_custom_column', [ __CLASS__, 'wp_posts_columns_values' ], 10, 2 );
 	}
 
 	/**
@@ -70,13 +75,16 @@ class Fields {
 	 */
 	public static function get_default_fields_config() {
 		return [
-			// Editable fields.
+
+			// Core editable fields.
 			[
-				'description' => __( 'The internal name for the story.', 'newspack-story-budget' ),
-				'is_editable' => true,
-				'name'        => __( 'Story Name', 'newspack-story-budget' ),
-				'slug'        => 'name',
-				'type'        => 'text',
+				'description'            => __( 'The internal name for the story.', 'newspack-story-budget' ),
+				'is_editable'            => true,
+				'name'                   => __( 'Story Name', 'newspack-story-budget' ),
+				'slug'                   => 'name',
+				'type'                   => 'text',
+				'show_in_wp_posts_table' => true,
+				'is_searchable'          => true,
 			],
 			[
 				'default_value' => function() {
@@ -91,7 +99,7 @@ class Fields {
 				'options'       => Statuses::get_statuses_arrays(),
 			],
 
-			// Read-only fields.
+			// Core Read-only fields.
 			[
 				'save_value_callback' => [ __CLASS__, 'get_word_count' ],
 				'description'         => __( 'The word count of the story.', 'newspack-story-budget' ),
@@ -131,6 +139,16 @@ class Fields {
 	}
 
 	/**
+	 * Get a field by its post meta name.
+	 *
+	 * @param string $post_meta_name The post meta name for the field to get.
+	 */
+	public static function get_field_by_post_meta_name( $post_meta_name ) {
+		$slug = str_replace( Abstract_Field::FIELD_PREFIX, '', $post_meta_name );
+		return self::get_field( $slug );
+	}
+
+	/**
 	 * Update stored field value of read-only fields when post is updated.
 	 *
 	 * @param int $post_id The post ID being updated.
@@ -148,6 +166,40 @@ class Fields {
 			if ( ! empty( $value ) ) {
 				\update_post_meta( $post_id, $field->get_post_meta_name(), $value );
 			}
+		}
+	}
+
+	/**
+	 * Add custom columns to the post list table.
+	 *
+	 * @param array $columns The existing columns.
+	 * @return array The modified columns.
+	 */
+	public static function wp_posts_columns( $columns ) {
+		$fields = self::get_all_fields();
+		foreach ( $fields as $field ) {
+			if ( $field->show_in_wp_posts_table() ) {
+				$columns[ $field->get_post_meta_name() ] = $field->get_name();
+			}
+		}
+		return $columns;
+	}
+
+	/**
+	 * Display the value of the custom columns in the post list table.
+	 *
+	 * @param string $column_name The name of the column.
+	 * @param int    $post_id The post ID.
+	 */
+	public static function wp_posts_columns_values( $column_name, $post_id ) {
+		$field = self::get_field_by_post_meta_name( $column_name );
+		if ( ! $field ) {
+			return;
+		}
+		$value = $field->get_value( $post_id );
+
+		if ( ! empty( $value ) ) {
+			echo esc_html( $value );
 		}
 	}
 

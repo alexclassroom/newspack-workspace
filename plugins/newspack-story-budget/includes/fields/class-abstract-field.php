@@ -243,6 +243,24 @@ abstract class Abstract_Field {
 	}
 
 	/**
+	 * True if the field should be displayed in the wp posts table, false if not.
+	 *
+	 * @return bool
+	 */
+	public function show_in_wp_posts_table() {
+		return $this->show_in_wp_posts_table;
+	}
+
+	/**
+	 * True if the field should be searchable, false if not.
+	 *
+	 * @return bool
+	 */
+	public function is_searchable() {
+		return $this->is_searchable;
+	}
+
+	/**
 	 * Get the field's value.
 	 *
 	 * @param int $post_id The post ID to get the value for. If not passed, return the default value, if any.
