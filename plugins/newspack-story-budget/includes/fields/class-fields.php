@@ -137,7 +137,7 @@ class Fields {
 				'save_value_callback' => [ __CLASS__, 'save_budgets' ],
 				'show_in_table'       => true,
 				'slug'                => 'budgets',
-				'type'                => 'text',
+				'type'                => 'number',
 
 				/**
 				 * Filters the story budget statuses.

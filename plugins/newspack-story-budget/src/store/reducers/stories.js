@@ -8,10 +8,19 @@ export default ( state = INITIAL_STATE.stories, action ) => {
 				return acc;
 			}, {} );
 			return stories;
+		case 'SAVE_STORY_SUCCESS':
 		case 'STORIES_ADD':
 			return {
 				...state,
 				[ action.payload.id ]: action.payload,
+			};
+		case 'SAVE_STORY_FIELD_SUCCESS':
+			return {
+				...state,
+				[ action.payload.id ]: {
+					...state[ action.payload.id ],
+					[ action.payload.slug ]: action.payload.value,
+				},
 			};
 		default:
 			return state;

@@ -20,6 +20,8 @@ class Admin {
 		add_action( 'admin_notices', [ __CLASS__, 'remove_admin_notices' ], -PHP_INT_MAX );
 		add_action( 'all_admin_notices', [ __CLASS__, 'remove_admin_notices' ], -PHP_INT_MAX );
 		add_action( 'network_admin_notices', [ __CLASS__, 'remove_admin_notices' ], -PHP_INT_MAX );
+		add_action( 'wp_head', [ __CLASS__, 'story_preview_css' ], 100 );
+		add_filter( 'newspack_popups_should_display_prompt', [ __CLASS__, 'hide_prompts_on_preview' ] );
 	}
 
 	/**
@@ -52,7 +54,7 @@ class Admin {
 		wp_enqueue_script(
 			'newspack-story-budget',
 			plugin_dir_url( __DIR__ ) . 'dist/story-budget.js',
-			[ 'wp-components', 'wp-data-controls' ],
+			[ 'wp-components', 'wp-data-controls', 'wp-core-data' ],
 			filemtime( NEWSPACK_STORY_BUDGET_PLUGIN_DIR . 'dist/story-budget.js' ),
 			true
 		);
@@ -90,5 +92,53 @@ class Admin {
 			return;
 		}
 		remove_all_actions( current_action() );
+	}
+
+	/**
+	 * Check if the story preview is enabled.
+	 */
+	protected static function is_story_preview() {
+		return current_user_can( 'edit_others_posts' ) && isset( $_GET['newspack-story-preview'] ); // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+	}
+
+	/**
+	 * Story preview CSS.
+	 */
+	public static function story_preview_css() {
+		if ( ! self::is_story_preview() ) {
+			return;
+		}
+		add_filter( 'show_admin_bar', '__return_false' ); // phpcs:ignore WordPressVIPMinimum.UserExperience.AdminBarRemoval.RemovalDetected
+		?>
+		<style>
+			html {
+				margin-top: 0 !important;
+			}
+			#page > *,
+			#comments,
+			#secondary,
+			.edit-link {
+				display: none !important;
+			}
+			#page > #content {
+				display: block !important;
+				pointer-events: none;
+			}
+		</style>
+		<?php
+	}
+
+	/**
+	 * Hide Newspack Campaign prompts on the story preview.
+	 *
+	 * @param bool $should_display Whether the prompt should be displayed.
+	 *
+	 * @return bool
+	 */
+	public static function hide_prompts_on_preview( $should_display ) {
+		if ( self::is_story_preview() ) {
+			return false;
+		}
+		return $should_display;
 	}
 }

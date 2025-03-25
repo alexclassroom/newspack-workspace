@@ -9,6 +9,12 @@ export const getProgress = state => state.meta.progress;
 
 export const getFields = state => state.fields;
 
+export const hasField = ( state, slug ) =>
+	state.meta.fields.find( f => f.slug === slug ) ?? false;
+
+export const getField = ( state, slug ) =>
+	state.fields.find( f => f.slug === slug );
+
 export const getBudgets = state => state.budgets;
 
 export const getStories = createSelector(
@@ -118,6 +124,8 @@ export const getStories = createSelector(
 		state.view.sort,
 	]
 );
+
+export const hasFetchedStory = ( state, id ) => !! state.stories[ id ];
 
 export const getStory = ( state, id ) => state.stories[ id ];
 

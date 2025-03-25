@@ -2,14 +2,27 @@
 
 .toplevel_page_newspack-story-budget {
 	background: #fff;
+	--wp-components-color-accent: #003da5;
+	--wp-components-color-accent-darker-10: #00296e;
+	--wp-components-color-accent-darker-20: #001f53;
 }
 
 .wrap {
 	margin: 10px 0 0 -20px;
 }
 
-#newspack-story-budget-app {
-	.newspack-story-budget-header {
+/* Fix fullscreen modal content area */
+.components-modal__frame.is-full-screen .components-modal__content > div:not(.components-modal__header) {
+	height: 100%;
+}
+
+.components-modal__frame.newspack-story-budget__page__story .components-modal__content {
+	padding: 0;
+	overflow: hidden;
+}
+
+.newspack-story-budget {
+	&__header {
 		padding: 16px 48px;
 		border-bottom: 1px solid #f0f0f0;
 		min-height: 40px;
@@ -19,7 +32,7 @@
 			white-space: nowrap;
 		}
 	}
-	.newspack-story-budget-loading {
+	&__loading {
 		display: flex;
 		flex-direction: column;
 		align-items: center;
@@ -36,4 +49,71 @@
 			}
 		}
 	}
+	&__field-row {
+		max-width: 280px;
+		align-items: flex-start !important;
+		justify-content: flex-start !important;
+		> *:first-child {
+			width: 40%;
+			padding: 6px 0;
+		}
+		.newspack-story-budget__field {
+			width: 60%;
+		}
+	}
+	&__field {
+		&__value {
+			white-space: normal !important;
+			line-height: inherit;
+			text-align: left;
+			display: inline-flex;
+			padding: 6px 12px;
+			margin: 0;
+		}
+		&__button {
+			white-space: normal !important;
+			line-height: inherit;
+			text-align: left;
+			height: auto;
+			&:disabled {
+				color: inherit !important;
+			}
+		}
+		&__empty-value {
+			color: #a0a0a0;
+			font-style: italic;
+			font-size: 12px;
+		}
+		&__popover .components-popover__content {
+			min-width: 320px;
+			padding: 16px;
+			.block-editor-inspector-popover-header {
+				margin-bottom: 16px;
+			}
+		}
+	}
+	&__table-row-field {
+		margin: 0 -8px;
+		position: relative;
+		> svg {
+			position: absolute;
+			top: 2px;
+			left: -34px;
+		}
+		.newspack-story-budget__field__button,
+		.newspack-story-budget__field__value {
+			padding: 4px 8px;
+		}
+	}
+	&__sidebar {
+		flex: 0 0 280px;
+		outline: 1px solid #0000;
+		box-shadow: -1px 0 0 0 rgba(0, 0, 0, 0.133);
+		z-index: 1000;
+	}
+}
+
+// Hides the primary "View" action from the action dropdown.
+[id^=":r"][data-dialog] [role="group"] > :first-child {
+	display: none;
 }

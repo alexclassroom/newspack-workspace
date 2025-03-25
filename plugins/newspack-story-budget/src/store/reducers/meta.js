@@ -46,6 +46,26 @@ export default ( state = INITIAL_STATE.meta, action ) => {
 					[ action.payload ]: false,
 				},
 			};
+		case 'SAVE_STORY_START':
+		case 'SAVE_STORY_FIELD_START':
+			return {
+				...state,
+				loadingStory: {
+					...state.loadingStory,
+					[ action.payload.id ]: true,
+				},
+			};
+		case 'SAVE_STORY_SUCCESS':
+		case 'SAVE_STORY_ERROR':
+		case 'SAVE_STORY_FIELD_SUCCESS':
+		case 'SAVE_STORY_FIELD_ERROR':
+			return {
+				...state,
+				loadingStory: {
+					...state.loadingStory,
+					[ action.payload.id ]: false,
+				},
+			};
 		default:
 			return state;
 	}

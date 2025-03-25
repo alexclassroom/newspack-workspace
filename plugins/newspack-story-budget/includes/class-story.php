@@ -52,35 +52,6 @@ class Story {
 	}
 
 	/**
-	 * Get random value.
-	 *
-	 * @return string
-	 */
-	protected static function get_random_value() {
-		$values = [ 'Lorem', 'Ipsum', 'Dolor', 'Sit', 'Amet' ];
-		return $values[ array_rand( $values ) ];
-	}
-
-	/**
-	 * Get random value.
-	 *
-	 * @return string
-	 */
-	protected static function get_random_status() {
-		$values = [ 'writing', 'editing', 'pitch', 'ready' ];
-		return $values[ array_rand( $values ) ];
-	}
-
-	/**
-	 * Get random date.
-	 *
-	 * @return string
-	 */
-	protected static function get_random_date() {
-		return gmdate( 'Y-m-d', wp_rand( strtotime( '-2 weeks' ), time() ) );
-	}
-
-	/**
 	 * Get budget IDs assigned to this story.
 	 *
 	 * @return int[]

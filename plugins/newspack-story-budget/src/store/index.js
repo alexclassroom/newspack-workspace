@@ -1,4 +1,4 @@
-import { createReduxStore, register } from '@wordpress/data';
+import { createReduxStore, register, dispatch } from '@wordpress/data';
 import { controls } from '@wordpress/data-controls';
 
 import { NAMESPACE, INITIAL_STATE } from './constants';
@@ -16,4 +16,9 @@ const store = createReduxStore( NAMESPACE, {
 	initialState: INITIAL_STATE,
 } );
 
-export const registerStore = () => register( store );
+export const registerStore = () => {
+	register( store );
+
+	// Initialize entities config when store is registered
+	dispatch( NAMESPACE ).initializeEntitiesConfig();
+};
