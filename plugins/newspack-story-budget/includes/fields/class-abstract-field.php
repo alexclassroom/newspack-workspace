@@ -111,6 +111,7 @@ abstract class Abstract_Field {
 
 	/**
 	 * Optional callback used to save the value of the field to a post.
+	 * Use if the field value needs to be fetched and stored someplace other than post meta.
 	 * Defaults to saving the value as post meta.
 	 *
 	 * @var callable|null
@@ -346,6 +347,16 @@ abstract class Abstract_Field {
 	 * @return mixed The field's value.
 	 */
 	abstract public function get_value( $post_id );
+
+	/**
+	 * Update the field's value.
+	 *
+	 * @param int   $post_id The post ID to update the value for.
+	 * @param mixed $value The new value of the field.
+	 *
+	 * @return bool|WP_Error True if updated successfully, otherwise WP_Error.
+	 */
+	abstract public function update_value( $post_id, $value );
 
 	/**
 	 * Update the value of the field stored as post meta.

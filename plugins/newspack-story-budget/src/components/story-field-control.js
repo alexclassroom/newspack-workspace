@@ -107,5 +107,9 @@ export default ( { fieldId, value, onChange = () => {} } ) => {
 		);
 	}
 
+	if ( field.type === 'number' ) {
+		controlProps.type = 'number';
+	}
+
 	return <InputControl value={ value } { ...controlProps } />;
 };

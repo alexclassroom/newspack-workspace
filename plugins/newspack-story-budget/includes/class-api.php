@@ -83,6 +83,40 @@ class API {
 
 		register_rest_route(
 			self::NAMESPACE,
+			'/stories/(?P<id>\d+)',
+			[
+				'methods'             => 'POST',
+				'callback'            => [ __CLASS__, 'update_story' ],
+				'permission_callback' => [ __CLASS__, 'permission_callback' ],
+			]
+		);
+
+		register_rest_route(
+			self::NAMESPACE,
+			'/stories/(?P<id>\d+)/(?P<slug>[\a-z]+)',
+			[
+				'methods'             => 'POST',
+				'callback'            => [ __CLASS__, 'update_story_field' ],
+				'permission_callback' => [ __CLASS__, 'permission_callback' ],
+				'args'                => [
+					'id'    => [
+						'description' => __( 'The post ID of the story to update.', 'newspack-story-budget' ),
+						'type'        => 'integer',
+					],
+					'slug'  => [
+						'description' => __( 'The slug of the field to update.', 'newspack-story-budget' ),
+						'type'        => 'string',
+					],
+					'value' => [
+						'description' => __( 'The value to update the field with.', 'newspack-story-budget' ),
+						'type'        => 'mixed',
+					],
+				],
+			]
+		);
+
+		register_rest_route(
+			self::NAMESPACE,
 			'/fields',
 			[
 				'methods'             => 'GET',
@@ -92,26 +126,6 @@ class API {
 					'fields' => [
 						'description' => __( 'Array of field slugs to return. If not provided, all fields will be returned.', 'newspack-story-budget' ),
 						'type'        => 'array',
-					],
-				],
-			]
-		);
-
-		register_rest_route(
-			self::NAMESPACE,
-			'/fields/(?P<slug>[\a-z]+)',
-			[
-				'methods'             => 'POST',
-				'callback'            => [ __CLASS__, 'update_field' ],
-				'permission_callback' => [ __CLASS__, 'permission_callback' ],
-				'args'                => [
-					'post_id' => [
-						'description' => __( 'The ID of the post to update the field with.', 'newspack-story-budget' ),
-						'type'        => 'integer',
-					],
-					'value'   => [
-						'description' => __( 'The value to update the field with.', 'newspack-story-budget' ),
-						'type'        => 'mixed',
 					],
 				],
 			]
@@ -235,7 +249,142 @@ class API {
 			return new \WP_Error( 'story_not_found', __( 'Story not found.', 'newspack-story-budget' ), [ 'status' => 404 ] );
 		}
 
+		// Refresh read-only field values.
+		$story->refresh();
+
 		return rest_ensure_response( $story->to_array() );
+	}
+
+	/**
+	 * Sanitize a value based on the field's type.
+	 *
+	 * @param \Newspack_Story_Budget\Fields\Abstract_Field $field The field to validate against.
+	 * @param mixed                                        $value The value to validate.
+	 *
+	 * @return mixed The sanitized value, or null if the value can't be sanitized to the field's expected type.
+	 */
+	private static function sanitize_field_value( $field, $value ) {
+		$type = $field->get_type();
+		if ( is_array( $value ) ) {
+			return array_values(
+				array_filter(
+					array_map(
+						function( $single_value ) use ( $field ) {
+							return self::sanitize_field_value( $field, $single_value );
+						},
+						$value
+					),
+					function( $value ) {
+						return ! is_null( $value );
+					}
+				)
+			);
+		}
+		if ( 'boolean' === $type ) {
+			return \rest_sanitize_boolean( $value );
+		}
+		if ( 'number' === $type ) {
+			return is_numeric( $value ) ? (float) $value : null;
+		}
+		if ( 'text' === $type || 'longtext' === $type ) {
+			return \sanitize_text_field( $value );
+		}
+
+		// Date values are stored as UNIX timestamps.
+		if ( 'date' === $type || 'datetime' === $type ) {
+			if ( (int) $value === (int) (string) $value && (int) $value <= PHP_INT_MAX && (int) $value >= ~PHP_INT_MAX ) {
+				return (int) $value;
+			}
+		}
+		return null;
+	}
+
+	/**
+	 * Update a story.
+	 *
+	 * @param \WP_REST_Request $request Request object.
+	 *
+	 * @return \WP_REST_Response|\WP_Error
+	 */
+	public static function update_story( $request ) {
+		$story = new Story( $request->get_param( 'id' ) );
+		if ( ! $story->is_valid() ) {
+			return new \WP_Error(
+				'story_not_found',
+				sprintf(
+					// translators: %d is the story ID.
+					__( 'Story with ID "%d" not found.', 'newspack-story-budget' ),
+					$request->get_param( 'id' )
+				),
+				[ 'status' => 404 ]
+			);
+		}
+		$params  = $request->get_params();
+		$payload = [];
+		foreach ( $params as $key => $value ) {
+			$field = Fields::get_field( $key );
+			if ( ! $field || ! $field->is_editable() ) {
+				continue;
+			}
+			$value = self::sanitize_field_value( $field, $value );
+			if ( null === $value ) {
+				return new \WP_Error(
+					'invalid_value',
+					sprintf(
+						// Translators: field data type.
+						__( 'Invalid value for field type "%s".', 'newspack-story-budget' ),
+						$field->get_type()
+					)
+				);
+			}
+			$payload[ $key ] = $value;
+		}
+		$result = $story->update( $payload );
+		return rest_ensure_response( \is_wp_error( $result ) ? $result : $story->to_array() );
+	}
+
+	/**
+	 * Update a story field.
+	 *
+	 * @param \WP_REST_Request $request Request object.
+	 *
+	 * @return \WP_REST_Response|\WP_Error
+	 */
+	public static function update_story_field( $request ) {
+		$story = new Story( $request->get_param( 'id' ) );
+		$field  = $request->get_param( 'slug' ) ? Fields::get_field( $request->get_param( 'slug' ) ) : null;
+		$value = self::sanitize_field_value( $field, $request->get_param( 'value' ) );
+		if ( ! $story->is_valid() ) {
+			return rest_ensure_response(
+				new \WP_Error(
+					'story_not_found',
+					sprintf(
+						// translators: %d is the story ID.
+						__( 'Story with ID "%d" not found.', 'newspack-story-budget' ),
+						$request->get_param( 'id' )
+					)
+				)
+			);
+		}
+		if ( empty( $field ) ) {
+			return new \WP_Error(
+				'missing_field',
+				__( 'Missing field.', 'newspack-story-budget' )
+			);
+		}
+		if ( null === $value ) {
+			return new \WP_Error(
+				'invalid_value',
+				sprintf(
+					// Translators: field data type.
+					__( 'Invalid value for field type "%s".', 'newspack-story-budget' ),
+					$field->get_type()
+				)
+			);
+		}
+
+		$result = $story->update( [ $field->get_slug() => $value ] );
+		return rest_ensure_response( \is_wp_error( $result ) ? $result : $story->to_array() );
 	}
 
 	/**
@@ -266,7 +415,7 @@ class API {
 	 *
 	 * @param \WP_REST_Request $request Request object.
 	 *
-	 * @return \WP_REST_Response
+	 * @return \WP_REST_Response|\WP_Error
 	 */
 	public static function update_field( $request ) {
 		$field = Fields::get_field( $request->get_param( 'slug' ) );
@@ -318,7 +467,7 @@ class API {
 	 *
 	 * @param \WP_REST_Request $request Request object.
 	 *
-	 * @return \WP_REST_Response
+	 * @return \WP_REST_Response|\WP_Error
 	 */
 	public static function get_budget_stories( $request ) {
 		$budget = new Budget( $request->get_param( 'id' ) );

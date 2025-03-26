@@ -130,3 +130,5 @@ export const hasFetchedStory = ( state, id ) => !! state.stories[ id ];
 export const getStory = ( state, id ) => state.stories[ id ];
 
 export const getView = state => state.view;
+
+export const getErrors = state => state.meta.errors;

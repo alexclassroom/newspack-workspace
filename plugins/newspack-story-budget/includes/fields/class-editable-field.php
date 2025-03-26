@@ -50,6 +50,7 @@ class Editable_Field extends Abstract_Field {
 	 *    Configuration for registering an editable field. See abstract class constructor for additional params.
 	 *    @type callable $permission_callback? Optional callback used to determine if the current user can edit the field value.
 	 *    @type mixed    $default_value?       Optional callback to calculate default value for the field.
+	 *    @type callable $save_value_callback? Optional callback used to save the value of the field to a post. Use if the field value needs to be fetched and stored someplace other than post meta.
 	 *    @type array    $options? {
 	 *        Optional possible values for the field. These will be rendered in UI as a select dropdown, or a multiselect if $is_multiple is also true.
 	 *        @type string     $label                The label for the option.
@@ -123,8 +124,11 @@ class Editable_Field extends Abstract_Field {
 		}
 
 		$default_value = is_callable( $this->default_value ) ? call_user_func( $this->default_value, $post_id ) : $default_value;
+		if ( $this->is_multiple && ! is_array( $default_value ) ) {
+			$default_value = is_null( $default_value ) ? [] : [ $default_value ];
+		}
 		if ( ! $post_id || ! get_post( $post_id ) ) {
-			return $this->is_multiple && ! is_array( $default_value ) ? [ $default_value ] : $default_value;
+			return $default_value;
 		}
 
 		if ( ! is_null( $this->get_value_callback ) ) {
@@ -134,6 +138,7 @@ class Editable_Field extends Abstract_Field {
 		$value = \get_post_meta( $post_id, $this->get_post_meta_name(), ! $this->is_multiple );
 		return ! empty( $value ) ? $value : $default_value;
 	}
+
 
 	/**
 	 * Update the value of the field.
@@ -147,6 +152,38 @@ class Editable_Field extends Abstract_Field {
 	public function update_value( $post_id, $value ) {
 		if ( ! is_null( $this->save_value_callback ) ) {
 			return call_user_func( $this->save_value_callback, $post_id, $value );
+		}
+
+		// If passed an empty value, clear all values for this field.
+		if ( empty( $value ) ) {
+			return $this->delete_value( $post_id );
+		}
+
+		// For is_multiple fields, add and remove values.
+		if ( $this->is_multiple ) {
+			if ( ! is_array( $value ) ) {
+				$value = [ $value ];
+			}
+			$existing_values = $this->get_value( $post_id );
+			$values_to_add   = array_values(
+				array_diff(
+					$value,
+					$existing_values
+				)
+			);
+			$values_to_remove = array_values(
+				array_diff(
+					$existing_values,
+					$value
+				)
+			);
+			foreach ( $values_to_add as $value ) {
+				$this->add_value( $post_id, $value );
+			}
+			foreach ( $values_to_remove as $value ) {
+				$this->delete_value( $post_id, $value );
+			}
+			return true;
 		}
 		return $this->update_stored_value( $post_id, $value );
 	}

@@ -2,6 +2,7 @@
 /**
  * WordPress dependencies.
  */
+import { __ } from '@wordpress/i18n';
 import {
 	__experimentalVStack as VStack,
 	__experimentalHStack as HStack,
@@ -185,7 +186,7 @@ export default ( {
 												onClose();
 											} }
 										>
-											Save
+											{ __( 'Save', 'newspack-story-budget' ) }
 										</Button>
 										<Button
 											variant="secondary"
@@ -194,7 +195,7 @@ export default ( {
 												setEditedValue( value );
 											} }
 										>
-											Cancel
+											{ __( 'Cancel', 'newspack-story-budget' ) }
 										</Button>
 									</HStack>
 								) }

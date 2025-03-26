@@ -38,7 +38,6 @@ export default ( state = INITIAL_STATE.meta, action ) => {
 				},
 			};
 		case 'FETCH_STORY_SUCCESS':
-		case 'FETCH_STORY_ERROR':
 			return {
 				...state,
 				loadingStory: {
@@ -46,7 +45,15 @@ export default ( state = INITIAL_STATE.meta, action ) => {
 					[ action.payload ]: false,
 				},
 			};
+		case 'FETCH_STORY_ERROR':
 		case 'SAVE_STORY_START':
+			return {
+				...state,
+				loadingStory: {
+					...state.loadingStory,
+					[ action.payload.id ]: true,
+				},
+			};
 		case 'SAVE_STORY_FIELD_START':
 			return {
 				...state,
@@ -57,6 +64,13 @@ export default ( state = INITIAL_STATE.meta, action ) => {
 			};
 		case 'SAVE_STORY_SUCCESS':
 		case 'SAVE_STORY_ERROR':
+			return {
+				...state,
+				loadingStory: {
+					...state.loadingStory,
+					[ action.payload.id ]: false,
+				},
+			};
 		case 'SAVE_STORY_FIELD_SUCCESS':
 		case 'SAVE_STORY_FIELD_ERROR':
 			return {

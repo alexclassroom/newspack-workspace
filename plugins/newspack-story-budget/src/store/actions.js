@@ -1,4 +1,5 @@
 /* globals newspackStoryBudget */
+import { __ } from '@wordpress/i18n';
 import { apiFetch } from '@wordpress/data-controls';
 import { resolveSelect } from '@wordpress/data';
 
@@ -163,7 +164,8 @@ export function* saveStory( id, story ) {
 			payload: result,
 		};
 	} catch ( error ) {
-		return { type: 'SAVE_STORY_ERROR', payload: { id, story } };
+		const message = error?.message || __( 'Error saving story.', 'newspack-story-budget' );
+		return { type: 'SAVE_STORY_ERROR', payload: { id, story, message } };
 	}
 }
 
@@ -181,6 +183,7 @@ export function* saveStoryField( id, slug, value ) {
 			payload: { id, slug, value: result[ slug ] },
 		};
 	} catch ( error ) {
-		return { type: 'SAVE_STORY_FIELD_ERROR', payload: { id, slug, value } };
+		const message = error?.message || __( 'Error saving field.', 'newspack-story-budget' );
+		return { type: 'SAVE_STORY_FIELD_ERROR', payload: { id, slug, value, message } };
 	}
 }

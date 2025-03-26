@@ -2,6 +2,7 @@
 /**
  * External dependencies.
  */
+import { __ } from '@wordpress/i18n';
 import { useParams } from 'react-router-dom';
 
 /**
@@ -111,7 +112,7 @@ export default ( { onCancel = () => {} } ) => {
 							disabled={ isLoadingStory }
 							onClick={ () => saveStory( id, editedStory ) }
 						>
-							Save
+							{ __( 'Save', 'newspack-story-budget' ) }
 						</Button>
 					) }
 					<Button
@@ -119,7 +120,7 @@ export default ( { onCancel = () => {} } ) => {
 						disabled={ isLoadingStory }
 						onClick={ onCancel }
 					>
-						{ canEdit ? 'Cancel' : 'Close' }
+						{ canEdit ? __( 'Cancel', 'newspack-story-budget' ) : __( 'Close', 'newspack-story-budget' ) }
 					</Button>
 					{ isLoadingStory && <Spinner /> }
 				</HStack>

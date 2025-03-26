@@ -8,7 +8,7 @@ import {
 	__experimentalText as Text,
 } from '@wordpress/components';
 import { useSelect } from '@wordpress/data';
-import { useMemo, useState, useEffect } from '@wordpress/element';
+import { useState, useEffect } from '@wordpress/element';
 
 /**
  * Internal dependencies.
@@ -17,21 +17,13 @@ import { NAMESPACE as storeNamespace } from '../store/constants';
 import StoryField from './story-field';
 
 const StoryFieldPanelRow = ( { field, story, onChange } ) => {
-	const [ popoverAnchor, setPopoverAnchor ] = useState( null );
-	const popoverProps = useMemo(
-		() => ( {
-			anchor: popoverAnchor,
-			placement: 'left-start',
-			shift: true,
-			offset: 36,
-		} ),
-		[ popoverAnchor ]
-	);
+	const popoverProps = {
+		placement: 'left-start',
+	};
 	return (
 		<HStack
 			key={ field.slug }
 			className="newspack-story-budget__field-row"
-			ref={ setPopoverAnchor }
 		>
 			<Text>{ field.name }:</Text>
 			<StoryField

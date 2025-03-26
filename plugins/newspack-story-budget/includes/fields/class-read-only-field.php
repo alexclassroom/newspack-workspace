@@ -18,19 +18,13 @@ class Read_Only_Field extends Abstract_Field {
 	 *
 	 * @param array $args {
 	 *    Configuration for registering a read-only field. See abstract class constructor for additional params.
-	 *    @type callable $get_value_callback?   Optional callback used to dynamically calculate the value of a read-only field.
-	 *    @type callable $save_value_hook?      Optional hook name to trigger the $save_value_callback. Defaults to save_post_post.
-	 *    @type callable $save_value_callback?  Optional callback used to calculate the value of a read-only field on $save_value_hook.
+	 *    @type callable $get_value_callback? Optional callback used to dynamically calculate the value of a read-only field.
+	 *    @type callable $post_save_callback? Optional callback used to calculate the value of a read-only field on post_save.
 	 * }
 	 */
 	public function __construct( $args ) {
 
 		parent::__construct( $args );
-
-		if ( ! empty( $args['save_value_hook'] ) ) {
-			$this->save_value_hook = $args['save_value_hook'];
-		}
-
 		if ( is_null( $this->get_value_callback ) && is_null( $this->post_save_callback ) ) {
 			$this->errors->add(
 				'newspack_story_budget_invalid_field_configuration',
@@ -96,9 +90,12 @@ class Read_Only_Field extends Abstract_Field {
 	/**
 	 * Return an error message if attempting to update a read-only field value.
 	 *
+	 * @param int   $post_id The post ID to update the value for.
+	 * @param mixed $value The new value of the field.
+	 *
 	 * @return WP_Error
 	 */
-	public function update_value() {
+	public function update_value( $post_id = null, $value = null ) {
 		return new \WP_Error(
 			'newspack_story_budget_read_only_field',
 			__( "Cannot update a read-only field's value.", 'newspack-story-budget' )
