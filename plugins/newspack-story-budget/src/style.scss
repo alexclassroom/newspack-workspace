@@ -5,10 +5,11 @@ body.toplevel_page_newspack-story-budget {
 	--wp-components-color-accent: #003da5;
 	--wp-components-color-accent-darker-10: #00296e;
 	--wp-components-color-accent-darker-20: #001f53;
+	--wp-admin-theme-color: #003da5;
 }
 
 .wrap {
-	margin: 10px 0 0 -20px;
+	margin: 0 0 0 -20px;
 }
 
 /* Fix fullscreen modal content area */
@@ -16,12 +17,13 @@ body.toplevel_page_newspack-story-budget {
 	height: 100%;
 }
 
-.components-modal__frame.newspack-story-budget__page__story .components-modal__content {
+.components-modal__frame.newspack-story-budget__modal-page__story .components-modal__content {
 	padding: 0;
 	overflow: hidden;
 }
 
 .newspack-story-budget {
+	// Unused header.
 	&__header {
 		padding: 16px 48px;
 		border-bottom: 1px solid #f0f0f0;
@@ -30,6 +32,26 @@ body.toplevel_page_newspack-story-budget {
 			flex-grow: 1;
 			flex-basis: 0;
 			white-space: nowrap;
+		}
+	}
+	&__content {
+		padding: 48px;
+		// DataViews custom styles for rendering inside content area.
+		.dataviews-wrapper {
+			overflow: visible;
+			margin-top: -16px;
+		}
+		.dataviews__view-actions,
+		.dataviews-filters__container {
+			padding: 16px 0;
+		}
+		.dataviews-view-table tr td:first-child,
+		.dataviews-view-table tr th:first-child {
+			padding-left: 8px;
+		}
+		.dataviews-view-table tr td:last-child,
+		.dataviews-view-table tr th:last-child {
+			padding-right: 8px;
 		}
 	}
 	&__loading {
@@ -105,13 +127,51 @@ body.toplevel_page_newspack-story-budget {
 			padding: 4px 8px;
 		}
 	}
+	&__story {
+		border: 1px solid rgba(0, 0, 0, 0.133);
+		.components-modal__content & {
+			height: 100%;
+			border: 0;
+		}
+	}
 	&__sidebar {
 		flex: 0 0 280px;
 		outline: 1px solid #0000;
 		box-shadow: -1px 0 0 0 rgba(0, 0, 0, 0.133);
-		z-index: 1000;
+		z-index: 3;
 	}
 	&__post-status-info {
 		margin: 0;
 	}
+}
+
+/**
+ * Newspack Wizard Tweaks
+ */
+.newspack-wizard {
+	&__header {
+		&__inner {
+			display: flex;
+			align-items: center;
+			justify-content: space-between;
+			border-bottom: 1px solid #ddd;
+		}
+		&__actions {
+			padding: 0 16px;
+		}
+	}
+	&__title {
+		border-bottom: 0;
+	}
+}
+// Fix Tabbed Navigation
+.newspack-tabbed-navigation {
+	z-index: 10;
+	li a {
+		box-sizing: border-box;
+	}
+}
+// Fix header logo background color.
+.newspack-wizard__title svg {
+	background: var(--wp-components-color-accent) !important;
 }

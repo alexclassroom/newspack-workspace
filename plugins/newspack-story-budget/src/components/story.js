@@ -3,7 +3,6 @@
  * External dependencies.
  */
 import { __ } from '@wordpress/i18n';
-import { useParams } from 'react-router-dom';
 
 /**
  * WordPress dependencies.
@@ -23,16 +22,15 @@ import { useState } from '@wordpress/element';
 import { NAMESPACE as storeNamespace } from '../store/constants';
 import StoryFieldPanel from './story-field-panel';
 
-export default ( { onCancel = () => {} } ) => {
-	const { id } = useParams();
+export default ( { storyId, onCancel } ) => {
 	const { fields, story, isLoadingStory, canEdit } = useSelect( select => ( {
 		fields: select( storeNamespace ).getFields(),
-		story: select( storeNamespace ).getStory( id ),
-		isLoadingStory: select( storeNamespace ).isLoadingStory( id ),
+		story: select( storeNamespace ).getStory( storyId ),
+		isLoadingStory: select( storeNamespace ).isLoadingStory( storyId ),
 		canEdit: select( 'core' ).canUser( 'update', {
 			kind: 'postType',
 			name: 'post',
-			id,
+			id: storyId,
 		} ),
 	} ) );
 	const { saveStory } = useDispatch( storeNamespace );
@@ -56,8 +54,12 @@ export default ( { onCancel = () => {} } ) => {
 		return null;
 	}
 	return (
-		<HStack style={ { height: '100%' } } alignment="top" spacing="0">
-			<VStack expanded style={ { flexGrow: 1, position: 'relative' } }>
+		<HStack
+			alignment="stretch"
+			spacing="0"
+			className="newspack-story-budget__story"
+		>
+			<VStack style={ { flexGrow: 1, position: 'relative' } }>
 				{ isIframeLoading && (
 					<VStack
 						style={ {
@@ -67,7 +69,7 @@ export default ( { onCancel = () => {} } ) => {
 							right: 0,
 							bottom: 0,
 							background: '#fff',
-							zIndex: 1000,
+							zIndex: 2,
 						} }
 						alignment="center"
 						justify="center"
@@ -78,15 +80,15 @@ export default ( { onCancel = () => {} } ) => {
 				<iframe
 					title={ story.title }
 					src={ story.metadata.preview_url }
-					style={ { width: '100%', height: '100%' } }
+					style={ {
+						width: '100%',
+						height: '100%',
+						minHeight: '500px',
+					} }
 					onLoad={ () => setIsIframeLoading( false ) }
 				/>
 			</VStack>
-			<VStack
-				expanded
-				justify="top"
-				className="newspack-story-budget__sidebar"
-			>
+			<VStack justify="top" className="newspack-story-budget__sidebar">
 				<div
 					style={ {
 						flexGrow: 1,
@@ -101,30 +103,36 @@ export default ( { onCancel = () => {} } ) => {
 						onChange={ setEditedStory }
 					/>
 				</div>
-				<HStack
-					expanded
-					direction="row-reverse"
-					justify="end"
-					style={ { padding: '16px' } }
-				>
-					{ canEdit && (
-						<Button
-							variant="primary"
-							disabled={ isLoadingStory }
-							onClick={ () => saveStory( id, editedStory ) }
-						>
-							{ __( 'Save', 'newspack-story-budget' ) }
-						</Button>
-					) }
-					<Button
-						variant="secondary"
-						disabled={ isLoadingStory }
-						onClick={ onCancel }
+				{ ( canEdit || onCancel ) && (
+					<HStack
+						expanded
+						direction="row-reverse"
+						justify="end"
+						style={ { padding: '16px', boxSizing: 'border-box' } }
 					>
-						{ canEdit ? __( 'Cancel', 'newspack-story-budget' ) : __( 'Close', 'newspack-story-budget' ) }
-					</Button>
-					{ isLoadingStory && <Spinner /> }
-				</HStack>
+						{ canEdit && (
+							<Button
+								variant="primary"
+								disabled={ isLoadingStory }
+								onClick={ () =>
+									saveStory( storyId, editedStory )
+								}
+							>
+								{ __( 'Save', 'newspack-story-budget' ) }
+							</Button>
+						) }
+						<Button
+							variant="secondary"
+							disabled={ isLoadingStory }
+							onClick={ onCancel }
+						>
+							{ canEdit
+								? __( 'Cancel', 'newspack-story-budget' )
+								: __( 'Close', 'newspack-story-budget' ) }
+						</Button>
+						{ isLoadingStory && <Spinner /> }
+					</HStack>
+				) }
 			</VStack>
 		</HStack>
 	);
