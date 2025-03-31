@@ -129,7 +129,7 @@ class Editable_Field extends Abstract_Field {
 		}
 
 		$value = \get_post_meta( $post_id, $this->get_post_meta_name(), ! $this->is_multiple );
-		return ! empty( $value ) ? $value : $default_value;
+		return ! empty( $value ) ? $this->cast_value( $value ) : $default_value;
 	}
 
 

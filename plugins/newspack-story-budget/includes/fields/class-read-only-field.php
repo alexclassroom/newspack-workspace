@@ -75,7 +75,7 @@ class Read_Only_Field extends Abstract_Field {
 			if ( '' === $post_meta ) {
 				return null;
 			}
-			return $post_meta;
+			return $this->cast_value( $post_meta );
 		}
 
 		return null;

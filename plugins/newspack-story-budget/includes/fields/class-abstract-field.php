@@ -397,4 +397,34 @@ abstract class Abstract_Field {
 		}
 		return true;
 	}
+
+	/**
+	 * Cast the value to the correct type.
+	 *
+	 * @param mixed $value The value to cast.
+	 *
+	 * @return mixed The cast value.
+	 */
+	protected function cast_value( $value ) {
+		if ( $this->is_multiple && is_array( $value ) ) {
+			return array_map( [ $this, 'cast_value' ], $value );
+		}
+
+		switch ( $this->type ) {
+			case 'boolean':
+				return (bool) $value;
+			case 'date':
+			case 'datetime':
+				return (int) $value;
+			case 'number':
+				if ( is_numeric( $value ) ) {
+					return ( floor( $value ) == $value ) ? (int) $value : (float) $value;
+				}
+				return 0;
+			case 'text':
+			case 'longtext':
+				return (string) $value;
+		}
+		return $value;
+	}
 }
