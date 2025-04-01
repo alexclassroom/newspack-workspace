@@ -66,6 +66,60 @@ class Statuses {
 	}
 
 	/**
+	 * Get the default statuses.
+	 *
+	 * @return array The default statuses.
+	 */
+	public static function get_default_statuses() {
+		return apply_filters(
+			'newspack_story_budget_statuses',
+			[
+				[
+					'slug'       => 'writing',
+					'label'      => __( 'Writing', 'newspack-story-budget' ),
+					'capability' => '',
+					'is_default' => true,
+				],
+				[
+					'slug'       => 'editing',
+					'label'      => __( 'Editing', 'newspack-story-budget' ),
+					'capability' => '',
+				],
+				[
+					'slug'       => 'factcheck',
+					'label'      => __( 'Fact-checking', 'newspack-story-budget' ),
+					'capability' => 'edit_others_posts',
+				],
+				[
+					'slug'       => 'approved',
+					'label'      => __( 'Approved', 'newspack-story-budget' ),
+					'capability' => 'edit_others_posts',
+				],
+				[
+					'slug'       => 'published',
+					'label'      => __( 'Published', 'newspack-story-budget' ),
+					'capability' => 'edit_others_posts',
+				],
+			]
+		);
+	}
+
+	/**
+	 * Get the default status. This will be returned as the status if no status is set for a post.
+	 *
+	 * @return array|null The default status or null if not found.
+	 */
+	public static function get_default_status() {
+		$statuses = self::get_default_statuses();
+		foreach ( $statuses as $status ) {
+			if ( ! empty( $status['is_default'] ) ) {
+				return $status;
+			}
+		}
+		return null;
+	}
+
+	/**
 	 * Register default statuses as taxonomy terms.
 	 */
 	public static function register_default_statuses() {
@@ -77,35 +131,7 @@ class Statuses {
 
 		update_option( $registered_option_name, true );
 
-		$default_statuses = [
-			[
-				'slug'       => 'writing',
-				'label'      => __( 'Writing', 'newspack-story-budget' ),
-				'capability' => '',
-			],
-			[
-				'slug'       => 'editing',
-				'label'      => __( 'Editing', 'newspack-story-budget' ),
-				'capability' => '',
-			],
-			[
-				'slug'       => 'factcheck',
-				'label'      => __( 'Fact-checking', 'newspack-story-budget' ),
-				'capability' => 'edit_others_posts',
-			],
-			[
-				'slug'       => 'approved',
-				'label'      => __( 'Approved', 'newspack-story-budget' ),
-				'capability' => 'edit_others_posts',
-			],
-			[
-				'slug'       => 'published',
-				'label'      => __( 'Published', 'newspack-story-budget' ),
-				'capability' => 'edit_others_posts',
-			],
-		];
-
-		foreach ( $default_statuses as $status ) {
+		foreach ( self::get_default_statuses() as $status ) {
 			$term = term_exists( $status['slug'], self::TAXONOMY );
 
 			if ( ! $term ) {
@@ -219,7 +245,14 @@ class Statuses {
 	 */
 	public static function get_post_status( $post_id ) {
 		$terms = wp_get_object_terms( $post_id, self::TAXONOMY );
-		if ( is_wp_error( $terms ) || empty( $terms ) ) {
+		if ( is_wp_error( $terms ) ) {
+			return null;
+		}
+		if ( empty( $terms ) ) {
+			$default_status = self::get_default_status();
+			if ( ! empty( $default_status['slug'] ) ) {
+				return new Status( $default_status['slug'] );
+			}
 			return null;
 		}
 		return new Status( $terms[0] );

@@ -167,8 +167,8 @@ class Fields {
 				'slug'                => 'status',
 				'type'                => 'text',
 				'options'             => Statuses::get_statuses_arrays(),
-				'save_value_callback' => [ __CLASS__, 'save_status' ],
-				'get_value_callback'  => [ __CLASS__, 'get_status' ],
+				'save_value_callback' => [ __CLASS__, 'save_post_status' ],
+				'get_value_callback'  => [ __CLASS__, 'get_post_status' ],
 			],
 			[
 				'description'        => __( 'The word count of the story.', 'newspack-story-budget' ),
