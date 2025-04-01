@@ -1,5 +1,11 @@
 export const NAMESPACE = 'newspack-story-budget';
 
+export const STORAGE_KEY_BASE = 'newspack-story-budget';
+
+export const STORAGE_KEYS = {
+	view: `${ STORAGE_KEY_BASE }-view`,
+};
+
 export const INITIAL_STATE = {
 	budgets: [],
 	stories: {},

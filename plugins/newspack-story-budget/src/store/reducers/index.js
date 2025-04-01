@@ -8,7 +8,11 @@ import meta from './meta';
 import view from './view';
 import errors from './errors';
 
-export default combineReducers( {
+import { STORAGE_KEYS } from '../constants';
+
+import reducerActions from '../utils/reducer-actions';
+
+const appReducer = combineReducers( {
 	budgets,
 	stories,
 	fields,
@@ -17,3 +21,27 @@ export default combineReducers( {
 	view,
 	errors,
 } );
+
+const reducer = ( state, action ) => {
+	if ( action.type === 'HYDRATE' ) {
+		return {
+			...state,
+			...action.payload,
+		};
+	}
+
+	const newState = appReducer( state, action );
+
+	for ( const key in STORAGE_KEYS ) {
+		if ( reducerActions[ key ]?.[ action.type ] ) {
+			sessionStorage.setItem(
+				STORAGE_KEYS[ key ],
+				JSON.stringify( newState[ key ] )
+			);
+		}
+	}
+
+	return newState;
+};
+
+export default reducer;

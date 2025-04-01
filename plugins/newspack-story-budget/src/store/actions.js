@@ -2,11 +2,22 @@
 import { __ } from '@wordpress/i18n';
 import { apiFetch } from '@wordpress/data-controls';
 import { resolveSelect, select, dispatch } from '@wordpress/data';
-import { NAMESPACE } from './constants';
+import { NAMESPACE, STORAGE_KEYS } from './constants';
 
 const { apiNamespace } = newspackStoryBudget;
 
 export function* initializeEntitiesConfig() {
+	// Hydrate state from sessionStorage if available
+	for ( const key in STORAGE_KEYS ) {
+		const stored = sessionStorage.getItem( STORAGE_KEYS[ key ] );
+		if ( stored ) {
+			yield {
+				type: 'HYDRATE',
+				payload: { [ key ]: JSON.parse( stored ) },
+			};
+		}
+	}
+
 	yield resolveSelect( NAMESPACE ).getFields();
 	yield resolveSelect( NAMESPACE ).getBudgets();
 	yield resolveSelect( NAMESPACE ).getStoriesMeta();
