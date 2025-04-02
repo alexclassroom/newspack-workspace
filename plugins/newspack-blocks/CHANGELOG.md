@@ -1,3 +1,10 @@
+## [4.9.1](https://github.com/Automattic/newspack-blocks/compare/v4.9.0...v4.9.1) (2025-04-02)
+
+
+### Bug Fixes
+
+* **donate-block:** handle decimals in custom amount input, fixed ([8090da1](https://github.com/Automattic/newspack-blocks/commit/8090da1d99da9b1e576c7ca0057bb4fbd93e00e8))
+
 # [4.9.0](https://github.com/Automattic/newspack-blocks/compare/v4.8.1...v4.9.0) (2025-03-31)
 
 
