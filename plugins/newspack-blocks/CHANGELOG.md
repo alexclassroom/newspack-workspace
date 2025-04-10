@@ -1,3 +1,10 @@
+## [4.9.2](https://github.com/Automattic/newspack-blocks/compare/v4.9.1...v4.9.2) (2025-04-10)
+
+
+### Bug Fixes
+
+* tweak button update functionality for Braintree ([#2104](https://github.com/Automattic/newspack-blocks/issues/2104)) ([0248e82](https://github.com/Automattic/newspack-blocks/commit/0248e82a6a5be4b9dbf9c37fdca706a9cc86cbd0))
+
 ## [4.9.1](https://github.com/Automattic/newspack-blocks/compare/v4.9.0...v4.9.1) (2025-04-02)
 
 
