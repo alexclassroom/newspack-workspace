@@ -258,6 +258,7 @@ final class Newspack_Newsletters_Ads {
 				'public'            => true,
 				'hierarchical'      => true,
 				'show_in_rest'      => true,
+				'show_in_menu'      => false,
 				'show_admin_column' => true,
 			]
 		);
@@ -345,7 +346,7 @@ final class Newspack_Newsletters_Ads {
 	public static function get_ads_config( $request ) {
 		$letterhead                 = new Newspack_Newsletters_Letterhead();
 		$has_letterhead_credentials = $letterhead->has_api_credentials();
-		$post_id                    = $request->get_param( 'id' );
+		$post_id                    = $request->get_param( 'postId' );
 		$newspack_ad_type           = self::CPT;
 
 		$url_to_manage_promotions   = 'https://app.tryletterhead.com/promotions';
