@@ -203,6 +203,7 @@ const StoryBudget = () => {
 						<Snackbar
 							key={ notice.id }
 							actions={ notice.actions }
+							onDismiss={ notice.onDismiss }
 						>
 							{ notice.content }
 						</Snackbar>

@@ -65,6 +65,7 @@ const CreateBudgetModal = ( { onClose } ) => {
 							label: 'add an existing one',
 						},
 					],
+					onDismiss: () => { removeNotice( result.id, 'newspack-story-budget' ); }
 				}
 			);
 			onClose();
