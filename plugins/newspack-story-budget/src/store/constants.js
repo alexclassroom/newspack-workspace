@@ -42,3 +42,5 @@ export const INITIAL_STATE = {
 		filters: [],
 	},
 };
+
+export const NOTICE_CONTEXT = 'newspack-story-budget';

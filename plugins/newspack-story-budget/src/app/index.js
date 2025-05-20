@@ -38,6 +38,7 @@ import Story from '../components/story';
 import Budgets from '../components/budgets';
 import CreateNewStory from '../components/create-new-story';
 import CreateBudgetModal from '../components/create-budget-modal';
+import { NOTICE_CONTEXT } from '../store/constants';
 import '../style.scss';
 
 const ModalPage = ( { children, name, closeHref, ...props } ) => {
@@ -75,7 +76,7 @@ const StoryPage = () => {
 const StoryBudget = () => {
 	const location = useLocation();
 
-	const notices = useSelect( ( select ) => select( noticesStore ).getNotices( 'newspack-story-budget' ) );
+	const notices = useSelect( ( select ) => select( noticesStore ).getNotices( NOTICE_CONTEXT ) );
 
 	const navigationItems = [
 		{ label: __( 'Stories', 'newspack-story-budget' ), path: '/stories' },

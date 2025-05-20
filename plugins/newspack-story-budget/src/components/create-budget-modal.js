@@ -17,7 +17,7 @@ import { store as noticesStore } from '@wordpress/notices';
 /**
  * Internal dependencies.
  */
-import { NAMESPACE as storeNamespace } from '../store/constants';
+import { NAMESPACE as storeNamespace, NOTICE_CONTEXT } from '../store/constants';
 
 const CreateBudgetModal = ( { onClose } ) => {
 	const [ budgetName, setBudgetName ] = useState( '' );
@@ -49,19 +49,19 @@ const CreateBudgetModal = ( { onClose } ) => {
 				{
 					id: result.id,
 					type: 'snackbar',
-					context: 'newspack-story-budget',
+					context: NOTICE_CONTEXT,
 					actions: [
 						{
 							url: `#/stories/new/${result.id}`,
 							label: __( 'Create a new story', 'newspack-story-budget' ),
-							onClick: () => { removeNotice( result.id, 'newspack-story-budget' ); },
+							onClick: () => { removeNotice( result.id, NOTICE_CONTEXT ); },
 						},
 						/**
 						 * TODO: Figure out how to display multiple actions in snackbar.
 						 * ref: https://github.com/WordPress/gutenberg/blob/7b3850b6a39ce45948f09efe750451c6323a4613/packages/components/src/snackbar/index.tsx#L120-L127
 						 */
 					],
-					onDismiss: () => { removeNotice( result.id, 'newspack-story-budget' ); }
+					onDismiss: () => { removeNotice( result.id, NOTICE_CONTEXT ); }
 				}
 			);
 			onClose();
