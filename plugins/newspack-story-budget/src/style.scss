@@ -333,12 +333,21 @@ body.toplevel_page_newspack-story-budget {
 		}
 	}
 	&__modal-page {
-		&__create-new-story {
+		&__create-new-story,
+		&__create-budget {
 			max-width: 512px !important;
 		}
 	}
 	&__error-message {
 		color: var(--wp-admin-color-alert-red);
+	}
+
+	&__notices {
+		position: fixed;
+		bottom: 24px;
+		padding-left: 24px;
+		z-index: 99999;
+		pointer-events: none;
 	}
 }
 
