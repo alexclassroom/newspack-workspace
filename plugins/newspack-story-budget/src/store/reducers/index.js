@@ -9,7 +9,7 @@ import view from './view';
 import budgetsView from './budgets-view';
 import errors from './errors';
 
-import { STORAGE_KEYS, setCache } from '../cache';
+import { STORAGE_KEYS, setCache, canUseCache } from '../cache';
 import cachedActions from '../utils/cached-actions';
 
 const appReducer = combineReducers( {
@@ -24,6 +24,11 @@ const appReducer = combineReducers( {
 } );
 
 const reducer = ( state, action ) => {
+	// Just return the appReducer if cache can't be used.
+	if ( ! canUseCache() ) {
+		return appReducer( state, action );
+	}
+
 	let newState;
 
 	if ( action.type === 'HYDRATE' ) {

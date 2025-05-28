@@ -113,3 +113,17 @@ export function deleteCache( key ) {
 		console.warn( 'Unable to delete cache for key:', key, error ); // eslint-disable-line no-console
 	}
 }
+
+/**
+ * Check if cache can be used.
+ *
+ * @return {boolean} True if cache can be used, false otherwise.
+ */
+export function canUseCache() {
+	// Don't use cache if sessionStorage is not available.
+	if ( 'undefined' === typeof sessionStorage ) {
+		return false;
+	}
+
+	return true;
+}

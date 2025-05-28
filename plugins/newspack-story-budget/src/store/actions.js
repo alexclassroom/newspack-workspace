@@ -7,24 +7,26 @@ import { addQueryArgs } from '@wordpress/url';
 /**
  * Internal dependencies
  */
-import { STORAGE_KEYS, getCache } from './cache';
+import { STORAGE_KEYS, getCache, canUseCache } from './cache';
 import { NAMESPACE } from './constants';
 
 const { apiNamespace } = newspackStoryBudget;
 
 export function* initializeEntitiesConfig() {
 	// Hydrate state from cache if available.
-	for ( const key in STORAGE_KEYS ) {
-		const stored = getCache( key );
-		if ( stored?.data ) {
-			yield {
-				type: 'HYDRATE',
-				payload: {
-					key,
-					timestamp: stored.timestamp,
-					data: stored.data,
-				},
-			};
+	if ( canUseCache() ) {
+		for ( const key in STORAGE_KEYS ) {
+			const stored = getCache( key );
+			if ( stored?.data ) {
+				yield {
+					type: 'HYDRATE',
+					payload: {
+						key,
+						timestamp: stored.timestamp,
+						data: stored.data,
+					},
+				};
+			}
 		}
 	}
 
@@ -33,16 +35,18 @@ export function* initializeEntitiesConfig() {
 	yield resolveSelect( NAMESPACE ).getStoriesMeta();
 
 	// Periodically refresh cacheable state.
-	for ( const key in STORAGE_KEYS ) {
-		const cache = STORAGE_KEYS[ key ];
-		if ( cache?.actions?.length && cache?.ttl ) {
-			setInterval(
-				() =>
-					cache.actions.forEach( action =>
-						dispatch( NAMESPACE )[ action ]()
-					),
-				cache.ttl
-			);
+	if ( canUseCache() ) {
+		for ( const key in STORAGE_KEYS ) {
+			const cache = STORAGE_KEYS[ key ];
+			if ( cache?.actions?.length && cache?.ttl ) {
+				setInterval(
+					() =>
+						cache.actions.forEach( action =>
+							dispatch( NAMESPACE )[ action ]()
+						),
+					cache.ttl
+				);
+			}
 		}
 	}
 }
@@ -68,7 +72,7 @@ export function* search( str ) {
 	if ( ! str ) {
 		return {
 			type: 'SEARCH_CLEAR',
-			payload: { type: 'stories' }
+			payload: { type: 'stories' },
 		};
 	}
 
@@ -566,7 +570,7 @@ export function* searchBudgets( str ) {
 	if ( ! str ) {
 		return {
 			type: 'SEARCH_CLEAR',
-			payload: { type: 'budgets' }
+			payload: { type: 'budgets' },
 		};
 	}
 
@@ -597,7 +601,7 @@ export function* searchBudgets( str ) {
 	}
 }
 
-export function* updateBudget( budgetId = null , budget = null ) {
+export function* updateBudget( budgetId = null, budget = null ) {
 	try {
 		const result = yield apiFetch( {
 			path: `${ apiNamespace }/budgets/${ budgetId }`,
@@ -608,11 +612,10 @@ export function* updateBudget( budgetId = null , budget = null ) {
 			type: 'BUDGET_UPDATE',
 			payload: result,
 		};
-	}
-	catch ( error ) {
+	} catch ( error ) {
 		return {
 			type: 'UPDATE_BUDGET_ERROR',
-			payload: { id:budgetId, message:error.message },
+			payload: { id: budgetId, message: error.message },
 		};
 	}
 }
@@ -622,11 +625,11 @@ export function* saveActiveBudgetOrder( budgetIds = [] ) {
 		yield apiFetch( {
 			path: `${ apiNamespace }/budgets/order`,
 			method: 'POST',
-			data: { ids: budgetIds }
+			data: { ids: budgetIds },
 		} );
 		return {
 			type: 'BUDGETS_ORDER',
-			payload: budgetIds
+			payload: budgetIds,
 		};
 	} catch ( error ) {
 		console.error( error ); // eslint-disable-line no-console
