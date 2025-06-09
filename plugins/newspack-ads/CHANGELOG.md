@@ -1,3 +1,10 @@
+## [3.5.2](https://github.com/Automattic/newspack-ads/compare/v3.5.1...v3.5.2) (2025-06-09)
+
+
+### Bug Fixes
+
+* **deps:** bump googleads/googleads-php-lib from 65.0.0 to 69.0.0 ([#950](https://github.com/Automattic/newspack-ads/issues/950)) ([27b0574](https://github.com/Automattic/newspack-ads/commit/27b0574e8f18d27f452b40ff8b29db886090d0ff))
+
 ## [3.5.1](https://github.com/Automattic/newspack-ads/compare/v3.5.0...v3.5.1) (2025-05-14)
 
 
