@@ -1,3 +1,10 @@
+## [3.5.3](https://github.com/Automattic/newspack-ads/compare/v3.5.2...v3.5.3) (2025-06-10)
+
+
+### Bug Fixes
+
+* avoid using get_option with random IDs [NPPM-2029] ([#956](https://github.com/Automattic/newspack-ads/issues/956)) ([3cc4201](https://github.com/Automattic/newspack-ads/commit/3cc4201bb47c749adae484def99e182dd200545a))
+
 ## [3.5.2](https://github.com/Automattic/newspack-ads/compare/v3.5.1...v3.5.2) (2025-06-09)
 
 
