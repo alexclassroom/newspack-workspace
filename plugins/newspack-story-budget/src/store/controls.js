@@ -36,6 +36,7 @@ triggerFetch.use( ( options, next ) => {
 			method,
 			data,
 			url,
+			credentials: 'omit', // Prevent cookies from being sent
 			headers: {
 				Authorization: `Basic ${ authorization }`,
 				'X-Network-Site-Url': siteUrl,
