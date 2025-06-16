@@ -1,3 +1,39 @@
+# [2.10.0](https://github.com/Automattic/newspack-theme/compare/v2.9.1...v2.10.0) (2025-06-16)
+
+
+### Bug Fixes
+
+* add threads.com to Social Menu's supported URLs ([#2503](https://github.com/Automattic/newspack-theme/issues/2503)) ([5656313](https://github.com/Automattic/newspack-theme/commit/56563131fd256d3480467136de4334f782049ac0))
+* revert [#2497](https://github.com/Automattic/newspack-theme/issues/2497) ([3824142](https://github.com/Automattic/newspack-theme/commit/3824142f0a31ff4ff2e1f5385586d58f2c603722))
+
+
+### Features
+
+* add Mastodon social icon support for oldbytes.space ([#2504](https://github.com/Automattic/newspack-theme/issues/2504)) ([ae7a714](https://github.com/Automattic/newspack-theme/commit/ae7a7149301bf3e7c17f9036f07245fd6e078125))
+* add the Accessibility Statement link to the site's footer ([#2506](https://github.com/Automattic/newspack-theme/issues/2506)) ([304e4a5](https://github.com/Automattic/newspack-theme/commit/304e4a51ae0110ec381f754982a7d23e87089748))
+* **archives:** add a 'grid' layout option for archives ([#2499](https://github.com/Automattic/newspack-theme/issues/2499)) ([c4e316b](https://github.com/Automattic/newspack-theme/commit/c4e316be671d42c48b7e1401ec1c72acb24c362b))
+
+# [2.10.0-alpha.2](https://github.com/Automattic/newspack-theme/compare/v2.10.0-alpha.1...v2.10.0-alpha.2) (2025-06-10)
+
+
+### Features
+
+* add the Accessibility Statement link to the site's footer ([#2506](https://github.com/Automattic/newspack-theme/issues/2506)) ([304e4a5](https://github.com/Automattic/newspack-theme/commit/304e4a51ae0110ec381f754982a7d23e87089748))
+
+# [2.10.0-alpha.1](https://github.com/Automattic/newspack-theme/compare/v2.9.1...v2.10.0-alpha.1) (2025-06-05)
+
+
+### Bug Fixes
+
+* add threads.com to Social Menu's supported URLs ([#2503](https://github.com/Automattic/newspack-theme/issues/2503)) ([5656313](https://github.com/Automattic/newspack-theme/commit/56563131fd256d3480467136de4334f782049ac0))
+* revert [#2497](https://github.com/Automattic/newspack-theme/issues/2497) ([3824142](https://github.com/Automattic/newspack-theme/commit/3824142f0a31ff4ff2e1f5385586d58f2c603722))
+
+
+### Features
+
+* add Mastodon social icon support for oldbytes.space ([#2504](https://github.com/Automattic/newspack-theme/issues/2504)) ([ae7a714](https://github.com/Automattic/newspack-theme/commit/ae7a7149301bf3e7c17f9036f07245fd6e078125))
+* **archives:** add a 'grid' layout option for archives ([#2499](https://github.com/Automattic/newspack-theme/issues/2499)) ([c4e316b](https://github.com/Automattic/newspack-theme/commit/c4e316be671d42c48b7e1401ec1c72acb24c362b))
+
 ## [2.9.1](https://github.com/Automattic/newspack-theme/compare/v2.9.0...v2.9.1) (2025-06-02)
 
 
