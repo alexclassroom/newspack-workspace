@@ -1,3 +1,10 @@
+## [4.13.1](https://github.com/Automattic/newspack-blocks/compare/v4.13.0...v4.13.1) (2025-06-25)
+
+
+### Bug Fixes
+
+* **modal-checkout:** price summary recurrence ([#2152](https://github.com/Automattic/newspack-blocks/issues/2152)) ([35ebab2](https://github.com/Automattic/newspack-blocks/commit/35ebab2771bbb5682bd0a59d32b117942ffa3b50))
+
 # [4.13.0](https://github.com/Automattic/newspack-blocks/compare/v4.12.3...v4.13.0) (2025-06-16)
 
 
