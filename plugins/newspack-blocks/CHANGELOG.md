@@ -1,3 +1,10 @@
+## [4.14.1](https://github.com/Automattic/newspack-blocks/compare/v4.14.0...v4.14.1) (2025-07-02)
+
+
+### Bug Fixes
+
+* update supported gateway check to improve accuracy ([#2135](https://github.com/Automattic/newspack-blocks/issues/2135)) ([bca370e](https://github.com/Automattic/newspack-blocks/commit/bca370e64ecf0003e4e83213e393a9389518fef4))
+
 # [4.14.0](https://github.com/Automattic/newspack-blocks/compare/v4.13.1...v4.14.0) (2025-06-30)
 
 
