@@ -43,13 +43,7 @@ export const BUDGET_STATUS = {
  */
 const LoadingSpinner = () => (
 	<div className="newspack-story-budget__loading">
-		<Spinner
-			style={ {
-				width: '100px',
-				height: '100px',
-			} }
-			aria-label={ __( 'Loading…', 'newspack-story-budget' ) }
-		/>
+		<Spinner aria-label={ __( 'Loading…', 'newspack-story-budget' ) } />
 		<p>{ __( 'Fetching Budgets…', 'newspack-story-budget' ) }</p>
 	</div>
 );
