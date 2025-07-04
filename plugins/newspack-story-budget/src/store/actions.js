@@ -169,24 +169,13 @@ export function* fetchBudgets() {
  *
  * @param {Object} budget      Budget data.
  * @param {string} budget.name Budget name.
+ *
  * @return {Object} Action object.
  */
 export function* createBudget( budget ) {
-	if ( ! budget.name || ! budget.name.trim() ) {
-		return {
-			type: 'SET_BUDGET_ERROR',
-			payload: {
-				message: __(
-					'Budget name is required',
-					'newspack-story-budget'
-				),
-			},
-		};
-	}
-
 	yield {
-		type: 'SET_IS_CREATING_BUDGET',
-		payload: { isCreating: true },
+		type: 'CREATE_BUDGET_START',
+		payload: { budget },
 	};
 
 	try {
@@ -196,7 +185,7 @@ export function* createBudget( budget ) {
 			data: budget,
 		} );
 		yield {
-			type: 'BUDGETS_ADD',
+			type: 'CREATE_BUDGET_SUCCESS',
 			payload: result,
 		};
 		return result;
@@ -206,13 +195,8 @@ export function* createBudget( budget ) {
 			__( 'Error creating budget.', 'newspack-story-budget' );
 
 		yield {
-			type: 'SET_BUDGET_ERROR',
+			type: 'CREATE_BUDGET_ERROR',
 			payload: { message },
-		};
-	} finally {
-		yield {
-			type: 'SET_IS_CREATING_BUDGET',
-			payload: { isCreating: false },
 		};
 	}
 }
@@ -221,70 +205,47 @@ export function* createBudget( budget ) {
  * Create a new story.
  *
  * @param {Object} storyData Story data.
+ *
  * @return {Object} Action object.
  */
 export function* createStory( storyData ) {
-	if ( ! storyData.name || ! storyData.name.trim() ) {
-		return {
-			type: 'SET_STORY_ERROR',
-			payload: {
-				message: __(
-					'Story name is required',
-					'newspack-story-budget'
-				),
-			},
-		};
-	}
-
 	yield {
-		type: 'SET_IS_CREATING_STORY',
-		payload: { isCreating: true },
+		type: 'CREATE_STORY_START',
+		payload: { storyData },
 	};
 
-	try {
-		if ( storyData.newBudgetName ) {
-			if ( ! storyData.newBudgetName.trim() ) {
-				return {
-					type: 'SET_BUDGET_ERROR',
-					payload: {
-						message: __(
-							'Budget name is required',
-							'newspack-story-budget'
-						),
-					},
-				};
-			}
-
-			const budgetResult = yield apiFetch( {
-				path: '/budgets',
-				method: 'POST',
-				data: { name: storyData.newBudgetName.trim() },
-			} );
-
-			yield {
-				type: 'BUDGETS_ADD',
-				payload: { [ budgetResult.id ]: budgetResult },
-			};
-
+	// If a new budget is being created, create it first.
+	if ( storyData.newBudgetName ) {
+		const budgetResult = yield createBudget( {
+			name: storyData.newBudgetName,
+		} );
+		if ( budgetResult?.id ) {
 			storyData.budgets = [ budgetResult.id ];
+		} else {
+			return {
+				type: 'CREATE_STORY_ERROR',
+				payload: { message: budgetResult.message },
+			};
 		}
+	}
 
-		// eslint-disable-next-line @typescript-eslint/no-unused-vars
-		const { newBudgetName, ...storyDataToSend } = storyData;
+	// eslint-disable-next-line @typescript-eslint/no-unused-vars
+	const { newBudgetName, ...storyDataToSend } = storyData;
 
-		// fallback to title if name is not provided.
-		if ( ! storyDataToSend.title || ! storyDataToSend.title.trim() ) {
-			storyDataToSend.title = storyDataToSend.name.trim();
-		}
+	// fallback to title if name is not provided.
+	if ( ! storyDataToSend.title || ! storyDataToSend.title.trim() ) {
+		storyDataToSend.title = storyDataToSend.name.trim();
+	}
 
+	try {
 		const result = yield apiFetch( {
 			path: '/stories',
 			method: 'POST',
 			data: storyDataToSend,
 		} );
 		yield {
-			type: 'STORIES_APPEND',
-			payload: { [ result.id ]: result },
+			type: 'CREATE_STORY_SUCCESS',
+			payload: result,
 		};
 		return result;
 	} catch ( error ) {
@@ -293,13 +254,8 @@ export function* createStory( storyData ) {
 			__( 'Error creating story.', 'newspack-story-budget' );
 
 		yield {
-			type: 'SET_STORY_ERROR',
+			type: 'CREATE_STORY_ERROR',
 			payload: { message },
-		};
-	} finally {
-		yield {
-			type: 'SET_IS_CREATING_STORY',
-			payload: { isCreating: false },
 		};
 	}
 }

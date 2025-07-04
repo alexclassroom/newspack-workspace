@@ -10,27 +10,28 @@ import {
 	__experimentalHStack as HStack,
 	Button,
 	TextControl,
-	Notice
+	Notice,
 } from '@wordpress/components';
 import { store as noticesStore } from '@wordpress/notices';
 
 /**
  * Internal dependencies.
  */
-import { NAMESPACE as storeNamespace, NOTICE_CONTEXT } from '../store/constants';
+import {
+	NAMESPACE as storeNamespace,
+	NOTICE_CONTEXT,
+} from '../store/constants';
 
 const CreateBudgetModal = ( { onClose } ) => {
 	const [ budgetName, setBudgetName ] = useState( '' );
 
-	const {
-		budgetError,
-		isCreatingBudget,
-	} = useSelect( select => ( {
+	const { budgetError, isCreatingBudget } = useSelect( select => ( {
 		budgetError: select( storeNamespace ).getErrors()?.budgetError || null,
 		isCreatingBudget: select( storeNamespace ).isCreatingBudget(),
 	} ) );
 
-	const { createBudget, clearErrors } = useDispatch( storeNamespace );
+	const { createBudget, clearErrors, fetchFields } =
+		useDispatch( storeNamespace );
 	const { createNotice, removeNotice } = useDispatch( noticesStore );
 
 	const handleSubmit = async e => {
@@ -43,16 +44,15 @@ const CreateBudgetModal = ( { onClose } ) => {
 
 		const result = await createBudget( { name: budgetName.trim() } );
 		if ( result?.id ) {
-			createNotice(
-				'success',
-				`"${budgetName}" budget saved. `,
-				{
-					id: result.id,
-					type: 'snackbar',
-					context: NOTICE_CONTEXT,
-					onDismiss: () => { removeNotice( result.id, NOTICE_CONTEXT ); }
-				}
-			);
+			fetchFields();
+			createNotice( 'success', `"${ budgetName }" budget saved. `, {
+				id: result.id,
+				type: 'snackbar',
+				context: NOTICE_CONTEXT,
+				onDismiss: () => {
+					removeNotice( result.id, NOTICE_CONTEXT );
+				},
+			} );
 			onClose();
 		}
 	};
@@ -71,10 +71,7 @@ const CreateBudgetModal = ( { onClose } ) => {
 				</div>
 
 				{ budgetError && (
-					<Notice
-						status="error"
-						onRemove={ clearErrors }
-					>
+					<Notice status="error" onRemove={ clearErrors }>
 						{ budgetError.message }
 					</Notice>
 				) }

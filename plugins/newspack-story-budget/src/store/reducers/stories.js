@@ -21,6 +21,11 @@ export default ( state = INITIAL_STATE.stories, action ) => {
 			}
 			return newState;
 		}
+		case 'CREATE_STORY_SUCCESS':
+			return {
+				...state,
+				[ action.payload.id ]: action.payload,
+			};
 		case actions.STORY_META_SET:
 			return {
 				...state,

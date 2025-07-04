@@ -3,7 +3,7 @@
  * WordPress dependencies.
  */
 import { __ } from '@wordpress/i18n';
-import { useState } from '@wordpress/element';
+import { useState, useMemo } from '@wordpress/element';
 import { useSelect, useDispatch } from '@wordpress/data';
 import {
 	__experimentalVStack as VStack,
@@ -18,6 +18,7 @@ import StoryFieldControl from './story-field-control';
  * Internal dependencies.
  */
 import { NAMESPACE as storeNamespace } from '../store/constants';
+import { useField, useFields } from '../hooks';
 
 const CreateStoryModal = ( { onClose } ) => {
 	const [ storyName, setStoryName ] = useState( '' );
@@ -25,21 +26,18 @@ const CreateStoryModal = ( { onClose } ) => {
 	const [ newBudgetName, setNewBudgetName ] = useState( '' );
 	const [ customFieldValues, setCustomFieldValues ] = useState( {} );
 
-	const {
-		budgetsField,
-		storyError,
-		budgetError,
-		isCreatingStory,
-		isCreatingBudget,
-		allfields,
-	} = useSelect( select => ( {
-		budgetsField: select( storeNamespace ).getField( 'budgets' ),
-		storyError: select( storeNamespace ).getErrors()?.storyError || null,
-		budgetError: select( storeNamespace ).getErrors()?.budgetError || null,
-		isCreatingStory: select( storeNamespace ).isCreatingStory(),
-		isCreatingBudget: select( storeNamespace ).isCreatingBudget(),
-		allfields: select( storeNamespace ).getFields() || {},
-	} ) );
+	const { storyError, budgetError, isCreatingStory, isCreatingBudget } =
+		useSelect( select => ( {
+			storyError:
+				select( storeNamespace ).getErrors()?.storyError || null,
+			budgetError:
+				select( storeNamespace ).getErrors()?.budgetError || null,
+			isCreatingStory: select( storeNamespace ).isCreatingStory(),
+			isCreatingBudget: select( storeNamespace ).isCreatingBudget(),
+		} ) );
+
+	const budgets = useField( 'budgets' );
+	const fields = useFields();
 
 	const { createStory, fetchFields, clearErrors } =
 		useDispatch( storeNamespace );
@@ -47,14 +45,20 @@ const CreateStoryModal = ( { onClose } ) => {
 	const isSubmitting = isCreatingStory || isCreatingBudget;
 	const error = storyError || budgetError;
 
-	const budgetOptions = [
-		{ value: '', label: __( 'Select a budget', 'newspack-story-budget' ) },
-		{
-			value: 'new',
-			label: __( 'Add new budget', 'newspack-story-budget' ),
-		},
-		...( budgetsField?.options || [] ),
-	];
+	const budgetOptions = useMemo(
+		() => [
+			{
+				value: '',
+				label: __( 'Select a budget', 'newspack-story-budget' ),
+			},
+			{
+				value: 'new',
+				label: __( 'Add new budget', 'newspack-story-budget' ),
+			},
+			...( budgets?.options || [] ),
+		],
+		[ budgets ]
+	);
 
 	const handleFieldChange = ( fieldSlug, newValue ) => {
 		setCustomFieldValues( prev => ( {
@@ -71,7 +75,7 @@ const CreateStoryModal = ( { onClose } ) => {
 		const createStoryArgs = {
 			name: storyName.trim(),
 			budgets: [],
-			... customFieldValues,
+			...customFieldValues,
 		};
 
 		if ( selectedBudget === 'new' ) {
@@ -129,7 +133,7 @@ const CreateStoryModal = ( { onClose } ) => {
 					</div>
 				) }
 
-				{ Object.entries( allfields )
+				{ Object.entries( fields )
 					.filter( ( [ , field ] ) => field?.show_in_add_new_story )
 					.map( ( [ , field ] ) => (
 						<div key={ field.slug }>
@@ -139,11 +143,12 @@ const CreateStoryModal = ( { onClose } ) => {
 							<StoryFieldControl
 								field={ field }
 								value={ customFieldValues[ field.slug ] }
-								onChange={ newValue => handleFieldChange( field.slug, newValue ) }
+								onChange={ newValue =>
+									handleFieldChange( field.slug, newValue )
+								}
 							/>
 						</div>
-					) )
-				}
+					) ) }
 				{ error && (
 					<div className="newspack-story-budget__error-message">
 						{ error.message }

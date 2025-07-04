@@ -99,15 +99,27 @@ export default ( state = INITIAL_STATE.meta, action ) => {
 				...state,
 				loadingBudgets: false,
 			};
-		case 'SET_IS_CREATING_STORY':
+		case 'CREATE_STORY_START':
 			return {
 				...state,
-				isCreatingStory: action.payload.isCreating,
+				isCreatingStory: true,
 			};
-		case 'SET_IS_CREATING_BUDGET':
+		case 'CREATE_STORY_SUCCESS':
+		case 'CREATE_STORY_ERROR':
 			return {
 				...state,
-				isCreatingBudget: action.payload.isCreating,
+				isCreatingStory: false,
+			};
+		case 'CREATE_BUDGET_START':
+			return {
+				...state,
+				isCreatingBudget: true,
+			};
+		case 'CREATE_BUDGET_SUCCESS':
+		case 'CREATE_BUDGET_ERROR':
+			return {
+				...state,
+				isCreatingBudget: false,
 			};
 		default:
 			return state;

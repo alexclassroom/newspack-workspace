@@ -26,6 +26,20 @@ export const useFields = () => {
 };
 
 /**
+ * Hook to get a field.
+ *
+ * @param {string} fieldSlug The field slug.
+ *
+ * @return {Object} The field.
+ */
+export const useField = fieldSlug => {
+	return useSelect(
+		select => select( NAMESPACE ).getField( fieldSlug ),
+		[ fieldSlug ]
+	);
+};
+
+/**
  * Hook to get the field enhanced with props from the story metadata.
  *
  * @param {number} storyId   The story ID.
