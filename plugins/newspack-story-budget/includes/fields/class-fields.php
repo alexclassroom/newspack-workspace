@@ -460,6 +460,9 @@ class Fields {
 			return $default_budgets;
 		}
 		$budgets = $story->get_budgets();
+		if ( empty( $budgets ) ) {
+			return $default_budgets;
+		}
 		return $multiple_budgets_enabled ? $budgets : $budgets[0];
 	}
 
