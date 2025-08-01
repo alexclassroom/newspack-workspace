@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2025-07-30T10:06:20+00:00\n"
+"POT-Creation-Date: 2025-08-01T08:37:47+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: newspack-story-budget\n"
@@ -523,39 +523,39 @@ msgstr ""
 #: src/components/budget-field/budget-field-name.js:84
 #: src/components/create-budget-modal.js:85
 #: src/components/create-new-story.js:164
-#: src/components/stories-edit.js:351
+#: src/components/stories-edit.js:372
 #: src/components/story-field.js:239
 #: src/components/story.js:189
 msgid "Cancel"
 msgstr ""
 
 #: dist/story-budget-app.js:59
-#: src/components/stories-edit.js:67
+#: src/components/stories-edit.js:68
 msgid "Clear field"
 msgstr ""
 
 #: dist/story-budget-app.js:59
-#: src/components/stories-edit.js:74
+#: src/components/stories-edit.js:75
 msgid "Cancel changes"
 msgstr ""
 
 #. translators: %d: number of stories
 #: dist/story-budget-app.js:60
-#: src/components/stories-edit.js:95
+#: src/components/stories-edit.js:124
 #, js-format
 msgid "%d stories"
 msgstr ""
 
 #. translators: %1$s: first item title, %2$s: second item title
 #: dist/story-budget-app.js:61
-#: src/components/stories-edit.js:105
+#: src/components/stories-edit.js:134
 #, js-format
 msgid "%1$s and %2$s"
 msgstr ""
 
 #. translators: %1$s: comma-separated list of item titles, %2$s: last item title
 #: dist/story-budget-app.js:62
-#: src/components/stories-edit.js:114
+#: src/components/stories-edit.js:143
 #, js-format
 msgid "%1$s, and %2$s"
 msgstr ""
@@ -563,30 +563,30 @@ msgstr ""
 #. translators: %s is the title of the story.
 #. translators: %s is the title for the selected stories.
 #: dist/story-budget-app.js:65
-#: src/components/stories-edit.js:212
-#: src/components/stories-edit.js:217
+#: src/components/stories-edit.js:245
+#: src/components/stories-edit.js:250
 #, js-format
 msgid "Editing %s"
 msgstr ""
 
 #: dist/story-budget-app.js:65
-#: src/components/stories-edit.js:286
+#: src/components/stories-edit.js:307
 msgid "The following fields will be updated:"
 msgstr ""
 
 #: dist/story-budget-app.js:65
-#: src/components/stories-edit.js:316
+#: src/components/stories-edit.js:337
 msgid "Will be empty"
 msgstr ""
 
 #: dist/story-budget-app.js:65
-#: src/components/stories-edit.js:336
+#: src/components/stories-edit.js:357
 msgid "Save story"
 msgstr ""
 
 #. translators: %d is the number of stories.
 #: dist/story-budget-app.js:68
-#: src/components/stories-edit.js:339
+#: src/components/stories-edit.js:360
 #, js-format
 msgid "Save %d stories"
 msgstr ""
