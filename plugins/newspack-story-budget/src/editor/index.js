@@ -72,7 +72,7 @@ const StoryBudgetPanel = () => {
 				<StoryFieldPanel
 					fields={ editableFields.map( field => {
 						// Change the field name to distinguish from WordPress post status
-						if ( field.slug === 'status' ) {
+						if ( field.name === 'Status' ) {
 							field.name = __(
 								'Story Status',
 								'newspack-story-budget'
