@@ -159,6 +159,34 @@ if ( ! function_exists( 'newspack_posted_by' ) ) :
 	}
 endif;
 
+if ( ! function_exists( 'newspack_post_subtitle' ) ) :
+	/**
+	 * Prints the post subtitle.
+	 */
+	function newspack_post_subtitle() {
+		$subtitle = get_post_meta( get_the_ID(), 'newspack_post_subtitle', true );
+		$subtitle_allowed_tags = array(
+			'b'      => true,
+			'strong' => true,
+			'i'      => true,
+			'em'     => true,
+			'mark'   => true,
+			'u'      => true,
+			'small'  => true,
+			'sub'    => true,
+			'sup'    => true,
+			'a'      => array(
+				'href'   => true,
+				'target' => true,
+				'rel'    => true,
+			),
+		);
+		if ( $subtitle ) :
+			return wptexturize( wp_kses( $subtitle, $subtitle_allowed_tags ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+		endif;
+	}
+endif;
+
 if ( ! function_exists( 'newspack_author_social_links' ) ) :
 	/**
 	 * Prints list of social links for the current author.

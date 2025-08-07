@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Newspack 1.0.0-alpha.33\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/theme/newspack-theme\n"
-"POT-Creation-Date: 2025-07-31T17:12:41+00:00\n"
+"POT-Creation-Date: 2025-08-05T21:02:44+00:00\n"
 "PO-Revision-Date: 2025-03-12 09:13-0700\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -54,12 +54,12 @@ msgid "Corrections and clarifications"
 msgstr ""
 
 #: archive-newspack_correction.php:51 comments.php:116
-#: inc/template-tags.php:293
+#: inc/template-tags.php:321
 msgid "Previous"
 msgstr "Anterior"
 
 #: archive-newspack_correction.php:52 comments.php:117
-#: inc/template-tags.php:291
+#: inc/template-tags.php:319
 msgid "Next"
 msgstr "Próximo"
 
@@ -130,11 +130,11 @@ msgstr "Feito por Newspack"
 msgid "Primary Menu"
 msgstr "Menu Principal"
 
-#: functions.php:89 inc/template-tags.php:621
+#: functions.php:89 inc/template-tags.php:649
 msgid "Secondary Menu"
 msgstr "Menu Secundário"
 
-#: functions.php:90 inc/template-tags.php:652
+#: functions.php:90 inc/template-tags.php:680
 msgid "Tertiary Menu"
 msgstr "Menu Terciário"
 
@@ -142,7 +142,7 @@ msgstr "Menu Terciário"
 msgid "Topic Highlight Menu"
 msgstr ""
 
-#: functions.php:92 inc/template-tags.php:709 inc/template-tags.php:723
+#: functions.php:92 inc/template-tags.php:737 inc/template-tags.php:751
 msgid "Social Links Menu"
 msgstr "Menu de Links Sociais"
 
@@ -324,7 +324,7 @@ msgstr "Fechar pesquisa"
 msgid "Expand Comments"
 msgstr "Expandir comentários"
 
-#: functions.php:475 inc/customizer.php:1225
+#: functions.php:475 inc/customizer.php:1242
 msgid "Collapse Comments"
 msgstr "Fechar comentários"
 
@@ -522,7 +522,7 @@ msgid ""
 "visible."
 msgstr ""
 
-#: inc/customizer.php:281 inc/template-tags.php:547
+#: inc/customizer.php:281 inc/template-tags.php:575
 msgid "Donate"
 msgstr "Doação"
 
@@ -836,62 +836,66 @@ msgid "Show excerpts for all archives"
 msgstr ""
 
 #: inc/customizer.php:1079
+msgid "Show subtitles for all archives"
+msgstr ""
+
+#: inc/customizer.php:1096
 msgid ""
 "Crop archive images to a 4:3 aspect ratio (changes require regenerating "
 "thumbnails for existing featured images)"
 msgstr ""
 
-#: inc/customizer.php:1096
+#: inc/customizer.php:1113
 msgid "Show image captions in archives and WordPress’s default search results"
 msgstr ""
 
-#: inc/customizer.php:1113
+#: inc/customizer.php:1130
 msgid "Show image credits in archives and WordPress’s default search results"
 msgstr ""
 
-#: inc/customizer.php:1131
+#: inc/customizer.php:1148
 msgid "Use a large, featured display for the latest post in the archives"
 msgstr ""
 
-#: inc/customizer.php:1148
+#: inc/customizer.php:1165
 msgid "Archive Layout"
 msgstr ""
 
-#: inc/customizer.php:1150
+#: inc/customizer.php:1167
 msgid "With sidebar"
 msgstr ""
 
 #. Template Name of the theme
-#: inc/customizer.php:1151
+#: inc/customizer.php:1168
 msgid "One column"
 msgstr "Uma coluna"
 
 #. Template Name of the theme
-#: inc/customizer.php:1152
+#: inc/customizer.php:1169
 msgid "One column wide"
 msgstr ""
 
-#: inc/customizer.php:1171
+#: inc/customizer.php:1188
 msgid "Archive Title Format"
 msgstr ""
 
-#: inc/customizer.php:1172
+#: inc/customizer.php:1189
 msgid "Change the format of the title used on archive pages."
 msgstr ""
 
-#: inc/customizer.php:1174
+#: inc/customizer.php:1191
 msgid "Default (eg. \"Category: Featured\", \"Author: Jane Doe\")"
 msgstr ""
 
-#: inc/customizer.php:1175
+#: inc/customizer.php:1192
 msgid "Only archive name (eg. \"Featured\", \"Jane Doe\")"
 msgstr ""
 
-#: inc/customizer.php:1193
+#: inc/customizer.php:1210
 msgid "List or Grid Layout"
 msgstr ""
 
-#: inc/customizer.php:1194
+#: inc/customizer.php:1211
 msgid ""
 "When using grid, set the number of posts per page to a number divisible by "
 "12 under Settings > Reading and disable the \"Use a large, featured display "
@@ -899,109 +903,109 @@ msgid ""
 "posts."
 msgstr ""
 
-#: inc/customizer.php:1196
+#: inc/customizer.php:1213
 msgid "List"
 msgstr ""
 
-#: inc/customizer.php:1197
+#: inc/customizer.php:1214
 msgid "Grid"
 msgstr ""
 
-#: inc/customizer.php:1209
+#: inc/customizer.php:1226
 msgid "Comments Settings"
 msgstr "Configurações dos Comentários"
 
-#: inc/customizer.php:1226
+#: inc/customizer.php:1243
 msgid ""
 "When using WordPress's default comments, checking this option will collapse "
 "the comments section when there is more than one comment, and display a "
 "button to expand."
 msgstr ""
 
-#: inc/customizer.php:1243
+#: inc/customizer.php:1260
 msgid "Display comment policy"
 msgstr ""
 
-#: inc/customizer.php:1244
+#: inc/customizer.php:1261
 msgid ""
 "Allows you to add an optional comment policy above the comment form when "
 "using WordPress's default comments."
 msgstr ""
 
-#: inc/customizer.php:1261
+#: inc/customizer.php:1278
 msgid "Comment policy text"
 msgstr ""
 
-#: inc/customizer.php:1272
+#: inc/customizer.php:1289
 msgid "Footer Settings"
 msgstr "Configurações do Rodapé"
 
-#: inc/customizer.php:1288
+#: inc/customizer.php:1305
 msgid "Show footer branding"
 msgstr ""
 
-#: inc/customizer.php:1289
+#: inc/customizer.php:1306
 msgid ""
 "Display the site logo in the footer when the footer widget area is populated."
 msgstr ""
 
-#: inc/customizer.php:1306
+#: inc/customizer.php:1323
 msgid "Footer Widget Layout"
 msgstr ""
 
-#: inc/customizer.php:1307
+#: inc/customizer.php:1324
 msgid ""
 "Stack the footer widgets, or have them automatically divide into even "
 "columns."
 msgstr ""
 
-#: inc/customizer.php:1309
+#: inc/customizer.php:1326
 msgid "Columns"
 msgstr ""
 
-#: inc/customizer.php:1310
+#: inc/customizer.php:1327
 msgid "Stacked"
 msgstr ""
 
-#: inc/customizer.php:1328
+#: inc/customizer.php:1345
 msgid "Copyright Information"
 msgstr "Informações de Copyright"
 
-#: inc/customizer.php:1329
+#: inc/customizer.php:1346
 msgid ""
 "Add custom text to be displayed next to a copyright symbol and current year "
 "in the footer. By default, it will display your site title."
 msgstr ""
 
-#: inc/customizer.php:1348
+#: inc/customizer.php:1365
 msgid "Typography"
 msgstr "Tipografia"
 
-#: inc/customizer.php:1395
+#: inc/customizer.php:1412
 msgid "Font Provider Import Code or URL"
 msgstr "Código ou URL de importação do provedor de fontes"
 
-#: inc/customizer.php:1405
+#: inc/customizer.php:1422
 msgid "Secondary Font Provider Import Code or URL"
 msgstr "Código ou URL de importação do provedor de fontes secundárias"
 
-#: inc/customizer.php:1414
+#: inc/customizer.php:1431
 msgid "Header Font"
 msgstr "Fonte do cabeçalho"
 
-#: inc/customizer.php:1430
+#: inc/customizer.php:1447
 msgid "Header Font Fallback Stack"
 msgstr "Pilha de fallback da fonte do cabeçalho"
 
-#: inc/customizer.php:1440
+#: inc/customizer.php:1457
 msgid "Body Font"
 msgstr "Fonte do Corpo"
 
-#: inc/customizer.php:1449
+#: inc/customizer.php:1466
 msgid "Body Font Fallback Stack"
 msgstr "Body Font Fallback Stack"
 
-#: inc/customizer.php:1468
+#: inc/customizer.php:1485
 msgid "Use all-caps for accent text."
 msgstr "Use letras maiúsculas para acentuar o texto."
 
@@ -1141,39 +1145,39 @@ msgid "by"
 msgstr "por"
 
 #. translators: %s: Name of current post. Only visible to screen readers.
-#: inc/template-tags.php:238
+#: inc/template-tags.php:266
 #, php-format
 msgid "Leave a comment<span class=\"screen-reader-text\"> on %s</span>"
 msgstr "Deixe um comentário<span class=“screen-reader-text”> em %s</span>"
 
 #. translators: used between list items; followed by a space.
-#: inc/template-tags.php:267 inc/template-tags.php:310
+#: inc/template-tags.php:295 inc/template-tags.php:338
 msgid ","
 msgstr ","
 
-#: inc/template-tags.php:274
+#: inc/template-tags.php:302
 msgid "Posted in"
 msgstr "Publicado em"
 
-#: inc/template-tags.php:315
+#: inc/template-tags.php:343
 msgid "Tagged:"
 msgstr "Marcado:"
 
 #. translators: %s: Name of current post; only visible to screen readers.
-#: inc/template-tags.php:326 template-parts/content/content-page.php:42
+#: inc/template-tags.php:354 template-parts/content/content-page.php:42
 #, php-format
 msgid "Edit <span class=\"screen-reader-text\">%s</span>"
 msgstr "Editar <span class=\"screen-reader-text\">%s</span>"
 
-#: inc/template-tags.php:529
+#: inc/template-tags.php:557
 msgid "Newer posts"
 msgstr "Posts mais recentes"
 
-#: inc/template-tags.php:533
+#: inc/template-tags.php:561
 msgid "Older posts"
 msgstr "Posts mais antigos"
 
-#: inc/template-tags.php:589
+#: inc/template-tags.php:617
 msgid "Top Menu"
 msgstr "Menu do Topo"
 

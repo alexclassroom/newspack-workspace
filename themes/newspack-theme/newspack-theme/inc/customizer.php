@@ -1064,6 +1064,23 @@ function newspack_customize_register( $wp_customize ) {
 		)
 	);
 
+	// Add option to show subtitles for all archives.
+	$wp_customize->add_setting(
+		'archive_show_subtitle',
+		array(
+			'default'           => false,
+			'sanitize_callback' => 'newspack_sanitize_checkbox',
+		)
+	);
+	$wp_customize->add_control(
+		'archive_show_subtitle',
+		array(
+			'type'    => 'checkbox',
+			'label'   => esc_html__( 'Show subtitles for all archives', 'newspack-theme' ),
+			'section' => 'archive_options',
+		)
+	);
+
 	// Add option to enable image cropping in the archive pages.
 	$wp_customize->add_setting(
 		'archive_enable_cropping',

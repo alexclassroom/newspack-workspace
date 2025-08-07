@@ -136,6 +136,16 @@
 		}
 	}
 
+	.entry-header {
+		.entry-title:has(+ .newspack-post-subtitle) {
+			margin-bottom: calc(#{structure.$size__spacing-unit} * 0.25);
+		}
+
+		.newspack-post-subtitle {
+			margin: 0 0 calc(#{structure.$size__spacing-unit} * 0.5);
+		}
+	}
+
 	.cat-links:not(.sponsor-label) {
 		display: none;
 	}
