@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2025-08-06T13:25:55+00:00\n"
+"POT-Creation-Date: 2025-08-08T16:16:56+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: newspack-story-budget\n"
@@ -523,7 +523,7 @@ msgstr ""
 #: src/components/budget-field/budget-field-name.js:84
 #: src/components/create-budget-modal.js:85
 #: src/components/create-new-story.js:164
-#: src/components/stories-edit.js:372
+#: src/components/stories-edit.js:367
 #: src/components/story-field.js:239
 #: src/components/story.js:189
 msgid "Cancel"
@@ -541,21 +541,21 @@ msgstr ""
 
 #. translators: %d: number of stories
 #: dist/story-budget-app.js:60
-#: src/components/stories-edit.js:124
+#: src/components/stories-edit.js:119
 #, js-format
 msgid "%d stories"
 msgstr ""
 
 #. translators: %1$s: first item title, %2$s: second item title
 #: dist/story-budget-app.js:61
-#: src/components/stories-edit.js:134
+#: src/components/stories-edit.js:129
 #, js-format
 msgid "%1$s and %2$s"
 msgstr ""
 
 #. translators: %1$s: comma-separated list of item titles, %2$s: last item title
 #: dist/story-budget-app.js:62
-#: src/components/stories-edit.js:143
+#: src/components/stories-edit.js:138
 #, js-format
 msgid "%1$s, and %2$s"
 msgstr ""
@@ -563,30 +563,30 @@ msgstr ""
 #. translators: %s is the title of the story.
 #. translators: %s is the title for the selected stories.
 #: dist/story-budget-app.js:65
+#: src/components/stories-edit.js:240
 #: src/components/stories-edit.js:245
-#: src/components/stories-edit.js:250
 #, js-format
 msgid "Editing %s"
 msgstr ""
 
 #: dist/story-budget-app.js:65
-#: src/components/stories-edit.js:307
+#: src/components/stories-edit.js:302
 msgid "The following fields will be updated:"
 msgstr ""
 
 #: dist/story-budget-app.js:65
-#: src/components/stories-edit.js:337
+#: src/components/stories-edit.js:332
 msgid "Will be empty"
 msgstr ""
 
 #: dist/story-budget-app.js:65
-#: src/components/stories-edit.js:357
+#: src/components/stories-edit.js:352
 msgid "Save story"
 msgstr ""
 
 #. translators: %d is the number of stories.
 #: dist/story-budget-app.js:68
-#: src/components/stories-edit.js:360
+#: src/components/stories-edit.js:355
 #, js-format
 msgid "Save %d stories"
 msgstr ""
