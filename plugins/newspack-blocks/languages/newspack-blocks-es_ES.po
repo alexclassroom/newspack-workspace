@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Newspack Blocks 1.0.0-alpha.20\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/project\n"
-"POT-Creation-Date: 2025-08-11T16:07:11+00:00\n"
+"POT-Creation-Date: 2025-08-11T17:13:27+00:00\n"
 "PO-Revision-Date: 2024-08-30 08:45-0700\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -114,102 +114,102 @@ msgid "Close window"
 msgstr ""
 
 #. translators: %s: Site name.
-#: includes/class-modal-checkout.php:1525
+#: includes/class-modal-checkout.php:1515
 #, php-format
 msgid ""
 "You're already a subscriber! You can only have one active subscription at a "
 "time. Thank you for supporting %s."
 msgstr ""
 
-#: includes/class-modal-checkout.php:1559
+#: includes/class-modal-checkout.php:1549
 msgid "Could not complete this transaction. Please contact us for assistance."
 msgstr ""
 
 #. translators: 1: Checkout button confirmation text. 2: Order total.
 #. translators: 1 is the name of the item. 2 is the price of the item.
-#: includes/class-modal-checkout.php:1640
+#: includes/class-modal-checkout.php:1630
 #: includes/modal-checkout/class-checkout-data.php:64
 #, php-format
 msgid "%1$s: %2$s"
 msgstr ""
 
-#: includes/class-modal-checkout.php:1992
+#: includes/class-modal-checkout.php:1989
 msgid "Billing details"
 msgstr ""
 
-#: includes/class-modal-checkout.php:1993
+#: includes/class-modal-checkout.php:1990
 msgid "Shipping details"
 msgstr ""
 
-#: includes/class-modal-checkout.php:1994
+#: includes/class-modal-checkout.php:1991
 msgid "Gift recipient"
 msgstr ""
 
-#: includes/class-modal-checkout.php:1995
-#: includes/class-modal-checkout.php:1996
-#: includes/class-modal-checkout.php:1997
+#: includes/class-modal-checkout.php:1992
+#: includes/class-modal-checkout.php:1993
+#: includes/class-modal-checkout.php:1994
 msgid "Complete your transaction"
 msgstr ""
 
-#: includes/class-modal-checkout.php:1998
+#: includes/class-modal-checkout.php:1995
 msgctxt "Login modal title when logged out user attempts to checkout."
 msgid "Sign in to complete transaction"
 msgstr ""
 
-#: includes/class-modal-checkout.php:2003
+#: includes/class-modal-checkout.php:2000
 msgctxt "Login modal title when unregistered user attempts to checkout"
 msgid "Register to complete transaction"
 msgstr ""
 
-#: includes/class-modal-checkout.php:2008
+#: includes/class-modal-checkout.php:2005
 msgid "Continue browsing"
 msgstr ""
 
-#: includes/class-modal-checkout.php:2009
+#: includes/class-modal-checkout.php:2006
 msgid "This donation is a gift"
 msgstr ""
 
-#: includes/class-modal-checkout.php:2014
+#: includes/class-modal-checkout.php:2011
 msgid "This purchase is a gift"
 msgstr ""
 
-#: includes/class-modal-checkout.php:2016
+#: includes/class-modal-checkout.php:2013
 msgid "Complete transaction"
 msgstr ""
 
-#: includes/class-modal-checkout.php:2017
+#: includes/class-modal-checkout.php:2014
 msgid "Purchase"
 msgstr ""
 
-#: includes/class-modal-checkout.php:2018
+#: includes/class-modal-checkout.php:2015
 msgid "Back"
 msgstr ""
 
-#: includes/class-modal-checkout.php:2019
+#: includes/class-modal-checkout.php:2016
 msgid "Transaction successful"
 msgstr ""
 
-#: includes/class-modal-checkout.php:2020
+#: includes/class-modal-checkout.php:2017
 msgid ""
 "Your contribution directly funds our work. If you're moved to do so, you can "
 "opt to pay more than the standard rate."
 msgstr ""
 
-#: includes/class-modal-checkout.php:2021
+#: includes/class-modal-checkout.php:2018
 msgid "Thank you for your generosity! We couldn't do this without you!"
 msgstr ""
 
-#: includes/class-modal-checkout.php:2022
+#: includes/class-modal-checkout.php:2019
 msgid "Increase your support"
 msgstr ""
 
-#: includes/class-modal-checkout.php:2023
+#: includes/class-modal-checkout.php:2020
 #: src/modal-checkout/templates/form-coupon.php:20
 msgid "Apply"
 msgstr ""
 
 #. Translators: %s is the site name.
-#: includes/class-modal-checkout.php:2158
+#: includes/class-modal-checkout.php:2155
 #, php-format
 msgid ""
 "Thank you for supporting %s. Your transaction was completed successfully."
