@@ -1,3 +1,10 @@
+# [3.6.0](https://github.com/Automattic/newspack-ads/compare/v3.5.5...v3.6.0) (2025-08-11)
+
+
+### Features
+
+* **placements:** new sticky and side rail ([#975](https://github.com/Automattic/newspack-ads/issues/975)) ([18d6c78](https://github.com/Automattic/newspack-ads/commit/18d6c7881eb26d6489a2a9de5c5f7e27437f3ebf))
+
 ## [3.5.5](https://github.com/Automattic/newspack-ads/compare/v3.5.4...v3.5.5) (2025-07-28)
 
 
