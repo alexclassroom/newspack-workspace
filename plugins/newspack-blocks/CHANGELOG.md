@@ -1,3 +1,11 @@
+## [4.14.7](https://github.com/Automattic/newspack-blocks/compare/v4.14.6...v4.14.7) (2025-08-12)
+
+
+### Bug Fixes
+
+* **author-block:** classname application ([#2172](https://github.com/Automattic/newspack-blocks/issues/2172)) ([b689c66](https://github.com/Automattic/newspack-blocks/commit/b689c667d219199e5ae3a4d5a849eb7fb4334b07))
+* skip acct creation on verification request ([#2182](https://github.com/Automattic/newspack-blocks/issues/2182)) ([8aaef1d](https://github.com/Automattic/newspack-blocks/commit/8aaef1db423c8b1d9cbcc3f3f1a53220b0d82743))
+
 ## [4.14.6](https://github.com/Automattic/newspack-blocks/compare/v4.14.5...v4.14.6) (2025-07-28)
 
 
