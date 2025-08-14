@@ -8,7 +8,7 @@
  * License: GPL2
  * Text Domain:     newspack-newsletters
  * Domain Path:     /languages
- * Version:         3.19.1
+ * Version:         3.20.0-alpha.1
  *
  * @package         Newspack_Newsletters
  */
