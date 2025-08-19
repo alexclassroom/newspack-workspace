@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2025-08-14T19:59:18+00:00\n"
+"POT-Creation-Date: 2025-08-19T12:59:31+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: newspack-newsletters\n"
@@ -1495,15 +1495,15 @@ msgstr ""
 #: dist/adsEditor.js:1
 #: src/components/ad-placements/index.js:69
 #: src/components/send-button/index.js:382
-#: src/newsletter-editor/layout/index.js:244
-#: src/newsletter-editor/layout/index.js:275
+#: src/newsletter-editor/layout/index.js:246
+#: src/newsletter-editor/layout/index.js:277
 #: src/newsletter-editor/sidebar/autocomplete.js:123
 msgid "Cancel"
 msgstr ""
 
 #: dist/adsEditor.js:1
 #: src/components/ad-placements/index.js:77
-#: src/newsletter-editor/layout/index.js:241
+#: src/newsletter-editor/layout/index.js:243
 msgid "Save"
 msgstr ""
 
@@ -2792,36 +2792,36 @@ msgstr ""
 msgid "Layout"
 msgstr ""
 
-#: src/newsletter-editor/layout/index.js:150
+#: src/newsletter-editor/layout/index.js:152
 msgid "Are you sure you want to overwrite this layout?"
 msgstr ""
 
-#: src/newsletter-editor/layout/index.js:195
+#: src/newsletter-editor/layout/index.js:197
 msgid "Save new layout"
 msgstr ""
 
-#: src/newsletter-editor/layout/index.js:206
+#: src/newsletter-editor/layout/index.js:208
 msgid "Update layout"
 msgstr ""
 
-#: src/newsletter-editor/layout/index.js:217
-#: src/newsletter-editor/layout/index.js:272
+#: src/newsletter-editor/layout/index.js:219
+#: src/newsletter-editor/layout/index.js:274
 msgid "Reset layout"
 msgstr ""
 
-#: src/newsletter-editor/layout/index.js:224
+#: src/newsletter-editor/layout/index.js:226
 msgid "Save newsletter as a layout"
 msgstr ""
 
-#: src/newsletter-editor/layout/index.js:229
+#: src/newsletter-editor/layout/index.js:231
 msgid "Title"
 msgstr ""
 
-#: src/newsletter-editor/layout/index.js:253
+#: src/newsletter-editor/layout/index.js:255
 msgid "Reset newsletter layout?"
 msgstr ""
 
-#: src/newsletter-editor/layout/index.js:258
+#: src/newsletter-editor/layout/index.js:260
 msgid "Resetting the layout will remove all customizations and edits you’ve made. This action cannot be undone."
 msgstr ""
 
