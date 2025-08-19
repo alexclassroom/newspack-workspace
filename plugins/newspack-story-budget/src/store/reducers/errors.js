@@ -26,8 +26,7 @@ export default ( state = INITIAL_STATE.errors, action ) => {
 		case 'SAVE_STORY_FIELD_ERROR':
 			return {
 				...state,
-				[ `${ action.payload.id }-${ action.payload.slug }` ]:
-					action.payload.message,
+				[ `${ action.payload.id }-${ action.payload.slug }` ]: action.payload.message,
 			};
 		case 'FETCH_STORY_ERROR':
 		case 'SAVE_STORY_ERROR':
@@ -53,9 +52,7 @@ export default ( state = INITIAL_STATE.errors, action ) => {
 			};
 		case 'CLEAR_FIELD_ERROR': {
 			const newState = { ...state };
-			delete newState[
-				`${ action.payload.id }-${ action.payload.slug }`
-			];
+			delete newState[ `${ action.payload.id }-${ action.payload.slug }` ];
 			return newState;
 		}
 		case 'CLEAR_STORY_ERROR': {

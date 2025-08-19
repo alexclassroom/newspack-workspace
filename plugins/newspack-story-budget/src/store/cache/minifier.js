@@ -96,12 +96,7 @@ const minify = data => {
 
 	const minified = Array.isArray( data )
 		? data.map( entry => minifyEntry( entry ) )
-		: Object.fromEntries(
-				Object.entries( data ).map( ( [ id, entry ] ) => [
-					id,
-					minifyEntry( entry ),
-				] )
-		  );
+		: Object.fromEntries( Object.entries( data ).map( ( [ id, entry ] ) => [ id, minifyEntry( entry ) ] ) );
 
 	return {
 		data: minified,
@@ -122,9 +117,7 @@ const restore = ( minified, keyMap ) => {
 		return minified;
 	}
 
-	const reverseMap = new Map(
-		Object.entries( keyMap ).map( ( [ full, short ] ) => [ short, full ] )
-	);
+	const reverseMap = new Map( Object.entries( keyMap ).map( ( [ full, short ] ) => [ short, full ] ) );
 
 	const restoreEntry = minifiedEntry => {
 		if ( Array.isArray( minifiedEntry ) ) {
@@ -142,14 +135,7 @@ const restore = ( minified, keyMap ) => {
 
 	return Array.isArray( minified )
 		? minified.map( minifiedEntry => restoreEntry( minifiedEntry ) )
-		: Object.fromEntries(
-				Object.entries( minified ).map(
-					( [ id, minifiedEntry ] ) => [
-						id,
-						restoreEntry( minifiedEntry ),
-					]
-				)
-		  );
+		: Object.fromEntries( Object.entries( minified ).map( ( [ id, minifiedEntry ] ) => [ id, restoreEntry( minifiedEntry ) ] ) );
 };
 
 export { isMinifiable, minify, restore };

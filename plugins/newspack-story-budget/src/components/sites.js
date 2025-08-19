@@ -33,17 +33,10 @@ export default function Sites() {
 	return (
 		<div className="newspack-story-budget__sites-list">
 			{ sites.map( site => (
-				<div
-					className="newspack-story-budget__site-card"
-					key={ site.url }
-				>
+				<div className="newspack-story-budget__site-card" key={ site.url }>
 					<div className="newspack-story-budget__site-card-header">
-						<div className="newspack-story-budget__site-card-header-title">
-							{ site.name }
-						</div>
-						<div className="newspack-story-budget__site-card-header-url">
-							{ site.url }
-						</div>
+						<div className="newspack-story-budget__site-card-header-title">{ site.name }</div>
+						<div className="newspack-story-budget__site-card-header-url">{ site.url }</div>
 					</div>
 					<div className="newspack-story-budget__site-card-actions">
 						<ConnectButton url={ site.url } />

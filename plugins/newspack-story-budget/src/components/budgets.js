@@ -55,22 +55,16 @@ export default () => {
 		isLoading: select( storeNamespace ).isBudgetsLoading(),
 	} ) );
 
-	const { setBudgetsView, setSearching, searchBudgets } =
-		useDispatch( storeNamespace );
+	const { setBudgetsView, setSearching, searchBudgets } = useDispatch( storeNamespace );
 
 	const [ editMode, setEditMode ] = useState( false );
 
 	useEffect( () => {
-		setEditMode(
-			applyFilters( 'newspack-story-budget.defaultEditMode', false )
-		);
+		setEditMode( applyFilters( 'newspack-story-budget.defaultEditMode', false ) );
 	}, [] );
 
 	const [ searchTerm, setSearchTerm ] = useState( view.search );
-	const [ budgetStatus, setBudgetStatus ] = useState(
-		view.filters?.find( filter => filter.field === 'status' )?.value ??
-			BUDGET_STATUS.ACTIVE
-	);
+	const [ budgetStatus, setBudgetStatus ] = useState( view.filters?.find( filter => filter.field === 'status' )?.value ?? BUDGET_STATUS.ACTIVE );
 	const [ page, setPage ] = useState( view.page );
 
 	const doSearch = debounce( searchBudgets, 300 );
@@ -103,18 +97,8 @@ export default () => {
 
 	return (
 		<div className="newspack-story-budget__budgets">
-			<HStack
-				className="newspack-story-budget__budgets-actions"
-				spacing={ 2 }
-				align="center"
-			>
-				<HStack
-					className="newspack-story-budget__budgets-actions__primary"
-					justify="start"
-					spacing={ 4 }
-					align="center"
-					width="max-content"
-				>
+			<HStack className="newspack-story-budget__budgets-actions" spacing={ 2 } align="center">
+				<HStack className="newspack-story-budget__budgets-actions__primary" justify="start" spacing={ 4 } align="center" width="max-content">
 					<SearchControl
 						className="newspack-story-budget__search"
 						value={ searchTerm }
@@ -123,11 +107,7 @@ export default () => {
 						placeholder={ __( 'Search', 'newspack-story-budget' ) }
 						__nextHasNoMarginBottom
 					/>
-					<Divider
-						className="newspack-story-budget__divider"
-						orientation="vertical"
-						noshade
-					/>
+					<Divider className="newspack-story-budget__divider" orientation="vertical" noshade />
 					<SelectControl
 						className="newspack-story-budget__status-filter"
 						value={ budgetStatus }
@@ -139,10 +119,7 @@ export default () => {
 								value: BUDGET_STATUS.ACTIVE,
 							},
 							{
-								label: __(
-									'Archived',
-									'newspack-story-budget'
-								),
+								label: __( 'Archived', 'newspack-story-budget' ),
 								value: BUDGET_STATUS.ARCHIVED,
 							},
 						] }
@@ -162,24 +139,11 @@ export default () => {
 			{ isLoading ? (
 				<LoadingSpinner />
 			) : (
-				<VStack
-					className="newspack-story-budget__budgets-list"
-					spacing={ 2 }
-					align="stretch"
-				>
-					<BudgetRows
-						allowEdit={ editMode }
-						budgetStatus={ budgetStatus }
-						isSearching={ searchTerm.length > 0 }
-					/>
-					{ BUDGET_STATUS.ARCHIVED === budgetStatus &&
-						0 === searchTerm.length && (
-							<Pagination
-								currentPage={ page }
-								totalPages={ totalPages }
-								onPageChange={ setPage }
-							/>
-						) }
+				<VStack className="newspack-story-budget__budgets-list" spacing={ 2 } align="stretch">
+					<BudgetRows allowEdit={ editMode } budgetStatus={ budgetStatus } isSearching={ searchTerm.length > 0 } />
+					{ BUDGET_STATUS.ARCHIVED === budgetStatus && 0 === searchTerm.length && (
+						<Pagination currentPage={ page } totalPages={ totalPages } onPageChange={ setPage } />
+					) }
 				</VStack>
 			) }
 		</div>

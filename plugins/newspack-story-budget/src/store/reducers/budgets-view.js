@@ -11,7 +11,7 @@ export default ( state = INITIAL_STATE.budgetsView, action ) => {
 				...state,
 				...action.payload,
 			};
-	default:
-		return state;
+		default:
+			return state;
 	}
 };

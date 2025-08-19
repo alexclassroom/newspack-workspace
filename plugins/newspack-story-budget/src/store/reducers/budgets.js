@@ -8,15 +8,11 @@ export default ( state = INITIAL_STATE.budgets, action ) => {
 		case 'CREATE_BUDGET_SUCCESS':
 		case 'BUDGETS_ADD':
 			if ( state.find( budget => budget.id === action.payload.id ) ) {
-				return state.map( budget =>
-					budget.id === action.payload.id ? action.payload : budget
-				);
+				return state.map( budget => ( budget.id === action.payload.id ? action.payload : budget ) );
 			}
 			return [ ...state, action.payload ];
 		case 'BUDGET_UPDATE':
-			const newState = state.map( budget =>
-				budget.id === action.payload.id ? action.payload : budget
-			);
+			const newState = state.map( budget => ( budget.id === action.payload.id ? action.payload : budget ) );
 			return [ ...newState ];
 		case 'BUDGETS_ORDER':
 			const budgets = state.map( budget => ( {

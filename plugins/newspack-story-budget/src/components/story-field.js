@@ -4,14 +4,7 @@
  */
 import { __ } from '@wordpress/i18n';
 import { applyFilters } from '@wordpress/hooks';
-import {
-	__experimentalVStack as VStack,
-	__experimentalHStack as HStack,
-	Dropdown,
-	Button,
-	Notice,
-	Tooltip,
-} from '@wordpress/components';
+import { __experimentalVStack as VStack, __experimentalHStack as HStack, Dropdown, Button, Notice, Tooltip } from '@wordpress/components';
 import { __experimentalInspectorPopoverHeader as InspectorPopoverHeader } from '@wordpress/block-editor';
 import { useSelect, useDispatch } from '@wordpress/data';
 import { useState, useMemo } from '@wordpress/element';
@@ -29,24 +22,12 @@ const DEFAULT_POPOVER_PROPS = {
 	shift: true,
 };
 
-export default ( {
-	fieldId,
-	storyId,
-	value,
-	onChange = () => {},
-	onCloseEdit = () => {},
-	allowEdit = true,
-	saveInPlace = false,
-	popoverProps,
-} ) => {
+export default ( { fieldId, storyId, value, onChange = () => {}, onCloseEdit = () => {}, allowEdit = true, saveInPlace = false, popoverProps } ) => {
 	const { canEditStory, isLoadingStory, fieldError } = useSelect(
 		select => ( {
 			isLoadingStory: select( storeNamespace ).isLoadingStory( storyId ),
 			canEditStory: select( storeNamespace ).canEditStory( storyId ),
-			fieldError: select( storeNamespace ).getFieldError(
-				storyId,
-				fieldId
-			),
+			fieldError: select( storeNamespace ).getFieldError( storyId, fieldId ),
 		} ),
 		[ storyId, fieldId ]
 	);
@@ -66,28 +47,16 @@ export default ( {
 	}, [ field, value ] );
 
 	const collapsedValue = useMemo( () => {
-		return displayValue && displayValue.length > 70
-			? `${ displayValue.slice( 0, 67 ) }...`
-			: null;
+		return displayValue && displayValue.length > 70 ? `${ displayValue.slice( 0, 67 ) }...` : null;
 	}, [ displayValue ] );
 
-	const canEdit = useMemo(
-		() => allowEdit && canEditStory && field.is_editable,
-		[ allowEdit, canEditStory, field ]
-	);
+	const canEdit = useMemo( () => allowEdit && canEditStory && field.is_editable, [ allowEdit, canEditStory, field ] );
 
 	if ( ! field ) {
 		return null;
 	}
 
-	const customRender = applyFilters(
-		'newspack-story-budget.story-field',
-		null,
-		displayValue,
-		field,
-		story,
-		allowEdit
-	);
+	const customRender = applyFilters( 'newspack-story-budget.story-field', null, displayValue, field, story, allowEdit );
 	if ( customRender ) {
 		return customRender;
 	}
@@ -96,20 +65,11 @@ export default ( {
 		return (
 			<div className="newspack-story-budget__field">
 				{ collapsedValue ? (
-					<Tooltip
-						text={ displayValue }
-						delay={ 300 }
-						placement="bottom-start"
-						className="newspack-story-budget__field__value-tooltip"
-					>
-						<span className="newspack-story-budget__field__value">
-							{ collapsedValue }
-						</span>
+					<Tooltip text={ displayValue } delay={ 300 } placement="bottom-start" className="newspack-story-budget__field__value-tooltip">
+						<span className="newspack-story-budget__field__value">{ collapsedValue }</span>
 					</Tooltip>
 				) : (
-					<span className="newspack-story-budget__field__value">
-						{ displayValue !== null ? displayValue : '--' }
-					</span>
+					<span className="newspack-story-budget__field__value">{ displayValue !== null ? displayValue : '--' }</span>
 				) }
 			</div>
 		);
@@ -120,10 +80,7 @@ export default ( {
 		// the table row, which may trigger bulk edit selection and stop the
 		// popover from opening.
 		// eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions
-		<div
-			className="newspack-story-budget__field"
-			onClick={ e => e.stopPropagation() }
-		>
+		<div className="newspack-story-budget__field" onClick={ e => e.stopPropagation() }>
 			<Dropdown
 				open={ isOpen }
 				popoverProps={ popoverProps || DEFAULT_POPOVER_PROPS }
@@ -136,19 +93,10 @@ export default ( {
 						onClick={ onToggle }
 						disabled={ isLoadingStory }
 						aria-expanded={ isOpen }
-						title={
-							field.is_editable
-								? `Edit ${ field.name }`
-								: undefined
-						}
+						title={ field.is_editable ? `Edit ${ field.name }` : undefined }
 					>
 						{ displayValue === null ? (
-							<span className="newspack-story-budget__field__empty-value">
-								{ __(
-									'Click to set',
-									'newspack-story-budget'
-								) }
-							</span>
+							<span className="newspack-story-budget__field__empty-value">{ __( 'Click to set', 'newspack-story-budget' ) }</span>
 						) : (
 							collapsedValue || displayValue
 						) }
@@ -156,33 +104,20 @@ export default ( {
 				) }
 				renderContent={ ( { onClose } ) => (
 					<>
-						<InspectorPopoverHeader
-							title={ field.name }
-							onClose={ onClose }
-						/>
+						<InspectorPopoverHeader title={ field.name } onClose={ onClose } />
 						{ saveInPlace && fieldError && (
-							<Notice
-								className="newspack-story-budget__error"
-								isDismissible={ false }
-								status="error"
-							>
+							<Notice className="newspack-story-budget__error" isDismissible={ false } status="error">
 								{ fieldError }
 							</Notice>
 						) }
-						{ field.description && field.type !== 'boolean' && (
-							<p>{ field.description }</p>
-						) }
+						{ field.description && field.type !== 'boolean' && <p>{ field.description }</p> }
 						<form
 							onSubmit={ async e => {
 								clearErrors( storyId, fieldId );
 								setIsOpen( false );
 								e.preventDefault();
 								if ( saveInPlace ) {
-									const response = await saveStoryField(
-										storyId,
-										fieldId,
-										editedValue
-									);
+									const response = await saveStoryField( storyId, fieldId, editedValue );
 
 									// Reopen the popover if there is an error.
 									if ( response?.payload?.message ) {
@@ -208,25 +143,14 @@ export default ( {
 									/>
 								</div>
 								{ saveInPlace && (
-									<HStack
-										expanded
-										spacing={ 2 }
-										justify="end"
-										direction="row-reverse"
-									>
+									<HStack expanded spacing={ 2 } justify="end" direction="row-reverse">
 										<Button
 											variant="primary"
-											disabled={
-												value === editedValue ||
-												isLoadingStory
-											}
+											disabled={ value === editedValue || isLoadingStory }
 											isBusy={ isLoadingStory }
 											type="submit"
 										>
-											{ __(
-												'Save',
-												'newspack-story-budget'
-											) }
+											{ __( 'Save', 'newspack-story-budget' ) }
 										</Button>
 										<Button
 											variant="secondary"
@@ -236,10 +160,7 @@ export default ( {
 												setEditedValue( value );
 											} }
 										>
-											{ __(
-												'Cancel',
-												'newspack-story-budget'
-											) }
+											{ __( 'Cancel', 'newspack-story-budget' ) }
 										</Button>
 									</HStack>
 								) }

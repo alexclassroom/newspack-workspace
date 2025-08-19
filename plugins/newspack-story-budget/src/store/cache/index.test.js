@@ -44,11 +44,14 @@ describe( 'Cache functionality', () => {
 		} );
 
 		it( 'should return null for expired cache', () => {
-			const oldTimestamp = Date.now() - ( 2 * 60 * 60 * 1000 );
-			sessionStorage.setItem( 'testCache', encode( {
-				data: { test: 'value' },
-				timestamp: oldTimestamp
-			} ) );
+			const oldTimestamp = Date.now() - 2 * 60 * 60 * 1000;
+			sessionStorage.setItem(
+				'testCache',
+				encode( {
+					data: { test: 'value' },
+					timestamp: oldTimestamp,
+				} )
+			);
 			expect( getCache( 'testCache' ) ).toBeNull();
 		} );
 

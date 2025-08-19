@@ -60,9 +60,7 @@ describe( 'minifier', () => {
 			expect( minified.data ).not.toBe( largeArray );
 			expect( minified.keyMap ).toBeDefined();
 
-			expect( JSON.stringify( minified.data ).length ).toBeLessThan(
-				JSON.stringify( largeArray ).length
-			);
+			expect( JSON.stringify( minified.data ).length ).toBeLessThan( JSON.stringify( largeArray ).length );
 
 			const restored = restore( minified.data, minified.keyMap );
 			expect( restored ).toEqual( largeArray );
@@ -85,9 +83,7 @@ describe( 'minifier', () => {
 			expect( minified.data ).not.toBe( largeObject );
 			expect( minified.keyMap ).toBeDefined();
 
-			expect( JSON.stringify( minified.data ).length ).toBeLessThan(
-				JSON.stringify( largeObject ).length
-			);
+			expect( JSON.stringify( minified.data ).length ).toBeLessThan( JSON.stringify( largeObject ).length );
 
 			const restored = restore( minified.data, minified.keyMap );
 			expect( restored ).toEqual( largeObject );
@@ -111,10 +107,7 @@ describe( 'minifier', () => {
 		} );
 
 		it( 'should handle arrays with nested objects', () => {
-			const arrayWithNested = [
-				{ a: { b: { c: 1 } } },
-				{ a: { b: { c: 2 } } },
-			];
+			const arrayWithNested = [ { a: { b: { c: 1 } } }, { a: { b: { c: 2 } } } ];
 
 			const minified = minify( arrayWithNested );
 			const restored = restore( minified.data, minified.keyMap );

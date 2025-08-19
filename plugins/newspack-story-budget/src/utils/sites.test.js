@@ -1,15 +1,4 @@
-import {
-	getSites,
-	getCredentials,
-	setCredentials,
-	clearCredentials,
-	isAuthorizingSite,
-	getAuthorizationData,
-	getCurrentSite,
-	isRemoteSite,
-	getCurrentSiteName,
-	getLeaveSiteUrl
-} from './sites';
+import { getCredentials, setCredentials, clearCredentials, isAuthorizingSite, getAuthorizationData, isRemoteSite, getLeaveSiteUrl } from './sites';
 
 // Mock global window object and localStorage
 const mockLocalStorageData = {};
@@ -26,9 +15,9 @@ describe( 'sites utils', () => {
 				} ),
 				removeItem: jest.fn( key => {
 					delete mockLocalStorageData[ key ];
-				} )
+				} ),
 			},
-			writable: true
+			writable: true,
 		} );
 
 		// Mock location and URL handling
@@ -36,34 +25,16 @@ describe( 'sites utils', () => {
 		window.location = {
 			href: 'https://newssite.com/story-budget',
 			search: '',
-			hash: ''
+			hash: '',
 		};
 
 		Object.keys( mockLocalStorageData ).forEach( key => {
 			delete mockLocalStorageData[ key ];
 		} );
-
-		global.newspackStoryBudget = {
-			sites: [
-				{ name: 'Test Site', url: 'https://test.com' },
-				{ name: 'News Site', url: 'https://newssite.com' }
-			]
-		};
 	} );
 
 	afterEach( () => {
 		window = { ...originalWindow };
-		delete global.newspackStoryBudget;
-	} );
-
-	describe( 'getSites', () => {
-		it( 'should return the sites from global object', () => {
-			const sites = getSites();
-			expect( sites ).toEqual( [
-				{ name: 'Test Site', url: 'https://test.com' },
-				{ name: 'News Site', url: 'https://newssite.com' }
-			] );
-		} );
 	} );
 
 	describe( 'credentials management', () => {
@@ -72,27 +43,20 @@ describe( 'sites utils', () => {
 
 		it( 'should set credentials in localStorage', () => {
 			setCredentials( testUrl, 'username', 'password' );
-			expect( window.localStorage.setItem ).toHaveBeenCalledWith(
-				'newspack-story-budget-site-https://test.com',
-				'dXNlcm5hbWU6cGFzc3dvcmQ='
-			);
+			expect( window.localStorage.setItem ).toHaveBeenCalledWith( 'newspack-story-budget-site-https://test.com', 'dXNlcm5hbWU6cGFzc3dvcmQ=' );
 		} );
 
 		it( 'should get credentials from localStorage', () => {
 			mockLocalStorageData[ 'newspack-story-budget-site-https://test.com' ] = testCredentials;
 			const credentials = getCredentials( testUrl );
 			expect( credentials ).toBe( testCredentials );
-			expect( window.localStorage.getItem ).toHaveBeenCalledWith(
-				'newspack-story-budget-site-https://test.com'
-			);
+			expect( window.localStorage.getItem ).toHaveBeenCalledWith( 'newspack-story-budget-site-https://test.com' );
 		} );
 
 		it( 'should clear credentials from localStorage', () => {
 			mockLocalStorageData[ 'newspack-story-budget-site-https://test.com' ] = testCredentials;
 			clearCredentials( testUrl );
-			expect( window.localStorage.removeItem ).toHaveBeenCalledWith(
-				'newspack-story-budget-site-https://test.com'
-			);
+			expect( window.localStorage.removeItem ).toHaveBeenCalledWith( 'newspack-story-budget-site-https://test.com' );
 		} );
 	} );
 
@@ -119,7 +83,7 @@ describe( 'sites utils', () => {
 				siteUrl: 'https://test.com',
 				login: 'admin',
 				password: 'pass123',
-				success: true
+				success: true,
 			} );
 		} );
 
@@ -136,23 +100,8 @@ describe( 'sites utils', () => {
 				siteUrl: null,
 				login: null,
 				password: null,
-				success: true
+				success: true,
 			} );
-		} );
-	} );
-
-	describe( 'getCurrentSite', () => {
-		it( 'should return site URL from search params', () => {
-			window.location.search = '?site_url=https://test.com';
-			expect( getCurrentSite() ).toBe( 'https://test.com' );
-		} );
-
-		it( 'should return null when site_url is not in search params', () => {
-			window.location.search = '?other_param=value';
-			expect( getCurrentSite() ).toBeNull();
-
-			window.location.search = '';
-			expect( getCurrentSite() ).toBeNull();
 		} );
 	} );
 
@@ -165,13 +114,6 @@ describe( 'sites utils', () => {
 		it( 'should return false when site_url is not in search params', () => {
 			window.location.search = '';
 			expect( isRemoteSite() ).toBe( false );
-		} );
-	} );
-
-	describe( 'getCurrentSiteName', () => {
-		it( 'should return site name for a known site URL', () => {
-			window.location.search = '?site_url=https://test.com';
-			expect( getCurrentSiteName() ).toBe( 'Test Site' );
 		} );
 	} );
 

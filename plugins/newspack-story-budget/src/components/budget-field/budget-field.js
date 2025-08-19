@@ -6,13 +6,7 @@ import { Dropdown } from '@wordpress/components';
 /**
  * Budget field base component
  */
-const BudgetField = ( {
-	isOpen,
-	toggleButton,
-	popoverContent,
-	onClose = () => {},
-	className = ''
-} ) => {
+const BudgetField = ( { isOpen, toggleButton, popoverContent, onClose = () => {}, className = '' } ) => {
 	return (
 		<div className={ className }>
 			<Dropdown

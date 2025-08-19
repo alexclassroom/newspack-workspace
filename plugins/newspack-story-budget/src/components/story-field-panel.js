@@ -10,12 +10,7 @@ import { useState, useEffect } from '@wordpress/element';
  */
 import StoryFieldPanelRow from './story-field-panel-row';
 
-export default ( {
-	fields,
-	story,
-	rowAnchor = 'field',
-	onChange = () => {},
-} ) => {
+export default ( { fields, story, rowAnchor = 'field', onChange = () => {} } ) => {
 	const [ editedStory, setEditedStory ] = useState( story );
 
 	useEffect( () => {

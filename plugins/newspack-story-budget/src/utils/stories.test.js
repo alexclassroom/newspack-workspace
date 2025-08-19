@@ -41,22 +41,16 @@ describe( 'stories utils', () => {
 
 		it( 'should filter stories by exact match', () => {
 			const view = {
-				filters: [
-					{ operator: 'is', field: 'status', value: 'draft' },
-				],
+				filters: [ { operator: 'is', field: 'status', value: 'draft' } ],
 			};
 			const result = filter( mockStories, mockFields, view );
 			expect( result ).toHaveLength( 2 );
-			expect( result.every( story => story.status === 'draft' ) ).toBe(
-				true
-			);
+			expect( result.every( story => story.status === 'draft' ) ).toBe( true );
 		} );
 
 		it( 'should filter stories by not equal', () => {
 			const view = {
-				filters: [
-					{ operator: 'isNot', field: 'status', value: 'draft' },
-				],
+				filters: [ { operator: 'isNot', field: 'status', value: 'draft' } ],
 			};
 			const result = filter( mockStories, mockFields, view );
 			expect( result ).toHaveLength( 1 );
@@ -75,12 +69,8 @@ describe( 'stories utils', () => {
 			};
 			const result = filter( mockStories, mockFields, view );
 			expect( result ).toHaveLength( 2 );
-			expect(
-				result.some( story => story.categories.includes( 'sports' ) )
-			).toBe( true );
-			expect(
-				result.some( story => story.categories.includes( 'politics' ) )
-			).toBe( true );
+			expect( result.some( story => story.categories.includes( 'sports' ) ) ).toBe( true );
+			expect( result.some( story => story.categories.includes( 'politics' ) ) ).toBe( true );
 		} );
 
 		it( 'should filter stories by excluding multiple values (isNone)', () => {
@@ -110,9 +100,7 @@ describe( 'stories utils', () => {
 			};
 			const result = filter( mockStories, mockFields, view );
 			expect( result ).toHaveLength( 2 );
-			expect(
-				result.every( story => story.categories.includes( 'news' ) )
-			).toBe( true );
+			expect( result.every( story => story.categories.includes( 'news' ) ) ).toBe( true );
 		} );
 
 		it( 'should handle empty filter values', () => {
@@ -125,9 +113,7 @@ describe( 'stories utils', () => {
 
 		it( 'should handle non-filterable fields', () => {
 			const view = {
-				filters: [
-					{ operator: 'is', field: 'nonFilterable', value: 'test' },
-				],
+				filters: [ { operator: 'is', field: 'nonFilterable', value: 'test' } ],
 			};
 			const result = filter( mockStories, mockFields, view );
 			expect( result ).toEqual( mockStories );
@@ -135,9 +121,7 @@ describe( 'stories utils', () => {
 
 		it( 'should handle fields with is_filterable set to "no"', () => {
 			const view = {
-				filters: [
-					{ operator: 'is', field: 'author', value: 'John Doe' },
-				],
+				filters: [ { operator: 'is', field: 'author', value: 'John Doe' } ],
 			};
 			const result = filter( mockStories, mockFields, view );
 			expect( result ).toEqual( mockStories );
@@ -145,9 +129,7 @@ describe( 'stories utils', () => {
 
 		it( 'should filter fields with is_filterable set to "yes"', () => {
 			const view = {
-				filters: [
-					{ operator: 'is', field: 'priority', value: 1 },
-				],
+				filters: [ { operator: 'is', field: 'priority', value: 1 } ],
 			};
 			const result = filter( mockStories, mockFields, view );
 			expect( result ).toHaveLength( 1 );
@@ -156,9 +138,7 @@ describe( 'stories utils', () => {
 
 		it( 'should filter fields with is_filterable set to "always"', () => {
 			const view = {
-				filters: [
-					{ operator: 'is', field: 'featured', value: true },
-				],
+				filters: [ { operator: 'is', field: 'featured', value: true } ],
 			};
 			const result = filter( mockStories, mockFields, view );
 			expect( result ).toHaveLength( 2 );
@@ -196,11 +176,7 @@ describe( 'stories utils', () => {
 				sort: { field: 'title', direction: 'asc' },
 			};
 			const result = sort( mockStories, mockFields, view );
-			expect( result.map( story => story.title ) ).toEqual( [
-				'A',
-				'B',
-				'C',
-			] );
+			expect( result.map( story => story.title ) ).toEqual( [ 'A', 'B', 'C' ] );
 		} );
 
 		it( 'should sort stories by text field in descending order', () => {
@@ -208,11 +184,7 @@ describe( 'stories utils', () => {
 				sort: { field: 'title', direction: 'desc' },
 			};
 			const result = sort( mockStories, mockFields, view );
-			expect( result.map( story => story.title ) ).toEqual( [
-				'C',
-				'B',
-				'A',
-			] );
+			expect( result.map( story => story.title ) ).toEqual( [ 'C', 'B', 'A' ] );
 		} );
 
 		it( 'should sort stories by number field', () => {
@@ -220,9 +192,7 @@ describe( 'stories utils', () => {
 				sort: { field: 'priority', direction: 'asc' },
 			};
 			const result = sort( mockStories, mockFields, view );
-			expect( result.map( story => story.priority ) ).toEqual( [
-				1, 2, 3,
-			] );
+			expect( result.map( story => story.priority ) ).toEqual( [ 1, 2, 3 ] );
 		} );
 
 		it( 'should sort stories by date field', () => {
@@ -252,11 +222,7 @@ describe( 'stories utils', () => {
 		} );
 
 		it( 'should handle missing number field values', () => {
-			const storiesWithMissingValues = [
-				{ title: 'C', priority: 3 },
-				{ title: 'A' },
-				{ title: 'B', priority: 2 },
-			];
+			const storiesWithMissingValues = [ { title: 'C', priority: 3 }, { title: 'A' }, { title: 'B', priority: 2 } ];
 			const view = {
 				sort: { field: 'priority', direction: 'asc' },
 			};
@@ -267,11 +233,7 @@ describe( 'stories utils', () => {
 		} );
 
 		it( 'should handle missing text field values', () => {
-			const storiesWithMissingValues = [
-				{ title: 'C', priority: 3 },
-				{ priority: 1 },
-				{ title: 'B', priority: 2 },
-			];
+			const storiesWithMissingValues = [ { title: 'C', priority: 3 }, { priority: 1 }, { title: 'B', priority: 2 } ];
 			const view = {
 				sort: { field: 'title', direction: 'asc' },
 			};

@@ -46,41 +46,25 @@ const BudgetNameField = ( { budget, onUpdateBudget = () => {} } ) => {
 		</Button>
 	);
 
-	const popoverContent = ( onClose ) => (
+	const popoverContent = onClose => (
 		<>
-			<InspectorPopoverHeader
-				title={ __( 'Edit Budget', 'newspack-story-budget' ) }
-				onClose={ onClose }
-			/>
+			<InspectorPopoverHeader title={ __( 'Edit Budget', 'newspack-story-budget' ) } onClose={ onClose } />
 			<VStack spacing={ 2 }>
 				<div className="newspack-story-budget__field__content">
 					<InputControl
 						value={ name }
 						label={ __( 'Name', 'newspack-story-budget' ) }
-						onChange={ ( newName ) => {
+						onChange={ newName => {
 							setName( newName );
 						} }
 					/>
 				</div>
 				<Spacer margin={ 2 } />
-				<HStack
-					expanded
-					spacing={ 2 }
-					justify="end"
-					direction="row-reverse"
-				>
-					<Button
-						variant="primary"
-						disabled={ name === budget.name || '' === name }
-						type="submit"
-						onClick={ onSave }
-					>
+				<HStack expanded spacing={ 2 } justify="end" direction="row-reverse">
+					<Button variant="primary" disabled={ name === budget.name || '' === name } type="submit" onClick={ onSave }>
 						{ __( 'Save', 'newspack-story-budget' ) }
 					</Button>
-					<Button
-						variant="secondary"
-						onClick={ onCancel }
-					>
+					<Button variant="secondary" onClick={ onCancel }>
 						{ __( 'Cancel', 'newspack-story-budget' ) }
 					</Button>
 				</HStack>

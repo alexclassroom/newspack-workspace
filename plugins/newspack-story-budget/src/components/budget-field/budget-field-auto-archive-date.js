@@ -9,7 +9,7 @@ import {
 	__experimentalVStack as VStack,
 	__experimentalText as Text,
 	Button,
-	DatePicker
+	DatePicker,
 } from '@wordpress/components';
 import { __experimentalInspectorPopoverHeader as InspectorPopoverHeader } from '@wordpress/block-editor';
 import { useState } from '@wordpress/element';
@@ -36,20 +36,16 @@ const BudgetAutoArchiveDateField = ( { budget, onUpdateBudget = () => {} } ) => 
 		setIsOpen( false );
 	};
 
-	const formatDate = ( dateString ) => {
+	const formatDate = dateString => {
 		if ( ! dateString ) {
 			return '';
 		}
 
-		return new Date( dateString )
-			.toLocaleDateString(
-				'en-US',
-				{
-					year: 'numeric',
-					month: 'long',
-					day: 'numeric'
-				}
-			);
+		return new Date( dateString ).toLocaleDateString( 'en-US', {
+			year: 'numeric',
+			month: 'long',
+			day: 'numeric',
+		} );
 	};
 
 	if ( budget.archived ) {
@@ -58,7 +54,7 @@ const BudgetAutoArchiveDateField = ( { budget, onUpdateBudget = () => {} } ) => 
 
 	const toggleButton = (
 		<Button
-			className={ classnames('newspack-story-budget__field__button', 'newspack-story-budget__field__popover-button') }
+			className={ classnames( 'newspack-story-budget__field__button', 'newspack-story-budget__field__popover-button' ) }
 			variant="tertiary"
 			onClick={ () => setIsOpen( true ) }
 		>
@@ -76,60 +72,42 @@ const BudgetAutoArchiveDateField = ( { budget, onUpdateBudget = () => {} } ) => 
 		</Button>
 	);
 
-	const popoverContent = ( onClose ) => (
+	const popoverContent = onClose => (
 		<>
-			<InspectorPopoverHeader
-				title={ __( 'Auto-Archive', 'newspack-story-budget' ) }
-				onClose={ onClose }
-			/>
+			<InspectorPopoverHeader title={ __( 'Auto-Archive', 'newspack-story-budget' ) } onClose={ onClose } />
 			<VStack spacing={ 4 }>
 				<DatePicker
 					currentDate={ autoArchiveDate }
-					isInvalidDate={ ( date ) => {
+					isInvalidDate={ date => {
 						return date < new Date();
 					} }
-					onChange={ ( newDate ) => {
+					onChange={ newDate => {
 						setAutoArchiveDate( newDate );
 					} }
 				/>
 				{ autoArchiveDate && (
 					<div>
-						<Text>
-							{ __( 'Automatically archive on ', 'newspack-story-budget' ) }
-						</Text>
-						<Text weight={ 600 }>
-							{ formatDate( autoArchiveDate ) }
-						</Text>
+						<Text>{ __( 'Automatically archive on ', 'newspack-story-budget' ) }</Text>
+						<Text weight={ 600 }>{ formatDate( autoArchiveDate ) }</Text>
 					</div>
 				) }
-				<HStack
-					expanded
-					spacing={ 2 }
-					justify="end"
-					direction="row-reverse"
-				>
-					<Button
-						variant="primary"
-						disabled={ autoArchiveDate === budget.archive_at }
-						type="submit"
-						onClick={ onSave }
-					>
+				<HStack expanded spacing={ 2 } justify="end" direction="row-reverse">
+					<Button variant="primary" disabled={ autoArchiveDate === budget.archive_at } type="submit" onClick={ onSave }>
 						{ __( 'Save', 'newspack-story-budget' ) }
 					</Button>
 					{ autoArchiveDate && (
 						<Button
-							onClick={ () => { setAutoArchiveDate( '' ) } }
+							onClick={ () => {
+								setAutoArchiveDate( '' );
+							} }
 							variant="secondary"
 							isDestructive
 						>
 							{ __( 'Reset', 'newspack-story-budget' ) }
 						</Button>
 					) }
-					<Button
-						variant="secondary"
-						onClick={ onCancel }
-					>
-						{__( 'Cancel', 'newspack-story-budget' ) }
+					<Button variant="secondary" onClick={ onCancel }>
+						{ __( 'Cancel', 'newspack-story-budget' ) }
 					</Button>
 				</HStack>
 			</VStack>

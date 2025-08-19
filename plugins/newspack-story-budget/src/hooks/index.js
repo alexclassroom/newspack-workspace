@@ -34,10 +34,7 @@ export const useFields = () => {
  * @return {Object} The field.
  */
 export const useField = fieldSlug => {
-	return useSelect(
-		select => select( NAMESPACE ).getField( fieldSlug ),
-		[ fieldSlug ]
-	);
+	return useSelect( select => select( NAMESPACE ).getField( fieldSlug ), [ fieldSlug ] );
 };
 
 /**
@@ -49,15 +46,9 @@ export const useField = fieldSlug => {
  * @return {Object} The field enhanced with props.
  */
 export const useStoryField = ( storyId, fieldSlug ) => {
-	const field = useSelect(
-		select => select( NAMESPACE ).getField( fieldSlug ),
-		[ fieldSlug ]
-	);
+	const field = useSelect( select => select( NAMESPACE ).getField( fieldSlug ), [ fieldSlug ] );
 
-	const fieldsProps = useSelect(
-		select => select( NAMESPACE ).getStoryMeta( storyId, 'fields_props' ),
-		[ storyId ]
-	);
+	const fieldsProps = useSelect( select => select( NAMESPACE ).getStoryMeta( storyId, 'fields_props' ), [ storyId ] );
 
 	return useMemo( () => {
 		if ( ! field ) {
@@ -100,8 +91,7 @@ export const useStoryFields = ( { allowEdit } ) => {
 				.map( field => ( {
 					id: field.slug,
 					label: field.name,
-					isVisible: () =>
-						field.show_in_table || field.always_visible_in_table,
+					isVisible: () => field.show_in_table || field.always_visible_in_table,
 					type: field.type,
 					enableHiding: ! field.always_visible_in_table,
 					enableSorting: field.is_sortable,
@@ -115,13 +105,7 @@ export const useStoryFields = ( { allowEdit } ) => {
 							: undefined,
 					render: applyFilters(
 						'newspack-story-budget.table-row-field',
-						value => (
-							<TableRowField
-								story={ value.item }
-								field={ field }
-								allowEdit={ allowEdit }
-							/>
-						),
+						value => <TableRowField story={ value.item } field={ field } allowEdit={ allowEdit } />,
 						field,
 						allowEdit
 					),
@@ -206,8 +190,5 @@ export const useView = () => {
  * Hook to get the story.
  */
 export const useStory = storyId => {
-	return useSelect(
-		select => select( NAMESPACE ).getStory( storyId ),
-		[ storyId ]
-	);
+	return useSelect( select => select( NAMESPACE ).getStory( storyId ), [ storyId ] );
 };

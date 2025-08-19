@@ -23,14 +23,7 @@ import { useFields, useStoryField } from '../hooks';
 
 const EMPTY_STRING = '';
 
-const EditFieldPanel = ( {
-	field,
-	value,
-	disabled = false,
-	onChange,
-	onToggle,
-	initialOpen = false,
-} ) => {
+const EditFieldPanel = ( { field, value, disabled = false, onChange, onToggle, initialOpen = false } ) => {
 	const [ isOpen, setIsOpen ] = useState( initialOpen );
 
 	useEffect( () => {
@@ -38,40 +31,16 @@ const EditFieldPanel = ( {
 	}, [ isOpen ] );
 
 	return (
-		<PanelBody
-			key={ field.slug }
-			title={ field.name }
-			opened={ isOpen }
-			onToggle={ setIsOpen }
-		>
+		<PanelBody key={ field.slug } title={ field.name } opened={ isOpen } onToggle={ setIsOpen }>
 			<PanelRow>
 				<VStack style={ { width: '100%' } } spacing={ 2 }>
-					{ field.description && (
-						<p className="newspack-story-budget__field-description">
-							{ field.description }
-						</p>
-					) }
-					<StoryFieldControl
-						field={ field }
-						value={ value || EMPTY_STRING }
-						onChange={ onChange }
-						disabled={ disabled }
-					/>
+					{ field.description && <p className="newspack-story-budget__field-description">{ field.description }</p> }
+					<StoryFieldControl field={ field } value={ value || EMPTY_STRING } onChange={ onChange } disabled={ disabled } />
 					<HStack expanded direction="row-reverse" justify="end">
-						<Button
-							variant="secondary"
-							disabled={
-								value === null || value === '' || disabled
-							}
-							onClick={ () => onChange( null ) }
-						>
+						<Button variant="secondary" disabled={ value === null || value === '' || disabled } onClick={ () => onChange( null ) }>
 							{ __( 'Clear field', 'newspack-story-budget' ) }
 						</Button>
-						<Button
-							variant="tertiary"
-							disabled={ disabled }
-							onClick={ () => setIsOpen( false ) }
-						>
+						<Button variant="tertiary" disabled={ disabled } onClick={ () => setIsOpen( false ) }>
 							{ __( 'Cancel changes', 'newspack-story-budget' ) }
 						</Button>
 					</HStack>
@@ -89,17 +58,8 @@ const FieldControl = ( { field, story, onChange, disabled } ) => {
 	return (
 		<VStack spacing={ 2 }>
 			<Heading level={ 5 }>{ fieldProps.name }</Heading>
-			{ fieldProps.description && (
-				<p className="newspack-story-budget__field-description">
-					{ fieldProps.description }
-				</p>
-			) }
-			<StoryFieldControl
-				field={ fieldProps }
-				value={ story[ fieldProps.slug ] || EMPTY_STRING }
-				onChange={ onChange }
-				disabled={ disabled }
-			/>
+			{ fieldProps.description && <p className="newspack-story-budget__field-description">{ fieldProps.description }</p> }
+			<StoryFieldControl field={ fieldProps } value={ story[ fieldProps.slug ] || EMPTY_STRING } onChange={ onChange } disabled={ disabled } />
 		</VStack>
 	);
 };
@@ -151,25 +111,15 @@ export default ( { items, closeModal, onActionPerformed } ) => {
 
 	const fields = useFields();
 
-	const [ previousSavingStories, setPreviousSavingStories ] =
-		useState( false );
+	const [ previousSavingStories, setPreviousSavingStories ] = useState( false );
 
-	const [ editedStory, setEditedStory ] = useState(
-		isBulk ? {} : items[ 0 ]
-	);
+	const [ editedStory, setEditedStory ] = useState( isBulk ? {} : items[ 0 ] );
 
-	const [ editedFields, setEditedFields ] = useState(
-		isBulk
-			? []
-			: fields
-					.filter( field => field.is_editable )
-					.map( field => field.slug )
-	);
+	const [ editedFields, setEditedFields ] = useState( isBulk ? [] : fields.filter( field => field.is_editable ).map( field => field.slug ) );
 
 	const errorNoticeRef = useRef( null );
 
-	const { saveStories, clearSaveStoriesErrors } =
-		useDispatch( storeNamespace );
+	const { saveStories, clearSaveStoriesErrors } = useDispatch( storeNamespace );
 
 	if ( ! items || ! items.length ) {
 		return null;
@@ -193,19 +143,10 @@ export default ( { items, closeModal, onActionPerformed } ) => {
 	}, [ saveError ] );
 
 	const nonBulkTypes = [ 'date', 'datetime', 'longtext', 'number' ];
-	const bulkFields = fields.filter(
-		field =>
-			! nonBulkTypes.includes( field.type ) &&
-			field.is_editable &&
-			field.slug !== 'status'
-	);
+	const bulkFields = fields.filter( field => ! nonBulkTypes.includes( field.type ) && field.is_editable && field.slug !== 'status' );
 
 	const handleFieldToggle = field => open => {
-		setEditedFields(
-			open
-				? [ ...editedFields, field.slug ]
-				: editedFields.filter( f => f !== field.slug )
-		);
+		setEditedFields( open ? [ ...editedFields, field.slug ] : editedFields.filter( f => f !== field.slug ) );
 		// If the field is being closed, clear the value.
 		if ( ! open ) {
 			setEditedStory( {
@@ -222,8 +163,7 @@ export default ( { items, closeModal, onActionPerformed } ) => {
 			items.map( item => item.id ),
 			editedFields.map( field => ( {
 				slug: field,
-				value:
-					editedStory[ field ] === null ? '' : editedStory[ field ], // API will skip null values, let's send empty strings instead.
+				value: editedStory[ field ] === null ? '' : editedStory[ field ], // API will skip null values, let's send empty strings instead.
 			} ) )
 		);
 	};
@@ -259,13 +199,9 @@ export default ( { items, closeModal, onActionPerformed } ) => {
 							<EditFieldPanel
 								key={ field.slug }
 								field={ field }
-								value={
-									editedStory[ field.slug ] || EMPTY_STRING
-								}
+								value={ editedStory[ field.slug ] || EMPTY_STRING }
 								onToggle={ handleFieldToggle( field ) }
-								initialOpen={ editedFields.includes(
-									field.slug
-								) }
+								initialOpen={ editedFields.includes( field.slug ) }
 								onChange={ data =>
 									setEditedStory( {
 										...editedStory,
@@ -298,41 +234,19 @@ export default ( { items, closeModal, onActionPerformed } ) => {
 				) }
 				{ editedFields.length > 0 && isBulk && (
 					<VStack>
-						<p>
-							{ __(
-								'The following fields will be updated:',
-								'newspack-story-budget'
-							) }
-						</p>
+						<p>{ __( 'The following fields will be updated:', 'newspack-story-budget' ) }</p>
 						{ editedFields.map( field => (
-							<HStack
-								key={ field }
-								expanded
-								className="newspack-story-budget__field-row"
-							>
-								<Text>
-									{
-										fields.find( f => f.slug === field )
-											.name
-									}
-								</Text>
+							<HStack key={ field } expanded className="newspack-story-budget__field-row">
+								<Text>{ fields.find( f => f.slug === field ).name }</Text>
 								<Text className="newspack-story-budget__field">
 									<Text className="newspack-story-budget__field__value">
 										{ getDisplayValue(
-											fields.find(
-												f => f.slug === field
-											),
+											fields.find( f => f.slug === field ),
 											editedStory[ field ]
 										) || (
 											<Text className="newspack-story-budget__field__empty-value">
-												<Icon
-													icon={ warning }
-													size={ 20 }
-												/>
-												{ __(
-													'Will be empty',
-													'newspack-story-budget'
-												) }
+												<Icon icon={ warning } size={ 20 } />
+												{ __( 'Will be empty', 'newspack-story-budget' ) }
 											</Text>
 										) }
 									</Text>
@@ -342,28 +256,16 @@ export default ( { items, closeModal, onActionPerformed } ) => {
 					</VStack>
 				) }
 				<HStack expanded direction="row-reverse" justify="end">
-					<Button
-						variant="primary"
-						disabled={ ! editedFields.length || isSavingStories }
-						isBusy={ isSavingStories }
-						type="submit"
-					>
+					<Button variant="primary" disabled={ ! editedFields.length || isSavingStories } isBusy={ isSavingStories } type="submit">
 						{ items.length === 1
 							? __( 'Save story', 'newspack-story-budget' )
 							: sprintf(
 									// translators: %d is the number of stories.
-									__(
-										'Save %d stories',
-										'newspack-story-budget'
-									),
+									__( 'Save %d stories', 'newspack-story-budget' ),
 									items.length
 							  ) }
 					</Button>
-					<Button
-						variant="tertiary"
-						onClick={ closeModal }
-						disabled={ isSavingStories }
-					>
+					<Button variant="tertiary" onClick={ closeModal } disabled={ isSavingStories }>
 						{ __( 'Cancel', 'newspack-story-budget' ) }
 					</Button>
 				</HStack>

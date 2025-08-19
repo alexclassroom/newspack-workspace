@@ -24,10 +24,7 @@ export default function TableRowField( { story, field, allowEdit = false } ) {
 
 	const view = useView();
 
-	const fieldIdx = useMemo(
-		() => view.fields.findIndex( f => f === field.slug ),
-		[ view.fields, field.slug ]
-	);
+	const fieldIdx = useMemo( () => view.fields.findIndex( f => f === field.slug ), [ view.fields, field.slug ] );
 
 	return (
 		<div className="newspack-story-budget__table-row-field">
@@ -39,12 +36,7 @@ export default function TableRowField( { story, field, allowEdit = false } ) {
 					} }
 				/>
 			) : (
-				<StoryField
-					fieldId={ field.slug }
-					storyId={ story.id }
-					allowEdit={ allowEdit }
-					saveInPlace
-				/>
+				<StoryField fieldId={ field.slug } storyId={ story.id } allowEdit={ allowEdit } saveInPlace />
 			) }
 			{ fieldIdx === 0 && ! isLoadingStory && storyError && (
 				<Tooltip text={ storyError }>

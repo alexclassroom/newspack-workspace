@@ -28,29 +28,13 @@ export default function SitesNav() {
 		getCurrentSiteName()
 	);
 	return (
-		<HStack justify={ remoteSite ? "space-between" : "end" } style={ { marginLeft: '-16px' } }>
+		<HStack justify={ remoteSite ? 'space-between' : 'end' } style={ { marginLeft: '-16px' } }>
 			{ remoteSite && (
-				<Button
-					href={ getLeaveSiteUrl() }
-					variant="secondary"
-					size="small"
-					icon={ logout }
-					iconPosition="right"
-					iconSize={ 16 }
-				>
+				<Button href={ getLeaveSiteUrl() } variant="secondary" size="small" icon={ logout } iconPosition="right" iconSize={ 16 }>
 					{ leaveLabel }
 				</Button>
 			) }
-			{ sites.length > 0 && (
-				<Button
-					href="#/stories/sites"
-					icon={ globe }
-					label={ __(
-						'Connect to remote site',
-						'newspack-story-budget'
-					) }
-				/>
-			) }
+			{ sites.length > 0 && <Button href="#/stories/sites" icon={ globe } label={ __( 'Connect to remote site', 'newspack-story-budget' ) } /> }
 		</HStack>
 	);
 }

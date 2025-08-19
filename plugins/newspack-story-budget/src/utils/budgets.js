@@ -10,7 +10,9 @@ export const filter = ( budgets, view ) => {
 			switch ( field ) {
 				case 'status':
 					if ( 'archived' === value ) {
-						if ( false === pagination ) { pagination = true };
+						if ( false === pagination ) {
+							pagination = true;
+						}
 						return budget?.archived;
 					}
 					return ! budget?.archived;
@@ -23,7 +25,7 @@ export const filter = ( budgets, view ) => {
 	if ( pagination ) {
 		const startIndex = ( view.page - 1 ) * view.perPage;
 		const endIndex = view.page * view.perPage;
-		budgets = budgets.slice(startIndex, endIndex);
+		budgets = budgets.slice( startIndex, endIndex );
 	}
 
 	return budgets;
@@ -32,9 +34,15 @@ export const filter = ( budgets, view ) => {
 export const sortByOrder = ( items, order ) => {
 	return [ ...items ].sort( ( a, b ) => {
 		// Items with order 0 should go to the end
-		if ( a.order === 0 && b.order !== 0 ) { return 1 };
-		if ( b.order === 0 && a.order !== 0 ) { return -1 };
-		if ( a.order === 0 && b.order === 0 ) { return 0 };
+		if ( a.order === 0 && b.order !== 0 ) {
+			return 1;
+		}
+		if ( b.order === 0 && a.order !== 0 ) {
+			return -1;
+		}
+		if ( a.order === 0 && b.order === 0 ) {
+			return 0;
+		}
 
 		const aIndex = order.indexOf( a.id );
 		const bIndex = order.indexOf( b.id );
@@ -45,8 +53,12 @@ export const sortByOrder = ( items, order ) => {
 		}
 
 		// Push to the end
-		if ( aIndex !== -1 ) { return -1 };
-		if ( bIndex !== -1 ) { return 1 };
+		if ( aIndex !== -1 ) {
+			return -1;
+		}
+		if ( bIndex !== -1 ) {
+			return 1;
+		}
 
 		return 0;
 	} );
@@ -55,7 +67,7 @@ export const sortByOrder = ( items, order ) => {
 export const isBudgetStories = () => {
 	const urlParams = new URLSearchParams( window.location.search );
 	return urlParams.has( 'budget_id' );
-}
+};
 
 export const getCurrentBudget = () => {
 	const urlParams = new URLSearchParams( window.location.search );
@@ -63,7 +75,7 @@ export const getCurrentBudget = () => {
 	const budgetId = urlParams.get( 'budget_id' );
 
 	return budgetId ? budgetId : null;
-}
+};
 
 export const redirectWithCleanUrl = () => {
 	const url = new URL( window.location.href );
@@ -71,4 +83,4 @@ export const redirectWithCleanUrl = () => {
 	url.searchParams.delete( 'budget_id' );
 
 	window.location.replace( url.toString() );
-}
+};

@@ -3,10 +3,7 @@
  * WordPress dependencies
  */
 import { useState, useMemo } from '@wordpress/element';
-import {
-	__experimentalHStack as HStack,
-	__experimentalText as Text,
-} from '@wordpress/components';
+import { __experimentalHStack as HStack, __experimentalText as Text } from '@wordpress/components';
 
 /**
  * Internal dependencies
@@ -37,12 +34,7 @@ export default ( { field, story, anchor = 'field', onChange } ) => {
 	}
 
 	return (
-		<HStack
-			expanded
-			key={ field.slug }
-			className="newspack-story-budget__field-row"
-			ref={ anchor === 'panel' ? setPopoverAnchor : null }
-		>
+		<HStack expanded key={ field.slug } className="newspack-story-budget__field-row" ref={ anchor === 'panel' ? setPopoverAnchor : null }>
 			<Text>{ field.name }:</Text>
 			<StoryField
 				fieldId={ field.slug }

@@ -72,21 +72,14 @@ export default ( { field, value, onChange = () => {}, ...props } ) => {
 		const options = field.options.map( option => ( {
 			...option,
 			label: option.label || option.name,
-			disabled:
-				( option.hasOwnProperty( 'user_can_apply' ) &&
-					! option.user_can_apply ) ||
-				option.disabled ||
-				props.disabled,
+			disabled: ( option.hasOwnProperty( 'user_can_apply' ) && ! option.user_can_apply ) || option.disabled || props.disabled,
 		} ) );
 
 		if ( field.is_multiple ) {
 			return (
 				<VStack spacing={ 2 }>
 					{ options.map( option => (
-						<div
-							key={ getOptionId( option ) }
-							className="newspack-story-budget__control__checkbox-option"
-						>
+						<div key={ getOptionId( option ) } className="newspack-story-budget__control__checkbox-option">
 							<input
 								id={ getOptionId( option ) }
 								type="checkbox"
@@ -94,21 +87,12 @@ export default ( { field, value, onChange = () => {}, ...props } ) => {
 								disabled={ option.disabled }
 								onChange={ ev => {
 									onChange(
-										ev.target.checked
-											? [
-													...( value || [] ),
-													option.value,
-											  ]
-											: value?.filter(
-													v => v !== option.value
-											  ) || []
+										ev.target.checked ? [ ...( value || [] ), option.value ] : value?.filter( v => v !== option.value ) || []
 									);
 								} }
 								{ ...props }
 							/>
-							<label htmlFor={ getOptionId( option ) }>
-								{ option.label }
-							</label>
+							<label htmlFor={ getOptionId( option ) }>{ option.label }</label>
 						</div>
 					) ) }
 				</VStack>
@@ -117,10 +101,7 @@ export default ( { field, value, onChange = () => {}, ...props } ) => {
 		return (
 			<VStack spacing={ 2 }>
 				{ options.map( option => (
-					<div
-						key={ getOptionId( option ) }
-						className="newspack-story-budget__control__radio-option"
-					>
+					<div key={ getOptionId( option ) } className="newspack-story-budget__control__radio-option">
 						<input
 							{ ...props }
 							id={ getOptionId( option ) }
@@ -131,9 +112,7 @@ export default ( { field, value, onChange = () => {}, ...props } ) => {
 							onChange={ ev => onChange( ev.target.value ) }
 							disabled={ option.disabled }
 						/>
-						<label htmlFor={ getOptionId( option ) }>
-							{ option.label }
-						</label>
+						<label htmlFor={ getOptionId( option ) }>{ option.label }</label>
 					</div>
 				) ) }
 			</VStack>
@@ -141,53 +120,24 @@ export default ( { field, value, onChange = () => {}, ...props } ) => {
 	}
 
 	if ( field.type === 'date' ) {
-		return (
-			<DatePicker
-				currentDate={ new Date( value * 1000 ) }
-				{ ...controlProps }
-			/>
-		);
+		return <DatePicker currentDate={ new Date( value * 1000 ) } { ...controlProps } />;
 	}
 
 	if ( field.type === 'datetime' ) {
-		return (
-			<DateTimePicker
-				currentDate={ new Date( value * 1000 ) }
-				{ ...controlProps }
-			/>
-		);
+		return <DateTimePicker currentDate={ new Date( value * 1000 ) } { ...controlProps } />;
 	}
 
 	if ( field.type === 'longtext' ) {
-		return (
-			<TextareaControl
-				__next40pxDefaultSize
-				__nextHasNoMarginBottom
-				value={ value || EMPTY_STRING }
-				{ ...controlProps }
-			/>
-		);
+		return <TextareaControl __next40pxDefaultSize __nextHasNoMarginBottom value={ value || EMPTY_STRING } { ...controlProps } />;
 	}
 
 	if ( field.type === 'boolean' ) {
-		return (
-			<CheckboxControl
-				checked={ !! value }
-				label={ field.description || field.name }
-				onChange={ onChange }
-			/>
-		);
+		return <CheckboxControl checked={ !! value } label={ field.description || field.name } onChange={ onChange } />;
 	}
 
 	if ( field.type === 'number' ) {
 		controlProps.type = 'number';
 	}
 
-	return (
-		<InputControl
-			__next40pxDefaultSize
-			value={ value || EMPTY_STRING }
-			{ ...controlProps }
-		/>
-	);
+	return <InputControl __next40pxDefaultSize value={ value || EMPTY_STRING } { ...controlProps } />;
 };

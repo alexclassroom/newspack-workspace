@@ -10,7 +10,7 @@ export default ( state = INITIAL_STATE.search, action ) => {
 		case 'SEARCH_CLEAR':
 			return {
 				...state,
-				[ action.payload.type ]: []
+				[ action.payload.type ]: [],
 			};
 		default:
 			return state;

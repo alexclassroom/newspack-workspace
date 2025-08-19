@@ -12,9 +12,7 @@ jQuery( function ( $ ) {
 			const $quick_edit_row = $( '#edit-' + post_id );
 			const $budgets_span = $row.find( '.np-story-budget-budgets' );
 			const budgets = $budgets_span.data( 'budgets' );
-			const $select = $quick_edit_row.find(
-				'select[name="newspack_story_budget_budgets[]"]'
-			);
+			const $select = $quick_edit_row.find( 'select[name="newspack_story_budget_budgets[]"]' );
 			if ( typeof budgets !== 'undefined' ) {
 				if ( budgets ) {
 					// If multiple, split, otherwise set directly

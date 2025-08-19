@@ -24,9 +24,7 @@ export default ( state = {}, action ) => {
 			}
 			return {
 				...state,
-				fields: action.payload
-					.filter( field => field.show_in_table )
-					.map( field => field.slug ),
+				fields: action.payload.filter( field => field.show_in_table ).map( field => field.slug ),
 			};
 		default:
 			return state;

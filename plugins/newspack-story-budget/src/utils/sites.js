@@ -54,10 +54,7 @@ export function getCredentials( url ) {
  * @param {string} password Password.
  */
 export function setCredentials( url, login, password ) {
-	window.localStorage.setItem(
-		`newspack-story-budget-site-${ url }`,
-		btoa( `${ login }:${ password }` )
-	);
+	window.localStorage.setItem( `newspack-story-budget-site-${ url }`, btoa( `${ login }:${ password }` ) );
 }
 
 /**
@@ -161,9 +158,7 @@ export async function connect( url ) {
 	if ( ! data.namespaces.includes( 'newspack-story-budget/v1' ) ) {
 		throw new Error( 'Story Budget not enabled for this site.' );
 	}
-	window.location.href = getAuthorizationUrl(
-		data.authentication[ 'application-passwords' ].endpoints.authorization
-	);
+	window.location.href = getAuthorizationUrl( data.authentication[ 'application-passwords' ].endpoints.authorization );
 }
 
 /**

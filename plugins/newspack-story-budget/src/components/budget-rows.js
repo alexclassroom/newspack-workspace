@@ -14,12 +14,7 @@ import {
 	DropdownMenu,
 } from '@wordpress/components';
 import { ActionCard } from 'newspack-components';
-import {
-	moreVertical,
-	chevronUp,
-	chevronDown,
-	dragHandle,
-} from '@wordpress/icons';
+import { moreVertical, chevronUp, chevronDown, dragHandle } from '@wordpress/icons';
 
 /**
  * Internal dependencies.
@@ -33,8 +28,7 @@ const BudgetRows = ( { allowEdit, budgetStatus, isSearching } ) => {
 	const [ draggedItem, setDraggedItem ] = useState( null );
 	const [ currentBudgets, setCurrentBudgets ] = useState( [] );
 
-	const { updateBudget, saveActiveBudgetOrder } =
-		useDispatch( storeNamespace );
+	const { updateBudget, saveActiveBudgetOrder } = useDispatch( storeNamespace );
 
 	const { budgets } = useSelect(
 		select => ( {
@@ -66,19 +60,13 @@ const BudgetRows = ( { allowEdit, budgetStatus, isSearching } ) => {
 	 */
 	const handleDragStart = ( event, budgetId ) => {
 		// Only allow dragging if the target is the drag handle icon.
-		if (
-			! event.target.classList.contains(
-				'newspack-story-budget__budget-drag-handle'
-			)
-		) {
+		if ( ! event.target.classList.contains( 'newspack-story-budget__budget-drag-handle' ) ) {
 			event.preventDefault();
 			return;
 		}
 
 		// Find the closest wrapper element and add classes/set the drag image.
-		const wrapper = event.target.closest(
-			'.newspack-story-budget__budget-wrapper'
-		);
+		const wrapper = event.target.closest( '.newspack-story-budget__budget-wrapper' );
 		if ( wrapper ) {
 			wrapper.classList.add( 'is-dragging' );
 			event.dataTransfer.effectAllowed = 'move';
@@ -90,9 +78,7 @@ const BudgetRows = ( { allowEdit, budgetStatus, isSearching } ) => {
 
 	const handleDragEnd = event => {
 		// Find the closest wrapper element and remove the class
-		const wrapper = event.target.closest(
-			'.newspack-story-budget__budget-wrapper'
-		);
+		const wrapper = event.target.closest( '.newspack-story-budget__budget-wrapper' );
 		if ( wrapper ) {
 			wrapper.classList.remove( 'is-dragging' );
 		}
@@ -109,10 +95,7 @@ const BudgetRows = ( { allowEdit, budgetStatus, isSearching } ) => {
 		event.preventDefault();
 		const wrapper = event.currentTarget;
 
-		if (
-			draggedItem === targetBudgetId ||
-			wrapper.classList.contains( 'is-drag-over' )
-		) {
+		if ( draggedItem === targetBudgetId || wrapper.classList.contains( 'is-drag-over' ) ) {
 			return;
 		}
 		wrapper.classList.add( 'is-drag-over' );
@@ -124,12 +107,8 @@ const BudgetRows = ( { allowEdit, budgetStatus, isSearching } ) => {
 			return;
 		}
 
-		const draggedIndex = currentBudgets.findIndex(
-			budget => budget.id === draggedItem
-		);
-		const targetIndex = currentBudgets.findIndex(
-			budget => budget.id === targetBudgetId
-		);
+		const draggedIndex = currentBudgets.findIndex( budget => budget.id === draggedItem );
+		const targetIndex = currentBudgets.findIndex( budget => budget.id === targetBudgetId );
 		const newBudgets = [ ...currentBudgets ];
 		const [ removed ] = newBudgets.splice( draggedIndex, 1 );
 		newBudgets.splice( targetIndex, 0, removed );
@@ -141,9 +120,7 @@ const BudgetRows = ( { allowEdit, budgetStatus, isSearching } ) => {
 	};
 
 	const onUpClick = targetBudgetId => {
-		const index = currentBudgets.findIndex(
-			budget => budget.id === targetBudgetId
-		);
+		const index = currentBudgets.findIndex( budget => budget.id === targetBudgetId );
 		if ( 0 === index ) {
 			return;
 		}
@@ -155,9 +132,7 @@ const BudgetRows = ( { allowEdit, budgetStatus, isSearching } ) => {
 	};
 
 	const onDownClick = targetBudgetId => {
-		const index = currentBudgets.findIndex(
-			budget => budget.id === targetBudgetId
-		);
+		const index = currentBudgets.findIndex( budget => budget.id === targetBudgetId );
 		const targetBudget = currentBudgets[ index ];
 		const newBudgets = [ ...currentBudgets ];
 		newBudgets.splice( index, 1 );
@@ -191,9 +166,7 @@ const BudgetRows = ( { allowEdit, budgetStatus, isSearching } ) => {
 			},
 		},
 		{
-			title: budget.archived
-				? __( 'Unarchive', 'newspack-story-budget' )
-				: __( 'Archive', 'newspack-story-budget' ),
+			title: budget.archived ? __( 'Unarchive', 'newspack-story-budget' ) : __( 'Archive', 'newspack-story-budget' ),
 			onClick: async () => {
 				await onUpdateBudget( budget.id, {
 					...budget,
@@ -225,110 +198,47 @@ const BudgetRows = ( { allowEdit, budgetStatus, isSearching } ) => {
 						title={
 							<>
 								<div className="newspack-story-budget__budget-title">
-									<HStack
-										justify="between"
-										spacing={ 2 }
-										align="center"
-									>
-										{ allowEdit &&
-											BUDGET_STATUS.ACTIVE ===
-												budgetStatus && (
-												<>
-													<span
-														className="newspack-story-budget__budget-drag-handle"
-														draggable
+									<HStack justify="between" spacing={ 2 } align="center">
+										{ allowEdit && BUDGET_STATUS.ACTIVE === budgetStatus && (
+											<>
+												<span className="newspack-story-budget__budget-drag-handle" draggable>
+													<Icon icon={ dragHandle } />
+												</span>
+												<span className="newspack-story-budget__budget__sort-buttons">
+													<button
+														className="newspack-story-budget__sort-buttons__up"
+														onClick={ () => onUpClick( budget.id ) }
+														disabled={ 0 === currentBudgets.findIndex( b => b.id === budget.id ) }
 													>
-														<Icon
-															icon={ dragHandle }
-														/>
-													</span>
-													<span className="newspack-story-budget__budget__sort-buttons">
-														<button
-															className="newspack-story-budget__sort-buttons__up"
-															onClick={ () =>
-																onUpClick(
-																	budget.id
-																)
-															}
-															disabled={
-																0 ===
-																currentBudgets.findIndex(
-																	b =>
-																		b.id ===
-																		budget.id
-																)
-															}
-														>
-															<Icon
-																icon={
-																	chevronUp
-																}
-															/>
-														</button>
-														<button
-															className="newspack-story-budget__sort-buttons__down"
-															onClick={ () =>
-																onDownClick(
-																	budget.id
-																)
-															}
-															disabled={
-																currentBudgets.length -
-																	1 ===
-																currentBudgets.findIndex(
-																	b =>
-																		b.id ===
-																		budget.id
-																)
-															}
-														>
-															<Icon
-																icon={
-																	chevronDown
-																}
-															/>
-														</button>
-													</span>
-												</>
-											) }
+														<Icon icon={ chevronUp } />
+													</button>
+													<button
+														className="newspack-story-budget__sort-buttons__down"
+														onClick={ () => onDownClick( budget.id ) }
+														disabled={ currentBudgets.length - 1 === currentBudgets.findIndex( b => b.id === budget.id ) }
+													>
+														<Icon icon={ chevronDown } />
+													</button>
+												</span>
+											</>
+										) }
 										<span className="newspack-story-budget__budget-title__name">
 											{ allowEdit ? (
 												<div className="newspack-story-budget__field">
-													<BudgetNameField
-														budget={ budget }
-														onUpdateBudget={
-															onUpdateBudget
-														}
-													/>
-													<BudgetAutoArchiveDateField
-														budget={ budget }
-														onUpdateBudget={
-															onUpdateBudget
-														}
-													/>
+													<BudgetNameField budget={ budget } onUpdateBudget={ onUpdateBudget } />
+													<BudgetAutoArchiveDateField budget={ budget } onUpdateBudget={ onUpdateBudget } />
 												</div>
 											) : (
 												<VStack>
 													<span>{ budget.name }</span>
 													{ budget.archive_at && (
-														<Text
-															size="small"
-															variant="muted"
-														>
-															{ __(
-																'Auto-archive set for ',
-																'newspack-story-budget'
-															) }
-															{ new Date(
-																budget.archive_at
-															).toLocaleDateString(
-																'en-US',
-																{
-																	year: 'numeric',
-																	month: 'long',
-																	day: 'numeric',
-																}
-															) }
+														<Text size="small" variant="muted">
+															{ __( 'Auto-archive set for ', 'newspack-story-budget' ) }
+															{ new Date( budget.archive_at ).toLocaleDateString( 'en-US', {
+																year: 'numeric',
+																month: 'long',
+																day: 'numeric',
+															} ) }
 														</Text>
 													) }
 												</VStack>
@@ -341,15 +251,11 @@ const BudgetRows = ( { allowEdit, budgetStatus, isSearching } ) => {
 						actionText={
 							<DropdownMenu
 								icon={ moreVertical }
-								label={ __(
-									'Actions',
-									'newspack-story-budget'
-								) }
+								label={ __( 'Actions', 'newspack-story-budget' ) }
 								controls={ getBudgetControls( budget ) }
 								popoverProps={ {
 									placement: 'bottom-end',
-									className:
-										'newspack-story-budget__budget-actions',
+									className: 'newspack-story-budget__budget-actions',
 								} }
 							/>
 						}
@@ -357,9 +263,7 @@ const BudgetRows = ( { allowEdit, budgetStatus, isSearching } ) => {
 				</div>
 			) ) }
 			{ 0 === currentBudgets.length && (
-				<div className="newspack-story-budget__no-budgets">
-					{ __( 'No budgets found.', 'newspack-story-budget' ) }
-				</div>
+				<div className="newspack-story-budget__no-budgets">{ __( 'No budgets found.', 'newspack-story-budget' ) }</div>
 			) }
 		</>
 	);

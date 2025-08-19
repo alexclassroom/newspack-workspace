@@ -45,16 +45,13 @@ export const getDisplayValue = ( field, value ) => {
 		value === undefined ||
 		value === '' ||
 		( Array.isArray( value ) && ! value.length ) ||
-		( [ 'date', 'datetime', 'text', 'longtext' ].includes( field.type ) &&
-			! value )
+		( [ 'date', 'datetime', 'text', 'longtext' ].includes( field.type ) && ! value )
 	) {
 		return null;
 	}
 	if ( field.options?.length ) {
 		if ( Array.isArray( value ) ) {
-			value = value.map(
-				v => field.options.find( o => o.value === v )?.label || v
-			);
+			value = value.map( v => field.options.find( o => o.value === v )?.label || v );
 		}
 		value = field.options.find( o => o.value === value )?.label || value;
 	}
@@ -83,7 +80,5 @@ export const getUniqueValues = field => {
 	return stories
 		.map( story => story[ field.slug ] )
 		.flat()
-		.filter(
-			( value, index, self ) => value && self.indexOf( value ) === index
-		);
+		.filter( ( value, index, self ) => value && self.indexOf( value ) === index );
 };

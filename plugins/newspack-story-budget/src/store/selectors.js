@@ -12,18 +12,14 @@ export const isBusy = state =>
 	state.meta.searching ||
 	state.meta.refreshing ||
 	state.meta.savingStories ||
-	( state.meta.loadingStory &&
-		Object.values( state.meta.loadingStory || {} ).some( v => v ) ) ||
+	( state.meta.loadingStory && Object.values( state.meta.loadingStory || {} ).some( v => v ) ) ||
 	false;
 
-export const isLoadingStory = ( state, id ) =>
-	state.meta.loadingStory?.[ id ] ?? false;
+export const isLoadingStory = ( state, id ) => state.meta.loadingStory?.[ id ] ?? false;
 
 export const isSavingStories = state => state.meta.savingStories;
 
-export const isLoadingStories = state =>
-	state.meta.loadingStory &&
-	Object.values( state.meta.loadingStory ).some( Boolean );
+export const isLoadingStories = state => state.meta.loadingStory && Object.values( state.meta.loadingStory ).some( Boolean );
 
 export const isCreatingStory = state => state.meta.isCreatingStory ?? false;
 
@@ -33,11 +29,9 @@ export const getProgress = state => state.meta.progress;
 
 export const getFields = state => state.fields;
 
-export const getField = ( state, slug ) =>
-	state.fields.find( f => f.slug === slug );
+export const getField = ( state, slug ) => state.fields.find( f => f.slug === slug );
 
-export const isBudgetsLoading = state =>
-	state.meta.loadingBudgets || state.meta.searching;
+export const isBudgetsLoading = state => state.meta.loadingBudgets || state.meta.searching;
 
 export const getBudgets = createSelector(
 	state => {
@@ -46,9 +40,7 @@ export const getBudgets = createSelector(
 		let budgets;
 
 		if ( budgetsView.search ) {
-			budgets = search.budgets.map( id =>
-				state.budgets.find( budget => id === budget.id )
-			);
+			budgets = search.budgets.map( id => state.budgets.find( budget => id === budget.id ) );
 		} else {
 			budgets = Object.values( state.budgets );
 		}
@@ -59,12 +51,7 @@ export const getBudgets = createSelector(
 
 		return budgets;
 	},
-	state => [
-		state.search.budgets,
-		state.budgets,
-		state.budgetsView.search,
-		state.budgetsView.filters,
-	]
+	state => [ state.search.budgets, state.budgets, state.budgetsView.search, state.budgetsView.filters ]
 );
 
 export const getBudgetsCount = state => {
@@ -91,9 +78,7 @@ export const getStories = createSelector(
 		let stories;
 
 		if ( view.search ) {
-			stories = search.stories.map( id =>
-				state.stories[ id ] ? state.stories[ id ] : { id }
-			);
+			stories = search.stories.map( id => ( state.stories[ id ] ? state.stories[ id ] : { id } ) );
 		} else {
 			stories = Object.values( state.stories );
 		}
@@ -107,13 +92,7 @@ export const getStories = createSelector(
 		}
 		return stories;
 	},
-	state => [
-		state.search.stories,
-		state.stories,
-		state.view.search,
-		state.view.filters,
-		state.view.sort,
-	]
+	state => [ state.search.stories, state.stories, state.view.search, state.view.filters, state.view.sort ]
 );
 
 export const getStory = ( state, id ) => state.stories[ id ];
@@ -142,24 +121,17 @@ export const getView = createSelector(
 
 export const canManage = () => ! utils.sites.isRemoteSite();
 
-export const canEditStory = ( state, id ) =>
-	canManage() &&
-	( state.meta.stories.can_edit || state.stories[ id ]?.metadata?.can_edit );
+export const canEditStory = ( state, id ) => canManage() && ( state.meta.stories.can_edit || state.stories[ id ]?.metadata?.can_edit );
 
 export const getStoriesMeta = state => state.meta.stories;
 
-export const getStoryMeta = ( state, id, key ) =>
-	key
-		? state.stories[ id ]?.metadata?.[ key ]
-		: state.stories[ id ]?.metadata;
+export const getStoryMeta = ( state, id, key ) => ( key ? state.stories[ id ]?.metadata?.[ key ] : state.stories[ id ]?.metadata );
 
 export const getErrors = state => state.errors;
 
-export const getFieldError = ( state, storyId, fieldId ) =>
-	state.errors[ `${ storyId }-${ fieldId }` ];
+export const getFieldError = ( state, storyId, fieldId ) => state.errors[ `${ storyId }-${ fieldId }` ];
 
-export const getStoryError = ( state, storyId ) =>
-	state.errors[ `story-${ storyId }` ];
+export const getStoryError = ( state, storyId ) => state.errors[ `story-${ storyId }` ];
 
 export const getStoryMetaFetchQueue = state => state.meta.storyMetaFetchQueue;
 

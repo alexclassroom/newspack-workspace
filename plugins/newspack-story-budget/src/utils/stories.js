@@ -6,12 +6,7 @@ export const filter = ( stories, fields, view ) => {
 			continue;
 		}
 
-		if (
-			value === null ||
-			value === undefined ||
-			value === '' ||
-			( Array.isArray( value ) && ! value.length )
-		) {
+		if ( value === null || value === undefined || value === '' || ( Array.isArray( value ) && ! value.length ) ) {
 			continue;
 		}
 

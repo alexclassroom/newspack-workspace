@@ -24,13 +24,11 @@ import StoryFieldPanel from './story-field-panel';
 import { useFields, useStory } from '../hooks';
 
 export default ( { storyId, onCancel } ) => {
-	const { isLoadingStory, canEditStory, storyError } = useSelect(
-		select => ( {
-			isLoadingStory: select( storeNamespace ).isLoadingStory( storyId ),
-			canEditStory: select( storeNamespace ).canEditStory( storyId ),
-			storyError: select( storeNamespace ).getStoryError( storyId ),
-		} )
-	);
+	const { isLoadingStory, canEditStory, storyError } = useSelect( select => ( {
+		isLoadingStory: select( storeNamespace ).isLoadingStory( storyId ),
+		canEditStory: select( storeNamespace ).canEditStory( storyId ),
+		storyError: select( storeNamespace ).getStoryError( storyId ),
+	} ) );
 	const story = useStory( storyId );
 	const fields = useFields();
 
@@ -64,12 +62,7 @@ export default ( { storyId, onCancel } ) => {
 	if ( ! story ) {
 		if ( isLoadingStory ) {
 			return (
-				<VStack
-					expanded
-					style={ { height: '100%' } }
-					alignment="center"
-					justify="center"
-				>
+				<VStack expanded style={ { height: '100%' } } alignment="center" justify="center">
 					<HStack expanded alignment="center" justify="center">
 						<Spinner />
 					</HStack>
@@ -80,11 +73,7 @@ export default ( { storyId, onCancel } ) => {
 	}
 
 	return (
-		<HStack
-			alignment="stretch"
-			spacing="0"
-			className="newspack-story-budget__story"
-		>
+		<HStack alignment="stretch" spacing="0" className="newspack-story-budget__story">
 			<VStack style={ { flexGrow: 1, position: 'relative' } }>
 				{ ! story.metadata?.can_preview && (
 					<VStack
@@ -101,12 +90,7 @@ export default ( { storyId, onCancel } ) => {
 						justify="center"
 					>
 						<Icon icon={ notAllowed } size={ 32 } />
-						<p>
-							{ __(
-								'Preview is unavailable',
-								'newspack-story-budget'
-							) }
-						</p>
+						<p>{ __( 'Preview is unavailable', 'newspack-story-budget' ) }</p>
 					</VStack>
 				) }
 				{ story.metadata?.can_preview && isIframeLoading && (
@@ -126,27 +110,22 @@ export default ( { storyId, onCancel } ) => {
 						<Spinner />
 					</VStack>
 				) }
-				{ story.metadata?.can_preview &&
-					story?.metadata?.preview_url && (
-						<iframe
-							title={ story.title }
-							src={ story.metadata.preview_url }
-							style={ {
-								width: '100%',
-								height: '100%',
-								minHeight: '500px',
-							} }
-							onLoad={ () => setIsIframeLoading( false ) }
-						/>
-					) }
+				{ story.metadata?.can_preview && story?.metadata?.preview_url && (
+					<iframe
+						title={ story.title }
+						src={ story.metadata.preview_url }
+						style={ {
+							width: '100%',
+							height: '100%',
+							minHeight: '500px',
+						} }
+						onLoad={ () => setIsIframeLoading( false ) }
+					/>
+				) }
 			</VStack>
 			<VStack justify="top" className="newspack-story-budget__sidebar">
 				{ ! isIframeLoading && storyError && (
-					<Notice
-						className="newspack-story-budget__error"
-						isDismissible={ false }
-						status="error"
-					>
+					<Notice className="newspack-story-budget__error" isDismissible={ false } status="error">
 						{ storyError }
 					</Notice>
 				) }
@@ -158,52 +137,24 @@ export default ( { storyId, onCancel } ) => {
 						padding: '16px',
 					} }
 				>
-					<StoryFieldPanel
-						fields={ fields }
-						story={ story }
-						onChange={ handleFieldChange }
-					/>
+					<StoryFieldPanel fields={ fields } story={ story } onChange={ handleFieldChange } />
 				</div>
 				{ ( canEditStory || onCancel ) && (
-					<HStack
-						expanded
-						direction="row-reverse"
-						justify="end"
-						style={ { padding: '16px', boxSizing: 'border-box' } }
-					>
+					<HStack expanded direction="row-reverse" justify="end" style={ { padding: '16px', boxSizing: 'border-box' } }>
 						{ canEditStory && (
-							<Button
-								variant="primary"
-								disabled={ isLoadingStory }
-								onClick={ handleSave }
-							>
+							<Button variant="primary" disabled={ isLoadingStory } onClick={ handleSave }>
 								{ __( 'Save', 'newspack-story-budget' ) }
 							</Button>
 						) }
-						<Button
-							variant="secondary"
-							disabled={ isLoadingStory }
-							onClick={ handleCancel }
-						>
-							{ canEditStory
-								? __( 'Cancel', 'newspack-story-budget' )
-								: __( 'Close', 'newspack-story-budget' ) }
+						<Button variant="secondary" disabled={ isLoadingStory } onClick={ handleCancel }>
+							{ canEditStory ? __( 'Cancel', 'newspack-story-budget' ) : __( 'Close', 'newspack-story-budget' ) }
 						</Button>
 						<Spacer />
-						{ ! isLoadingStory &&
-							canEditStory &&
-							story.metadata.edit_url && (
-								<Button
-									variant="link"
-									href={ story.metadata.edit_url }
-									target="_blank"
-								>
-									{ __(
-										'Edit post',
-										'newspack-story-budget'
-									) }
-								</Button>
-							) }
+						{ ! isLoadingStory && canEditStory && story.metadata.edit_url && (
+							<Button variant="link" href={ story.metadata.edit_url } target="_blank">
+								{ __( 'Edit post', 'newspack-story-budget' ) }
+							</Button>
+						) }
 						{ isLoadingStory && <Spinner /> }
 					</HStack>
 				) }

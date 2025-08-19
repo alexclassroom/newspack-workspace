@@ -5,22 +5,13 @@
 import { __ } from '@wordpress/i18n';
 import { useState } from '@wordpress/element';
 import { useSelect, useDispatch } from '@wordpress/data';
-import {
-	__experimentalVStack as VStack,
-	__experimentalHStack as HStack,
-	Button,
-	TextControl,
-	Notice,
-} from '@wordpress/components';
+import { __experimentalVStack as VStack, __experimentalHStack as HStack, Button, TextControl, Notice } from '@wordpress/components';
 import { store as noticesStore } from '@wordpress/notices';
 
 /**
  * Internal dependencies.
  */
-import {
-	NAMESPACE as storeNamespace,
-	NOTICE_CONTEXT,
-} from '../store/constants';
+import { NAMESPACE as storeNamespace, NOTICE_CONTEXT } from '../store/constants';
 
 const CreateBudgetModal = ( { onClose } ) => {
 	const [ budgetName, setBudgetName ] = useState( '' );
@@ -30,8 +21,7 @@ const CreateBudgetModal = ( { onClose } ) => {
 		isCreatingBudget: select( storeNamespace ).isCreatingBudget(),
 	} ) );
 
-	const { createBudget, clearErrors, fetchFields } =
-		useDispatch( storeNamespace );
+	const { createBudget, clearErrors, fetchFields } = useDispatch( storeNamespace );
 	const { createNotice, removeNotice } = useDispatch( noticesStore );
 
 	const handleSubmit = async e => {
@@ -77,19 +67,10 @@ const CreateBudgetModal = ( { onClose } ) => {
 				) }
 
 				<HStack justify="end">
-					<Button
-						variant="secondary"
-						onClick={ onClose }
-						disabled={ isCreatingBudget }
-					>
+					<Button variant="secondary" onClick={ onClose } disabled={ isCreatingBudget }>
 						{ __( 'Cancel', 'newspack-story-budget' ) }
 					</Button>
-					<Button
-						variant="primary"
-						type="submit"
-						disabled={ ! budgetName.trim() || isCreatingBudget }
-						isBusy={ isCreatingBudget }
-					>
+					<Button variant="primary" type="submit" disabled={ ! budgetName.trim() || isCreatingBudget } isBusy={ isCreatingBudget }>
 						{ __( 'Save', 'newspack-story-budget' ) }
 					</Button>
 				</HStack>

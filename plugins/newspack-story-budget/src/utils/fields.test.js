@@ -59,8 +59,8 @@ describe( 'fields utils', () => {
 				slug: 'status',
 				options: [
 					{ value: 'draft', label: 'Draft' },
-					{ value: 'published', label: 'Published' }
-				]
+					{ value: 'published', label: 'Published' },
+				],
 			};
 			expect( getDisplayValue( field, 'draft' ) ).toBe( 'Draft' );
 			expect( getDisplayValue( field, 'published' ) ).toBe( 'Published' );
@@ -73,8 +73,8 @@ describe( 'fields utils', () => {
 				options: [
 					{ value: 'news', label: 'News' },
 					{ value: 'sports', label: 'Sports' },
-					{ value: 'politics', label: 'Politics' }
-				]
+					{ value: 'politics', label: 'Politics' },
+				],
 			};
 			expect( getDisplayValue( field, [ 'news', 'politics' ] ) ).toEqual( 'News, Politics' );
 		} );
@@ -82,7 +82,7 @@ describe( 'fields utils', () => {
 		it( 'should return the original value when no transformation is needed', () => {
 			const field = { type: 'text', slug: 'title' };
 			expect( getDisplayValue( field, 'Hello World' ) ).toBe( 'Hello World' );
-			
+
 			const numField = { type: 'number', slug: 'priority' };
 			expect( getDisplayValue( numField, 123 ) ).toBe( 123 );
 		} );

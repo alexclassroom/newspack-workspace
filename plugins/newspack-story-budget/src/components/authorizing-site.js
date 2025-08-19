@@ -43,9 +43,7 @@ export default function AuthorizingSite() {
 						'newspack-story-budget__authorizing--error': ! success,
 					} ) }
 				>
-					{ success
-						? __( 'Connection authorized', 'newspack-story-budget' )
-						: __( 'Connection denied', 'newspack-story-budget' ) }
+					{ success ? __( 'Connection authorized', 'newspack-story-budget' ) : __( 'Connection denied', 'newspack-story-budget' ) }
 				</h3>
 				<HStack justify="center">
 					<Spinner style={ { margin: 0 } } />

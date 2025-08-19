@@ -58,9 +58,7 @@ export function getCache( key ) {
 		return null;
 	}
 	try {
-		const cache = decode(
-			sessionStorage.getItem( STORAGE_KEY_BASE + key )
-		);
+		const cache = decode( sessionStorage.getItem( STORAGE_KEY_BASE + key ) );
 		if ( ! cache?.data ) {
 			return null;
 		}

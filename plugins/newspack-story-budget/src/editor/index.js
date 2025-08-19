@@ -19,17 +19,13 @@ import '../style.scss';
 const StoryBudgetPanel = () => {
 	const [ editedStory, setEditedStory ] = useState( {} );
 
-	const postId = useSelect( select =>
-		select( 'core/editor' ).getCurrentPostId()
-	);
+	const postId = useSelect( select => select( 'core/editor' ).getCurrentPostId() );
 
-	const { storyError, isSavingPost, isDeletingPost } = useSelect(
-		select => ( {
-			storyError: select( storeNamespace ).getStoryError( postId ),
-			isSavingPost: select( 'core/editor' ).isSavingPost(),
-			isDeletingPost: select( 'core/editor' ).isDeletingPost(),
-		} )
-	);
+	const { storyError, isSavingPost, isDeletingPost } = useSelect( select => ( {
+		storyError: select( storeNamespace ).getStoryError( postId ),
+		isSavingPost: select( 'core/editor' ).isSavingPost(),
+		isDeletingPost: select( 'core/editor' ).isDeletingPost(),
+	} ) );
 
 	const story = useStory( postId );
 	const fields = useFields();
@@ -77,10 +73,7 @@ const StoryBudgetPanel = () => {
 					fields={ editableFields.map( field => {
 						// Change the field name to distinguish from WordPress post status
 						if ( field.name === 'Status' ) {
-							field.name = __(
-								'Story Status',
-								'newspack-story-budget'
-							);
+							field.name = __( 'Story Status', 'newspack-story-budget' );
 						}
 						return field;
 					} ) }

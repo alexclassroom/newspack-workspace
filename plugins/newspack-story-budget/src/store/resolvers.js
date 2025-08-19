@@ -13,12 +13,8 @@ export const getFields =
 export const getField =
 	() =>
 	async ( { dispatch, registry } ) => {
-		const { hasStartedResolution, hasFinishedResolution } =
-			registry.select( NAMESPACE );
-		if (
-			hasStartedResolution( 'getFields' ) ||
-			hasFinishedResolution( 'getFields' )
-		) {
+		const { hasStartedResolution, hasFinishedResolution } = registry.select( NAMESPACE );
+		if ( hasStartedResolution( 'getFields' ) || hasFinishedResolution( 'getFields' ) ) {
 			return;
 		}
 		await dispatch.fetchFields();
