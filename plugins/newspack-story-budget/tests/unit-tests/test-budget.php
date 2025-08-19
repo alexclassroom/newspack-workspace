@@ -175,4 +175,136 @@ class Test_Budget extends \WP_UnitTestCase {
 		$this->assertTrue( $refreshed_budget->archived );
 		$this->assertEmpty( $refreshed_budget->archive_at );
 	}
+
+	/**
+	 * Test add stories to budget.
+	 */
+	public function test_add_stories() {
+		$budget = new Budget( self::$budgets[0] );
+
+		// Create new stories for testing.
+		$new_stories = $this->factory->post->create_many( 3, [ 'post_type' => 'post' ] );
+
+		$result = $budget->add_stories( $new_stories );
+		$this->assertEquals( 3, $result );
+
+		// Verify stories were added to budget.
+		foreach ( $new_stories as $story_id ) {
+			$story_budgets = wp_get_post_terms( $story_id, Budgets::TAXONOMY, [ 'fields' => 'ids' ] );
+			$this->assertTrue( in_array( $budget->id, $story_budgets ) );
+		}
+	}
+
+	/**
+	 * Test remove stories from budget.
+	 */
+	public function test_remove_stories() {
+		$budget = new Budget( self::$budgets[0] );
+
+		$test_stories = $this->factory->post->create_many( 2, [ 'post_type' => 'post' ] );
+		$budget->add_stories( $test_stories );
+
+		foreach ( $test_stories as $story_id ) {
+			$story_budgets = wp_get_post_terms( $story_id, Budgets::TAXONOMY, [ 'fields' => 'ids' ] );
+			$this->assertTrue( in_array( $budget->id, $story_budgets ) );
+		}
+
+		$result = $budget->remove_stories( [ $test_stories[0] ] );
+		$this->assertEquals( 1, $result );
+
+		// Verify it was removed.
+		$story_budgets = wp_get_post_terms( $test_stories[0], Budgets::TAXONOMY, [ 'fields' => 'ids' ] );
+		$this->assertFalse( in_array( $budget->id, $story_budgets ) );
+
+		// Verify the other story is still there.
+		$story_budgets = wp_get_post_terms( $test_stories[1], Budgets::TAXONOMY, [ 'fields' => 'ids' ] );
+		$this->assertTrue( in_array( $budget->id, $story_budgets ) );
+	}
+
+	/**
+	 * Test set auto archive on archived budget.
+	 */
+	public function test_set_auto_archive_on_archived_budget() {
+		$budget_id = self::$budgets[1];
+		$budget = new Budget( $budget_id );
+
+		$budget->archive();
+
+		$result = $budget->set_auto_archive( '+3 days' );
+		$this->assertFalse( $result );
+	}
+
+	/**
+	 * Test get auto archive method.
+	 */
+	public function test_get_auto_archive() {
+		$budget_id = self::$budgets[0];
+		$budget = new Budget( $budget_id );
+
+		$budget->unarchive();
+		$budget->clear_auto_archive();
+
+		// Should be empty initially.
+		$date = $budget->get_auto_archive();
+		$this->assertEmpty( $date );
+
+		// Set a date and verify.
+		$future_date = new \DateTime( '+2 weeks' );
+		$budget->set_auto_archive( $future_date );
+
+		$date = $budget->get_auto_archive();
+		$this->assertNotEmpty( $date );
+
+		$retrieved_date = new \DateTime( $date );
+		$this->assertEquals(
+			$future_date->setTime( 0, 0, 0 )->format( 'c' ),
+			$retrieved_date->format( 'c' )
+		);
+	}
+
+	/**
+	 * Test archive and unarchive order handling.
+	 */
+	public function test_archive_unarchive_order() {
+		$budget_id = self::$budgets[0];
+		$budget    = new Budget( $budget_id );
+
+		// Set initial order.
+		update_term_meta( $budget_id, Budget::ORDER_META_KEY, 5 );
+		$budget = new Budget( $budget_id ); // Refresh.
+		$this->assertEquals( 5, $budget->order );
+
+		// Archive should reset order to 0.
+		$budget->archive();
+		$this->assertEquals( 0, $budget->order );
+		$this->assertEmpty( get_term_meta( $budget_id, Budget::ORDER_META_KEY, true ) );
+
+		// Unarchive should set order to 0.
+		$budget->unarchive();
+		$refreshed_budget = new Budget( $budget_id );
+		$this->assertEquals( 0, $refreshed_budget->order );
+	}
+
+	/**
+	 * Test get budget errors.
+	 */
+	public function test_get_budget_errors() {
+		// Test valid budget.
+		$budget = new Budget( self::$budgets[0] );
+		$errors = $budget->get_budget_errors();
+		$this->assertFalse( $errors->has_errors() );
+
+		// Test invalid budget.
+		$budget = new Budget( 999999 );
+		$errors = $budget->get_budget_errors();
+		$this->assertTrue( $errors->has_errors() );
+		$this->assertEquals( 'not_found', $errors->get_error_code() );
+
+		// Test wrong taxonomy.
+		$tag_id = $this->factory->tag->create();
+		$budget = new Budget( $tag_id );
+		$errors = $budget->get_budget_errors();
+		$this->assertTrue( $errors->has_errors() );
+		$this->assertEquals( 'not_found', $errors->get_error_code() );
+	}
 }

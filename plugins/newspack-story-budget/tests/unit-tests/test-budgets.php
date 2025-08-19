@@ -221,4 +221,67 @@ class Test_Budgets extends \WP_UnitTestCase {
 		$refreshed_budget2 = new Budget( self::$budgets[1] );
 		$this->assertFalse( $refreshed_budget2->archived );
 	}
+
+	/**
+	 * Test update_budgets_order method.
+	 */
+	public function test_update_budgets_order() {
+		Budgets::update_budgets_order( [ self::$budgets[1], self::$budgets[0] ] );
+
+		$refreshed_budget1 = new Budget( self::$budgets[0] );
+		$refreshed_budget2 = new Budget( self::$budgets[1] );
+
+		$this->assertEquals( 2, $refreshed_budget1->order );
+		$this->assertEquals( 1, $refreshed_budget2->order );
+	}
+
+	/**
+	 * Test get_budgets ordering.
+	 */
+	public function test_get_budgets_ordering() {
+		Budgets::update_budgets_order( [ self::$budgets[1], self::$budgets[0] ] );
+
+		$budgets = Budgets::get_budgets();
+		$this->assertEquals( self::$budgets[1], $budgets[0]->id );
+		$this->assertEquals( self::$budgets[0], $budgets[1]->id );
+
+		delete_term_meta( self::$budgets[0], Budget::ORDER_META_KEY );
+		delete_term_meta( self::$budgets[1], Budget::ORDER_META_KEY );
+
+		$budgets = Budgets::get_budgets();
+		$this->assertCount( 2, $budgets );
+	}
+
+	/**
+	 * Test get_stories with query arg parameter.
+	 */
+	public function test_get_stories_with_query_arg() {
+		$draft_post_id = self::factory()->post->create(
+			[
+				'post_type'   => 'post',
+				'post_status' => 'draft',
+			]
+		);
+		wp_set_post_terms( $draft_post_id, [ self::$budgets[0] ], Budgets::TAXONOMY );
+
+		$published_stories = Budgets::get_stories( [ 'post_status' => 'publish' ] );
+		$all_stories       = Budgets::get_stories();
+
+		$this->assertGreaterThan( count( $published_stories ), count( $all_stories ) );
+	}
+
+	/**
+	 * Test process_auto_archive_budgets with already archived budget.
+	 */
+	public function test_process_auto_archive_budgets_already_archived() {
+		$budget = new Budget( self::$budgets[0] );
+		$budget->archive();
+		$budget->set_auto_archive( new \DateTime( 'yesterday' ) ); // This should not work on archived budget.
+
+		$result = Budgets::process_auto_archive_budgets();
+		$this->assertEmpty( $result );
+
+		// Clean up.
+		$budget->unarchive();
+	}
 }
