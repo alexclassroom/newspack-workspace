@@ -1,3 +1,15 @@
+# [4.15.0](https://github.com/Automattic/newspack-blocks/compare/v4.14.8...v4.15.0) (2025-08-25)
+
+
+### Bug Fixes
+
+* skip acct creation on verification request ([#2182](https://github.com/Automattic/newspack-blocks/issues/2182)) [trigger release] ([caec396](https://github.com/Automattic/newspack-blocks/commit/caec3965df53a97b603e289ec0e32eb2b0d46655))
+
+
+### Features
+
+* add hooks around the content loop's content ([#2187](https://github.com/Automattic/newspack-blocks/issues/2187)) ([a2c4c37](https://github.com/Automattic/newspack-blocks/commit/a2c4c37f69b8b02afe9c9a78c98a388b14c97fc3))
+
 ## [4.14.8](https://github.com/Automattic/newspack-blocks/compare/v4.14.7...v4.14.8) (2025-08-12)
 
 
