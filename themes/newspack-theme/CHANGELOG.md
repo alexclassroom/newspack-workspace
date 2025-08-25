@@ -1,3 +1,17 @@
+# [2.13.0](https://github.com/Automattic/newspack-theme/compare/v2.12.0...v2.13.0) (2025-08-25)
+
+
+### Features
+
+* add an option to show subtitles on archive pages (NPMIG-1106) ([#2528](https://github.com/Automattic/newspack-theme/issues/2528)) ([0d9d7a6](https://github.com/Automattic/newspack-theme/commit/0d9d7a697afd93d82828ba3916f712a06a4c2d4a))
+
+# [2.13.0-alpha.1](https://github.com/Automattic/newspack-theme/compare/v2.12.0...v2.13.0-alpha.1) (2025-08-14)
+
+
+### Features
+
+* add an option to show subtitles on archive pages (NPMIG-1106) ([#2528](https://github.com/Automattic/newspack-theme/issues/2528)) ([0d9d7a6](https://github.com/Automattic/newspack-theme/commit/0d9d7a697afd93d82828ba3916f712a06a4c2d4a))
+
 # [2.12.0](https://github.com/Automattic/newspack-theme/compare/v2.11.1...v2.12.0) (2025-08-12)
 
 
