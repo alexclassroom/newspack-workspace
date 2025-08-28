@@ -38,7 +38,7 @@ const PostStatusExtensions = ({ meta, postType, updateMetaValue }) => {
 
 	return (
 		<PluginPostStatusInfo className="newspack__post-meta-toggles">
-			{hideDate && 0 <= hide_date.indexOf(postType) && (
+			{hideDate && (
 				<div>
 					<label htmlFor="hide_updated_date">
 						{__('Hide last updated date', 'newspack-theme')}
@@ -55,7 +55,7 @@ const PostStatusExtensions = ({ meta, postType, updateMetaValue }) => {
 					/>
 				</div>
 			)}
-			{showDate && 0 <= show_date.indexOf(postType) && (
+			{showDate && (
 				<div>
 					<label htmlFor="show_updated_date">
 						{__('Show last updated date', 'newspack-theme')}

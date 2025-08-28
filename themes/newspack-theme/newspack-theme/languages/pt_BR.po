@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Newspack\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/theme/newspack-theme\n"
-"POT-Creation-Date: 2025-08-12T08:09:51+00:00\n"
+"POT-Creation-Date: 2025-08-28T16:42:37+00:00\n"
 "PO-Revision-Date: 2025-03-14 10:02-0700\n"
 "Last-Translator: Luiz Eduardo Oliveira Fonseca <luizeof@gmail.com>\n"
 "Language-Team: Português do Brasil\n"
@@ -148,7 +148,7 @@ msgid "Social Links Menu"
 msgstr "Menu de Links Sociais"
 
 #: functions.php:147 inc/customizer.php:696 inc/customizer.php:841
-#: inc/customizer.php:1006 js/dist/extend-featured-image-editor.js:1
+#: inc/customizer.php:1021 js/dist/extend-featured-image-editor.js:1
 msgid "Small"
 msgstr "Pequeno"
 
@@ -165,7 +165,7 @@ msgid "M"
 msgstr "M"
 
 #: functions.php:159 inc/customizer.php:698 inc/customizer.php:840
-#: inc/customizer.php:1005 js/dist/extend-featured-image-editor.js:1
+#: inc/customizer.php:1020 js/dist/extend-featured-image-editor.js:1
 msgid "Large"
 msgstr "Amplo"
 
@@ -325,7 +325,7 @@ msgstr "Fechar pesquisa"
 msgid "Expand Comments"
 msgstr ""
 
-#: functions.php:475 inc/customizer.php:1242
+#: functions.php:475 inc/customizer.php:1257
 msgid "Collapse Comments"
 msgstr ""
 
@@ -726,7 +726,7 @@ msgstr ""
 msgid "Post Settings"
 msgstr ""
 
-#: inc/customizer.php:837 inc/customizer.php:1002
+#: inc/customizer.php:837 inc/customizer.php:1017
 msgid "Featured Image Default Position"
 msgstr ""
 
@@ -735,22 +735,22 @@ msgid ""
 "Affects all posts where the Featured Image Position is set to 'Default'."
 msgstr ""
 
-#: inc/customizer.php:842 inc/customizer.php:1007
+#: inc/customizer.php:842 inc/customizer.php:1022
 #: js/dist/extend-featured-image-editor.js:1
 msgid "Behind article title"
 msgstr ""
 
-#: inc/customizer.php:843 inc/customizer.php:1008
+#: inc/customizer.php:843 inc/customizer.php:1023
 #: js/dist/extend-featured-image-editor.js:1
 msgid "Beside article title"
 msgstr ""
 
-#: inc/customizer.php:844 inc/customizer.php:1009
+#: inc/customizer.php:844 inc/customizer.php:1024
 #: js/dist/extend-featured-image-editor.js:1
 msgid "Above article title"
 msgstr ""
 
-#: inc/customizer.php:845 inc/customizer.php:1010
+#: inc/customizer.php:845 inc/customizer.php:1025
 #: js/dist/extend-featured-image-editor.js:1
 msgid "Hidden"
 msgstr ""
@@ -765,138 +765,148 @@ msgid ""
 "forward. The template can still be changed on a per-post basis."
 msgstr ""
 
-#: inc/customizer.php:866 inc/customizer.php:1031
+#: inc/customizer.php:866 inc/customizer.php:1046
 msgid "With Sidebar"
 msgstr ""
 
-#: inc/customizer.php:867 inc/customizer.php:1032
+#: inc/customizer.php:867 inc/customizer.php:1047
 msgid "One Column"
 msgstr ""
 
-#: inc/customizer.php:868 inc/customizer.php:1033
+#: inc/customizer.php:868 inc/customizer.php:1048
 msgid "One Column Wide"
 msgstr ""
 
-#: inc/customizer.php:886
+#: inc/customizer.php:885
 msgid "Use \"time ago\" date format"
 msgstr ""
 
-#: inc/customizer.php:903
+#: inc/customizer.php:902
 msgid "Cut off for \"time ago\" date in days."
 msgstr ""
 
-#: inc/customizer.php:920
+#: inc/customizer.php:918
 msgid "Show \"last updated\" date on single posts"
 msgstr ""
 
-#: inc/customizer.php:921
+#: inc/customizer.php:919
 msgid ""
 "When paired with the \"time ago\" date format, the cut off for that format "
 "will automatically be switched to one day."
 msgstr ""
 
-#: inc/customizer.php:939
+#: inc/customizer.php:935
+msgid "Updated date threshold"
+msgstr ""
+
+#: inc/customizer.php:936
+msgid ""
+"The number of hours after publishing a post before updates cause the \"last "
+"updated\" date to appear."
+msgstr ""
+
+#: inc/customizer.php:954
 msgid "Use Yoast's primary category functionality"
 msgstr ""
 
-#: inc/customizer.php:957
+#: inc/customizer.php:972
 msgid "Display previous and next links at the bottom of each post."
 msgstr ""
 
-#: inc/customizer.php:974
+#: inc/customizer.php:989
 msgid ""
 "Display the custom excerpt at the top of single posts instead of the article "
 "subtitle."
 msgstr ""
 
-#: inc/customizer.php:985
+#: inc/customizer.php:1000
 msgid "Page Settings"
 msgstr ""
 
-#: inc/customizer.php:1003
+#: inc/customizer.php:1018
 msgid ""
 "Affects all pages where the Featured Image Position is set to 'Default'."
 msgstr ""
 
-#: inc/customizer.php:1028
+#: inc/customizer.php:1043
 msgid "Default Page Template"
 msgstr ""
 
-#: inc/customizer.php:1029
+#: inc/customizer.php:1044
 msgid ""
 "This option changes the selected template used for newly created pages going "
 "forward. The template can still be changed on a per-page basis."
 msgstr ""
 
-#: inc/customizer.php:1045
+#: inc/customizer.php:1060
 msgid "Archive Settings"
 msgstr ""
 
-#: inc/customizer.php:1062
+#: inc/customizer.php:1077
 msgid "Show excerpts for all archives"
 msgstr ""
 
-#: inc/customizer.php:1079
+#: inc/customizer.php:1094
 msgid "Show subtitles for all archives"
 msgstr ""
 
-#: inc/customizer.php:1096
+#: inc/customizer.php:1111
 msgid ""
 "Crop archive images to a 4:3 aspect ratio (changes require regenerating "
 "thumbnails for existing featured images)"
 msgstr ""
 
-#: inc/customizer.php:1113
+#: inc/customizer.php:1128
 msgid "Show image captions in archives and WordPress’s default search results"
 msgstr ""
 
-#: inc/customizer.php:1130
+#: inc/customizer.php:1145
 msgid "Show image credits in archives and WordPress’s default search results"
 msgstr ""
 
-#: inc/customizer.php:1148
+#: inc/customizer.php:1163
 msgid "Use a large, featured display for the latest post in the archives"
 msgstr ""
 
-#: inc/customizer.php:1165
+#: inc/customizer.php:1180
 msgid "Archive Layout"
 msgstr ""
 
-#: inc/customizer.php:1167
+#: inc/customizer.php:1182
 msgid "With sidebar"
 msgstr ""
 
 #. Template Name of the theme
-#: inc/customizer.php:1168
+#: inc/customizer.php:1183
 msgid "One column"
 msgstr ""
 
 #. Template Name of the theme
-#: inc/customizer.php:1169
+#: inc/customizer.php:1184
 msgid "One column wide"
 msgstr ""
 
-#: inc/customizer.php:1188
+#: inc/customizer.php:1203
 msgid "Archive Title Format"
 msgstr ""
 
-#: inc/customizer.php:1189
+#: inc/customizer.php:1204
 msgid "Change the format of the title used on archive pages."
 msgstr ""
 
-#: inc/customizer.php:1191
+#: inc/customizer.php:1206
 msgid "Default (eg. \"Category: Featured\", \"Author: Jane Doe\")"
 msgstr ""
 
-#: inc/customizer.php:1192
+#: inc/customizer.php:1207
 msgid "Only archive name (eg. \"Featured\", \"Jane Doe\")"
 msgstr ""
 
-#: inc/customizer.php:1210
+#: inc/customizer.php:1225
 msgid "List or Grid Layout"
 msgstr ""
 
-#: inc/customizer.php:1211
+#: inc/customizer.php:1226
 msgid ""
 "When using grid, set the number of posts per page to a number divisible by "
 "12 under Settings > Reading and disable the \"Use a large, featured display "
@@ -904,109 +914,109 @@ msgid ""
 "posts."
 msgstr ""
 
-#: inc/customizer.php:1213
+#: inc/customizer.php:1228
 msgid "List"
 msgstr ""
 
-#: inc/customizer.php:1214
+#: inc/customizer.php:1229
 msgid "Grid"
 msgstr ""
 
-#: inc/customizer.php:1226
+#: inc/customizer.php:1241
 msgid "Comments Settings"
 msgstr ""
 
-#: inc/customizer.php:1243
+#: inc/customizer.php:1258
 msgid ""
 "When using WordPress's default comments, checking this option will collapse "
 "the comments section when there is more than one comment, and display a "
 "button to expand."
 msgstr ""
 
-#: inc/customizer.php:1260
+#: inc/customizer.php:1275
 msgid "Display comment policy"
 msgstr ""
 
-#: inc/customizer.php:1261
+#: inc/customizer.php:1276
 msgid ""
 "Allows you to add an optional comment policy above the comment form when "
 "using WordPress's default comments."
 msgstr ""
 
-#: inc/customizer.php:1278
+#: inc/customizer.php:1293
 msgid "Comment policy text"
 msgstr ""
 
-#: inc/customizer.php:1289
+#: inc/customizer.php:1304
 msgid "Footer Settings"
 msgstr ""
 
-#: inc/customizer.php:1305
+#: inc/customizer.php:1320
 msgid "Show footer branding"
 msgstr ""
 
-#: inc/customizer.php:1306
+#: inc/customizer.php:1321
 msgid ""
 "Display the site logo in the footer when the footer widget area is populated."
 msgstr ""
 
-#: inc/customizer.php:1323
+#: inc/customizer.php:1338
 msgid "Footer Widget Layout"
 msgstr ""
 
-#: inc/customizer.php:1324
+#: inc/customizer.php:1339
 msgid ""
 "Stack the footer widgets, or have them automatically divide into even "
 "columns."
 msgstr ""
 
-#: inc/customizer.php:1326
+#: inc/customizer.php:1341
 msgid "Columns"
 msgstr ""
 
-#: inc/customizer.php:1327
+#: inc/customizer.php:1342
 msgid "Stacked"
 msgstr ""
 
-#: inc/customizer.php:1345
+#: inc/customizer.php:1360
 msgid "Copyright Information"
 msgstr ""
 
-#: inc/customizer.php:1346
+#: inc/customizer.php:1361
 msgid ""
 "Add custom text to be displayed next to a copyright symbol and current year "
 "in the footer. By default, it will display your site title."
 msgstr ""
 
-#: inc/customizer.php:1365
+#: inc/customizer.php:1380
 msgid "Typography"
 msgstr "Tipografia"
 
-#: inc/customizer.php:1412
+#: inc/customizer.php:1427
 msgid "Font Provider Import Code or URL"
 msgstr "Código ou URL de importação do provedor de fontes"
 
-#: inc/customizer.php:1422
+#: inc/customizer.php:1437
 msgid "Secondary Font Provider Import Code or URL"
 msgstr "Código ou URL de importação do provedor de fontes secundárias"
 
-#: inc/customizer.php:1431
+#: inc/customizer.php:1446
 msgid "Header Font"
 msgstr "Fonte do cabeçalho"
 
-#: inc/customizer.php:1447
+#: inc/customizer.php:1462
 msgid "Header Font Fallback Stack"
 msgstr "Pilha de fallback da fonte do cabeçalho"
 
-#: inc/customizer.php:1457
+#: inc/customizer.php:1472
 msgid "Body Font"
 msgstr "Fonte do Corpo"
 
-#: inc/customizer.php:1466
+#: inc/customizer.php:1481
 msgid "Body Font Fallback Stack"
 msgstr "Body Font Fallback Stack"
 
-#: inc/customizer.php:1485
+#: inc/customizer.php:1500
 msgid "Use all-caps for accent text."
 msgstr "Use letras maiúsculas para acentuar o texto."
 

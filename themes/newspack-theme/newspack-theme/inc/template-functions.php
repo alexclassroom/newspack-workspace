@@ -797,7 +797,8 @@ function newspack_should_display_updated_date() {
 
 		$publish_timestamp  = strtotime( $publish_date );
 		$modified_timestamp = strtotime( $modified_date );
-		$modified_cutoff    = strtotime( 'tomorrow midnight', $publish_timestamp );
+		$modified_threshold = get_theme_mod( 'post_updated_date_threshold', 24 );
+		$modified_cutoff    = strtotime( '+' . $modified_threshold . ' hours', $publish_timestamp );
 
 		// Show the updated date either if it's enabled site-wide and more than 24 hours past the publish date, or if it's enabled on this specific post:
 		if ( ( $modified_timestamp > $modified_cutoff && $show_updated_date_sitewide ) || $show_updated_date_post ) {
