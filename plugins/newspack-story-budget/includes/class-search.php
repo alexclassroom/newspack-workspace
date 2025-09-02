@@ -31,6 +31,15 @@ class Search {
 		$is_story_budget_search = ! empty( $query->query_vars['story_budget_search'] );
 		$is_wp_admin_search = is_admin() && 'edit.php' === $pagenow && $query->is_main_query();
 
+		/**
+		 * Enables search on custom fields in the WP Admin posts screen.
+		 *
+		 * This can slow down sites with too many posts.
+		 */
+		if ( ( ! defined( 'NEWSPACK_STORY_BUDGET_ENABLE_SEARCH_META' ) || ! NEWSPACK_STORY_BUDGET_ENABLE_SEARCH_META ) && $is_wp_admin_search ) {
+			return false;
+		}
+
 		return ! empty( $query->query_vars['s'] ) && ( $is_story_budget_search || $is_wp_admin_search );
 	}
 
