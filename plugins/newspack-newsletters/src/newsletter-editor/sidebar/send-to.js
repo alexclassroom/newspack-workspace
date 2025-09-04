@@ -30,8 +30,7 @@ const SendTo = () => {
 	const editPost = useDispatch( 'core/editor' ).editPost;
 	const updateMeta = ( meta ) => editPost( { meta } );
 
-	const newsletterData = useNewsletterData();
-	const { lists = [], sublists } = newsletterData; // All ESPs have lists, but not all have sublists.
+	const { newsletterData: { lists = [], sublists, send_list_id = null, send_sublist_id = null }, isRetrievingLists, hasRetrievedLists } = useNewsletterData();
 	const { labels } = newspack_newsletters_data || {};
 	const listLabel = labels?.list || __( 'list', 'newspack-newsletters' );
 	const sublistLabel = labels?.sublist || __( 'sublist', 'newspack-newsletters' );
@@ -46,7 +45,11 @@ const SendTo = () => {
 		}
 	}, [] );
 
+	// Handle fetching lists and sublists as needed.
 	useEffect( () => {
+		if ( isRetrievingLists ) {
+			return;
+		}
 		// If we have a selected list ID but no list info, fetch it.
 		if ( listId && ! selectedList ) {
 			fetchSendLists( { ids: [ listId ] } );
@@ -62,7 +65,13 @@ const SendTo = () => {
 			fetchSendLists( { type: 'sublist', parent_id: listId }, true );
 			updateMeta( { send_sublist_id: null } );
 		}
+	}, [ listId, sublistId ] );
 
+	// Handle cases where the selected list or sublist is no longer valid.
+	useEffect( () => {
+		if ( isRetrievingLists || ! hasRetrievedLists || ! lists.length ) {
+			return;
+		}
 		// If the list ID doesn't match any fetched lists reset the list and sublist IDs.
 		if ( listId && ! lists.find( item => item.id.toString() === listId.toString() ) ) {
 			updateMeta( { send_list_id: null, send_sublist_id: null } );
@@ -73,10 +82,10 @@ const SendTo = () => {
 					listLabel
 				)
 			);
+			return;
 		}
-
 		// If the sublist ID doesn't match any fetched sublists reset the sublist ID.
-		if ( sublistId && listId && ! sublists?.find( item => item.id.toString() === sublistId.toString() ) ) {
+		if ( listId && sublistId && ! sublists?.find( item => item.id.toString() === sublistId.toString() ) ) {
 			updateMeta( { send_sublist_id: null } );
 			setError(
 				sprintf(
@@ -86,7 +95,7 @@ const SendTo = () => {
 				)
 			);
 		}
-	}, [ newsletterData?.lists, newsletterData?.sublists, listId, sublistId ] );
+	}, [ lists, sublists ] );
 
 	const renderSelectedSummary = () => {
 		if ( ! selectedList?.name || ( selectedSublist && ! selectedSublist.name ) ) {
@@ -145,7 +154,7 @@ const SendTo = () => {
 				</Notice>
 			) }
 			{
-				( newsletterData?.send_list_id || newsletterData?.send_sublist_id ) && (
+				( send_list_id || send_sublist_id ) && (
 					<Notice status="success" isDismissible={ false }>
 						{ __( 'Updated send-to info fetched from ESP.', 'newspack-newsletters' ) }
 					</Notice>
