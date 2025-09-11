@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Newspack\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/theme/newspack-theme\n"
-"POT-Creation-Date: 2025-08-28T16:42:37+00:00\n"
+"POT-Creation-Date: 2025-09-08T14:34:56+00:00\n"
 "PO-Revision-Date: 2025-03-14 10:02-0700\n"
 "Last-Translator: Luiz Eduardo Oliveira Fonseca <luizeof@gmail.com>\n"
 "Language-Team: Português do Brasil\n"
@@ -55,12 +55,12 @@ msgid "Corrections and clarifications"
 msgstr ""
 
 #: archive-newspack_correction.php:51 comments.php:116
-#: inc/template-tags.php:321
+#: inc/template-tags.php:326
 msgid "Previous"
 msgstr "Anterior"
 
 #: archive-newspack_correction.php:52 comments.php:117
-#: inc/template-tags.php:319
+#: inc/template-tags.php:324
 msgid "Next"
 msgstr "Próximo"
 
@@ -131,11 +131,11 @@ msgstr "Feito por Newspack"
 msgid "Primary Menu"
 msgstr "Menu Principal"
 
-#: functions.php:89 inc/template-tags.php:649
+#: functions.php:89 inc/template-tags.php:654
 msgid "Secondary Menu"
 msgstr "Menu Secundário"
 
-#: functions.php:90 inc/template-tags.php:680
+#: functions.php:90 inc/template-tags.php:685
 msgid "Tertiary Menu"
 msgstr "Menu Terciário"
 
@@ -143,7 +143,7 @@ msgstr "Menu Terciário"
 msgid "Topic Highlight Menu"
 msgstr ""
 
-#: functions.php:92 inc/template-tags.php:737 inc/template-tags.php:751
+#: functions.php:92 inc/template-tags.php:742 inc/template-tags.php:756
 msgid "Social Links Menu"
 msgstr "Menu de Links Sociais"
 
@@ -523,7 +523,7 @@ msgid ""
 "visible."
 msgstr ""
 
-#: inc/customizer.php:281 inc/template-tags.php:575
+#: inc/customizer.php:281 inc/template-tags.php:580
 msgid "Donate"
 msgstr ""
 
@@ -1151,44 +1151,44 @@ msgstr ""
 msgid "Updated"
 msgstr ""
 
-#: inc/template-tags.php:112 inc/template-tags.php:153
+#: inc/template-tags.php:112 inc/template-tags.php:158
 msgid "by"
 msgstr "por"
 
 #. translators: %s: Name of current post. Only visible to screen readers.
-#: inc/template-tags.php:266
+#: inc/template-tags.php:271
 #, php-format
 msgid "Leave a comment<span class=\"screen-reader-text\"> on %s</span>"
 msgstr "Deixe um comentário em %s"
 
 #. translators: used between list items; followed by a space.
-#: inc/template-tags.php:295 inc/template-tags.php:338
+#: inc/template-tags.php:300 inc/template-tags.php:343
 msgid ","
 msgstr ","
 
-#: inc/template-tags.php:302
+#: inc/template-tags.php:307
 msgid "Posted in"
 msgstr "Postado em"
 
-#: inc/template-tags.php:343
+#: inc/template-tags.php:348
 msgid "Tagged:"
 msgstr "Marcado:"
 
 #. translators: %s: Name of current post; only visible to screen readers.
-#: inc/template-tags.php:354 template-parts/content/content-page.php:42
+#: inc/template-tags.php:359 template-parts/content/content-page.php:42
 #, php-format
 msgid "Edit <span class=\"screen-reader-text\">%s</span>"
 msgstr "Editar <span class=\"screen-reader-text\">%s</span>"
 
-#: inc/template-tags.php:557
+#: inc/template-tags.php:562
 msgid "Newer posts"
 msgstr "Postagens mais recentes"
 
-#: inc/template-tags.php:561
+#: inc/template-tags.php:566
 msgid "Older posts"
 msgstr "Posts mais antigos"
 
-#: inc/template-tags.php:617
+#: inc/template-tags.php:622
 msgid "Top Menu"
 msgstr "Menu do Topo"
 
