@@ -2,14 +2,14 @@
 # This file is distributed under the GPL2.
 msgid ""
 msgstr ""
-"Project-Id-Version: Newspack Newsletters 3.22.1\n"
+"Project-Id-Version: Newspack Newsletters 3.22.2\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/project\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2025-09-10T20:03:55+00:00\n"
+"POT-Creation-Date: 2025-09-15T16:15:58+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: newspack-newsletters\n"
@@ -2223,23 +2223,23 @@ msgstr ""
 msgid "Saved layouts"
 msgstr ""
 
-#: src/components/init-modal/screens/layout-picker/index.js:68
+#: src/components/init-modal/screens/layout-picker/index.js:67
 msgid "Choose a layout or start with a blank newsletter."
 msgstr ""
 
-#: src/components/init-modal/screens/layout-picker/index.js:113
+#: src/components/init-modal/screens/layout-picker/index.js:112
 msgid "You don’t have any saved layouts yet."
 msgstr ""
 
-#: src/components/init-modal/screens/layout-picker/index.js:116
+#: src/components/init-modal/screens/layout-picker/index.js:115
 msgid "Turn any newsletter to a layout via the \"Layout\" sidebar menu in the editor."
 msgstr ""
 
-#: src/components/init-modal/screens/layout-picker/index.js:129
+#: src/components/init-modal/screens/layout-picker/index.js:128
 msgid "Blank newsletter"
 msgstr ""
 
-#: src/components/init-modal/screens/layout-picker/index.js:136
+#: src/components/init-modal/screens/layout-picker/index.js:135
 msgid "Use selected layout"
 msgstr ""
 
@@ -2878,31 +2878,31 @@ msgstr ""
 msgid "Error fetching send lists."
 msgstr ""
 
-#: src/newsletter-editor/sidebar/index.js:141
+#: src/newsletter-editor/sidebar/index.js:144
 msgid "You must authorize your account before publishing your newsletter."
 msgstr ""
 
-#: src/newsletter-editor/sidebar/index.js:164
+#: src/newsletter-editor/sidebar/index.js:167
 msgid "There was an error retrieving campaign data. Please try again."
 msgstr ""
 
-#: src/newsletter-editor/sidebar/index.js:182
+#: src/newsletter-editor/sidebar/index.js:185
 msgid "Retrieving campaign data…"
 msgstr ""
 
-#: src/newsletter-editor/sidebar/index.js:194
+#: src/newsletter-editor/sidebar/index.js:197
 msgid "Campaign has been sent."
 msgstr ""
 
-#: src/newsletter-editor/sidebar/index.js:202
+#: src/newsletter-editor/sidebar/index.js:205
 msgid "Campaign Name"
 msgstr ""
 
-#: src/newsletter-editor/sidebar/index.js:210
+#: src/newsletter-editor/sidebar/index.js:213
 msgid "Subject"
 msgstr ""
 
-#: src/newsletter-editor/sidebar/index.js:217
+#: src/newsletter-editor/sidebar/index.js:220
 msgid "Preview text"
 msgstr ""
 
