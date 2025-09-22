@@ -1,3 +1,10 @@
+## [3.23.1](https://github.com/Automattic/newspack-newsletters/compare/v3.23.0...v3.23.1) (2025-09-22)
+
+
+### Bug Fixes
+
+* trigger save before opening send modal ([#1925](https://github.com/Automattic/newspack-newsletters/issues/1925)) ([7492915](https://github.com/Automattic/newspack-newsletters/commit/74929153a240eb0e6aa68093b3480e5510d8c466))
+
 # [3.23.0](https://github.com/Automattic/newspack-newsletters/compare/v3.22.2...v3.23.0) (2025-09-22)
 
 
