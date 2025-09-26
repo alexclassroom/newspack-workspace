@@ -140,6 +140,7 @@ export async function connect( url ) {
 		await validateConnection( url );
 		// Credentials are valid, redirect.
 		const redirectUrl = new URL( window.location.href );
+		redirectUrl.searchParams.delete( 'budget_id' ); // Remove budget_id from URL.
 		redirectUrl.searchParams.set( 'site_url', url );
 		redirectUrl.hash = '';
 		window.location.href = redirectUrl.toString();
