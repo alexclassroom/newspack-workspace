@@ -46,7 +46,7 @@
 		"@wordpress/browserslist-config": "^6.27.0",
 		"chokidar-cli": "^3.0.0",
 		"classnames": "^2.5.1",
-		"cssnano": "^7.1.0",
+		"cssnano": "^7.1.1",
 		"eslint": "^8.57.0",
 		"fs-extra": "^11.3.2",
 		"lint-staged": "^16.2.3",
