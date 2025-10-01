@@ -1,3 +1,10 @@
+## [4.15.4](https://github.com/Automattic/newspack-blocks/compare/v4.15.3...v4.15.4) (2025-10-01)
+
+
+### Bug Fixes
+
+* **iframe-block:** validate file extensions before allowing upload ([#2220](https://github.com/Automattic/newspack-blocks/issues/2220)) ([263e419](https://github.com/Automattic/newspack-blocks/commit/263e419b56814d3f848d6629a5442f54b1dad28d))
+
 ## [4.15.3](https://github.com/Automattic/newspack-blocks/compare/v4.15.2...v4.15.3) (2025-09-25)
 
 
