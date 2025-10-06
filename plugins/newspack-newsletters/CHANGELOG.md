@@ -1,3 +1,11 @@
+## [3.23.2](https://github.com/Automattic/newspack-newsletters/compare/v3.23.1...v3.23.2) (2025-10-06)
+
+
+### Bug Fixes
+
+* avoid errors ([#1927](https://github.com/Automattic/newspack-newsletters/issues/1927)) ([8bad336](https://github.com/Automattic/newspack-newsletters/commit/8bad336aa3fcf0b9c4f02fc651c8fe52938dc83b))
+* update download URL for db.php ([#1920](https://github.com/Automattic/newspack-newsletters/issues/1920)) ([bf89e79](https://github.com/Automattic/newspack-newsletters/commit/bf89e799440d7818fa74485f63be12e11697b3e6))
+
 ## [3.23.1](https://github.com/Automattic/newspack-newsletters/compare/v3.23.0...v3.23.1) (2025-09-22)
 
 
