@@ -1,3 +1,10 @@
+## [3.23.4](https://github.com/Automattic/newspack-newsletters/compare/v3.23.3...v3.23.4) (2025-10-07)
+
+
+### Bug Fixes
+
+* **activecampaign:** only trigger contact deletion when in change email context ([#1938](https://github.com/Automattic/newspack-newsletters/issues/1938)) ([e1a0cb0](https://github.com/Automattic/newspack-newsletters/commit/e1a0cb0306ac63c9629cfe9a53f406cd0a18c1a2))
+
 ## [3.23.3](https://github.com/Automattic/newspack-newsletters/compare/v3.23.2...v3.23.3) (2025-10-07)
 
 
