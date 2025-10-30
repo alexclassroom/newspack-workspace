@@ -115,6 +115,10 @@ domReady( () => {
 		const productDetails = container.querySelector( '#modal-checkout-product-details' );
 		const checkoutData = getCheckoutData( productDetails );
 
+		container.addEventListener( 'checkout-cancel', () => {
+			closeCheckout();
+		} );
+
 		onCheckoutReady( container, () => {
 			// Make sure the order summary renders the correct text.
 			const summaryTextNode = productDetails?.querySelector( 'strong' );
@@ -458,7 +462,6 @@ domReady( () => {
 		document.body.appendChild( checkoutForm );
 
 		checkoutForm.addEventListener( 'submit', handleCheckoutFormSubmit );
-
 		return checkoutForm;
 	}
 
@@ -494,6 +497,8 @@ domReady( () => {
 			'input[name="after_success_behavior"]'
 		);
 		const hasNewsletterPopup = document?.querySelector( '.newspack-newsletters-signup-modal' );
+
+		const checkoutData = getCheckoutData( container?.querySelector( '#modal-checkout-product-details' ) );
 
 		// Empty cart if checkout is not complete.
 		if ( ! container?.checkoutComplete ) {
@@ -543,7 +548,7 @@ domReady( () => {
 				inCheckoutIntent = false;
 			};
 
-			if ( window?.newspackReaderActivation?.openNewslettersSignupModal ) {
+			if ( checkoutData.action_type !== 'subscription_switch' && window?.newspackReaderActivation?.openNewslettersSignupModal ) {
 				window.newspackReaderActivation.openNewslettersSignupModal( {
 					onSuccess: handleCheckoutComplete,
 					onError: handleCheckoutComplete,
