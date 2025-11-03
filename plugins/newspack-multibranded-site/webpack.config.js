@@ -19,10 +19,8 @@ const entry = {
 	promptBrands: path.join( __dirname, 'src/prompt-brands' ),
 };
 
-const webpackConfig = getBaseWebpackConfig(
-	{
-		entry,
-	}
-);
+const webpackConfig = getBaseWebpackConfig( {
+	entry,
+} );
 
 module.exports = webpackConfig;
