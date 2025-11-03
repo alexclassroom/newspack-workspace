@@ -1,3 +1,10 @@
+## [4.17.2](https://github.com/Automattic/newspack-blocks/compare/v4.17.1...v4.17.2) (2025-11-03)
+
+
+### Bug Fixes
+
+* handle multiple responsive iframe blocks ([#2242](https://github.com/Automattic/newspack-blocks/issues/2242)) ([dc218ea](https://github.com/Automattic/newspack-blocks/commit/dc218ea08ecc5f134b5a1dd4e7d4d6a25a8d71e5))
+
 ## [4.17.1](https://github.com/Automattic/newspack-blocks/compare/v4.17.0...v4.17.1) (2025-11-03)
 
 
