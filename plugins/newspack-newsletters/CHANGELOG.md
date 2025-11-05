@@ -1,3 +1,10 @@
+## [3.24.1](https://github.com/Automattic/newspack-newsletters/compare/v3.24.0...v3.24.1) (2025-11-05)
+
+
+### Bug Fixes
+
+* potential fatal errors due to assumed data types ([#1959](https://github.com/Automattic/newspack-newsletters/issues/1959)) ([d42ad7d](https://github.com/Automattic/newspack-newsletters/commit/d42ad7d7699569e89cf6ea876732a1d3a63503ba))
+
 # [3.24.0](https://github.com/Automattic/newspack-newsletters/compare/v3.23.7...v3.24.0) (2025-10-30)
 
 
