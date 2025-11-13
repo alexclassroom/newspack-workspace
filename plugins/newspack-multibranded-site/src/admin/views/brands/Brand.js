@@ -46,9 +46,7 @@ const Brand = ( { brands = [], saveBrand, fetchLogoAttachment } ) => {
 
 	const getThemeColor = colorName => {
 		const color = brand.meta._theme_colors?.find( c => colorName === c.name )?.color;
-		return color
-			? color
-			: registeredThemeColors.find( c => colorName === c.theme_mod_name )?.default;
+		return color ? color : registeredThemeColors.find( c => colorName === c.theme_mod_name )?.default;
 	};
 
 	const hasCustomThemeColor = colorName => {
@@ -67,9 +65,7 @@ const Brand = ( { brands = [], saveBrand, fetchLogoAttachment } ) => {
 			updatedThemeColors = themeColors;
 		} else if ( color && colorIndex > -1 ) {
 			// Updating color.
-			updatedThemeColors = themeColors.map( _color =>
-				name === _color.name ? { ..._color, color } : _color
-			);
+			updatedThemeColors = themeColors.map( _color => ( name === _color.name ? { ..._color, color } : _color ) );
 		} else if ( color && colorIndex === -1 ) {
 			// Adding color.
 			updatedThemeColors = [ ...themeColors, { name, color } ];
@@ -103,9 +99,7 @@ const Brand = ( { brands = [], saveBrand, fetchLogoAttachment } ) => {
 		const menuIndex = menus.findIndex( _menu => location === _menu.location );
 
 		const updatedMenus =
-			menuIndex > -1
-				? menus.map( _menu => ( location === _menu.location ? { ..._menu, menu } : _menu ) )
-				: [ ...menus, { location, menu } ];
+			menuIndex > -1 ? menus.map( _menu => ( location === _menu.location ? { ..._menu, menu } : _menu ) ) : [ ...menus, { location, menu } ];
 
 		return updateBrand( {
 			meta: {
@@ -127,9 +121,7 @@ const Brand = ( { brands = [], saveBrand, fetchLogoAttachment } ) => {
 
 	// Brand is valid when it has a name, and if a page is selected to be shown in front, the page should be selected.
 	const isBrandValid =
-		0 < brand.name?.length &&
-		( 'no' === showOnFrontSelect ||
-			( 'yes' === showOnFrontSelect && 0 < brand.meta._show_page_on_front ) );
+		0 < brand.name?.length && ( 'no' === showOnFrontSelect || ( 'yes' === showOnFrontSelect && 0 < brand.meta._show_page_on_front ) );
 
 	const findSelectedMenu = location => {
 		if ( ! brand.meta._menus ) {
@@ -167,10 +159,7 @@ const Brand = ( { brands = [], saveBrand, fetchLogoAttachment } ) => {
 			{ registeredThemeColors && (
 				<SectionHeader
 					title={ __( 'Colors', 'newspack-multibranded-site' ) }
-					description={ __(
-						'These are the colors you can customize for this brand in the active theme',
-						'newspack-multibranded-site'
-					) }
+					description={ __( 'These are the colors you can customize for this brand in the active theme', 'newspack-multibranded-site' ) }
 				/>
 			) }
 
@@ -277,11 +266,7 @@ const Brand = ( { brands = [], saveBrand, fetchLogoAttachment } ) => {
 			) ) }
 
 			<div className="newspack-buttons-card">
-				<Button
-					disabled={ ! isBrandValid }
-					isPrimary
-					onClick={ () => saveBrand( Number( brandId ), brand ) }
-				>
+				<Button disabled={ ! isBrandValid } isPrimary onClick={ () => saveBrand( Number( brandId ), brand ) }>
 					{ __( 'Save', 'newspack-multibranded-site' ) }
 				</Button>
 				<Button isSecondary href="#/">

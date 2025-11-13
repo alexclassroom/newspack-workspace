@@ -33,8 +33,7 @@ const Brands = ( { setError, wizardApiFetch } ) => {
 						...brand,
 						meta: {
 							...brand.meta,
-							_theme_colors:
-								0 === brand.meta._theme_colors?.length ? null : brand.meta._theme_colors,
+							_theme_colors: 0 === brand.meta._theme_colors?.length ? null : brand.meta._theme_colors,
 							_menus: 0 === brand.meta._menus?.length ? null : brand.meta._menus,
 						},
 					} ) )
@@ -106,15 +105,16 @@ const Brands = ( { setError, wizardApiFetch } ) => {
 					const brandIndex = brandsList.findIndex( _brand => brandId === _brand.id );
 					return brandIndex > -1
 						? brandsList.map( _brand =>
-							brandId === _brand.id
-								? {
-									..._brand,
-									meta: {
-										..._brand.meta,
-										_logo: { ...attachment, url: attachment.source_url },
-									},
-								} : _brand
-						)
+								brandId === _brand.id
+									? {
+											..._brand,
+											meta: {
+												..._brand.meta,
+												_logo: { ...attachment, url: attachment.source_url },
+											},
+									  }
+									: _brand
+						  )
 						: brandsList;
 				} )
 			)
@@ -125,22 +125,10 @@ const Brands = ( { setError, wizardApiFetch } ) => {
 
 	return (
 		<Routes>
-			<Route
-				path="/"
-				element={
-					<BrandsList { ...wizardScreenProps } brands={ brands } deleteBrand={ deleteBrand } />
-				}
-			/>
+			<Route path="/" element={ <BrandsList { ...wizardScreenProps } brands={ brands } deleteBrand={ deleteBrand } /> } />
 			<Route
 				path="/brands/new"
-				element={
-					<Brand
-						{ ...wizardScreenProps }
-						saveBrand={ saveBrand }
-						setError={ setError }
-						wizardApiFetch={ wizardApiFetch }
-					/>
-				}
+				element={ <Brand { ...wizardScreenProps } saveBrand={ saveBrand } setError={ setError } wizardApiFetch={ wizardApiFetch } /> }
 			/>
 			<Route
 				path="/brands/:brandId"

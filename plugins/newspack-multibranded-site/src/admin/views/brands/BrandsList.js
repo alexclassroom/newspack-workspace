@@ -40,10 +40,7 @@ const BrandActionCard = ( { brand, deleteBrand } ) => {
 							<MenuItem onClick={ () => onFocusOutside() } className="screen-reader-text">
 								{ __( 'Close Popover', 'newspack' ) }
 							</MenuItem>
-							<MenuItem
-								onClick={ () => navigate( `/brands/${ brand.id }` ) }
-								className="newspack-button"
-							>
+							<MenuItem onClick={ () => navigate( `/brands/${ brand.id }` ) } className="newspack-button">
 								{ __( 'Edit', 'newspack' ) }
 							</MenuItem>
 							<MenuItem onClick={ () => deleteBrand( brand ) } className="newspack-button">
