@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2025-11-03T18:38:35+00:00\n"
+"POT-Creation-Date: 2025-11-19T21:00:49+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: newspack-story-budget\n"
@@ -598,22 +598,22 @@ msgid "Save %d stories"
 msgstr ""
 
 #: dist/story-budget-app.js:152
-#: src/hooks/index.js:132
+#: src/hooks/index.js:130
 msgid "View"
 msgstr ""
 
 #: dist/story-budget-app.js:152
-#: src/hooks/index.js:142
+#: src/hooks/index.js:139
 msgid "Edit Fields"
 msgstr ""
 
 #: dist/story-budget-app.js:152
-#: src/hooks/index.js:151
+#: src/hooks/index.js:147
 msgid "Refresh"
 msgstr ""
 
 #: dist/story-budget-app.js:152
-#: src/hooks/index.js:164
+#: src/hooks/index.js:159
 msgid "Edit Post"
 msgstr ""
 
