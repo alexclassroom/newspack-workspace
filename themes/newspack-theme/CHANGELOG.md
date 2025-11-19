@@ -1,3 +1,11 @@
+## [2.15.1-alpha.2](https://github.com/Automattic/newspack-theme/compare/v2.15.1-alpha.1...v2.15.1-alpha.2) (2025-11-19)
+
+
+### Bug Fixes
+
+* **contribution-meter:** patterns spacing ([#2591](https://github.com/Automattic/newspack-theme/issues/2591)) ([30c363e](https://github.com/Automattic/newspack-theme/commit/30c363e93387a2d22fbc7c7ee564372808d51e9a))
+* **contribution-meter:** reduce padding for patterns 1 and 2 ([#2594](https://github.com/Automattic/newspack-theme/issues/2594)) ([24dbdda](https://github.com/Automattic/newspack-theme/commit/24dbdda2e6e02a2c4239b96cf29be2a8bf8735e8))
+
 ## [2.15.1-alpha.1](https://github.com/Automattic/newspack-theme/compare/v2.15.0...v2.15.1-alpha.1) (2025-11-13)
 
 
