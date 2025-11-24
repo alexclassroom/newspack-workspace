@@ -2,14 +2,14 @@
 # This file is distributed under the same license as the Newspack Sponsors plugin.
 msgid ""
 msgstr ""
-"Project-Id-Version: Newspack Sponsors 2.0.2\n"
+"Project-Id-Version: Newspack Sponsors 2.1.0\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/project\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2025-07-30T10:05:31+00:00\n"
+"POT-Creation-Date: 2025-11-03T18:31:21+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: newspack-sponsors\n"
@@ -139,7 +139,7 @@ msgstr ""
 
 #: includes/class-core.php:239
 #: dist/editor.js:1
-#: src/editor/sidebar/index.js:105
+#: src/editor/sidebar/index.js:98
 msgid "Display the sponsor only in the byline, or both the sponsor and post author."
 msgstr ""
 
@@ -300,97 +300,97 @@ msgid "Sponsor Display Overrides"
 msgstr ""
 
 #: dist/editor.js:1
-#: src/editor/sidebar/index.js:76
+#: src/editor/sidebar/index.js:75
 msgid "The following settings optionally override the settings of assigned sponsors."
 msgstr ""
 
 #: dist/editor.js:1
-#: src/editor/sidebar/index.js:86
+#: src/editor/sidebar/index.js:81
 msgid "Sponsorship Scope"
 msgstr ""
 
 #: dist/editor.js:1
-#: src/editor/sidebar/index.js:90
+#: src/editor/sidebar/index.js:85
 msgid "Generally, native content is authored by the sponsor, while underwritten content is authored by editorial staff but supported by the sponsor. This option allows you to select a different visual treatment for native vs. underwitten content."
 msgstr ""
 
 #: dist/editor.js:1
-#: src/editor/sidebar/index.js:101
+#: src/editor/sidebar/index.js:94
 msgid "Sponsorship Byline Display"
 msgstr ""
 
 #: dist/editor.js:1
-#: src/editor/sidebar/index.js:112
+#: src/editor/sidebar/index.js:102
 msgid "Sponsorship Category Display"
 msgstr ""
 
 #: dist/editor.js:1
-#: src/editor/sidebar/index.js:118
+#: src/editor/sidebar/index.js:106
 msgid "Show the sponsor only, or the post’s categories alongside the \"sponsored\" flag."
 msgstr ""
 
 #: dist/editor.js:1
-#: src/editor/sidebar/index.js:129
+#: src/editor/sidebar/index.js:114
 msgid "Underwriter blurb style"
 msgstr ""
 
 #: dist/editor.js:1
-#: src/editor/sidebar/index.js:133
+#: src/editor/sidebar/index.js:118
 msgid "Show the underwriter blurb in a standard or simplified style."
 msgstr ""
 
 #: dist/editor.js:1
-#: src/editor/sidebar/index.js:140
+#: src/editor/sidebar/index.js:122
 msgid "Underwriter placement"
 msgstr ""
 
 #: dist/editor.js:1
-#: src/editor/sidebar/index.js:144
+#: src/editor/sidebar/index.js:126
 msgid "Show the underwriter blurb at the top or bottom of the post."
 msgstr ""
 
 #: dist/editor.js:1
-#: src/editor/sidebar/index.js:155
+#: src/editor/sidebar/index.js:134
 msgid "Sponsor URL"
 msgstr ""
 
 #: dist/editor.js:1
-#: src/editor/sidebar/index.js:156
+#: src/editor/sidebar/index.js:135
 msgid "URL to link to for this sponsor"
 msgstr ""
 
 #: dist/editor.js:1
-#: src/editor/sidebar/index.js:157
+#: src/editor/sidebar/index.js:136
 msgid "Required if you want to show a link to an external URL."
 msgstr ""
 
 #: dist/editor.js:1
-#: src/editor/sidebar/index.js:167
+#: src/editor/sidebar/index.js:143
 msgid "Sponsor Flag Override (Optional)"
 msgstr ""
 
 #: dist/editor.js:1
-#: src/editor/sidebar/index.js:169
+#: src/editor/sidebar/index.js:145
 msgid "The label for the flag that appears in lieu of category flags. If not empty, this field will override the site-wide setting."
 msgstr ""
 
 #: dist/editor.js:1
-#: src/editor/sidebar/index.js:179
+#: src/editor/sidebar/index.js:155
 msgid "Sponsor Disclaimer Override (Optional)"
 msgstr ""
 
 #: dist/editor.js:1
-#: src/editor/sidebar/index.js:184
+#: src/editor/sidebar/index.js:157
 msgid "Text shown to explain sponsorship by this sponsor. If not empty, this field will override the site-wide setting."
 msgstr ""
 
 #: dist/editor.js:1
-#: src/editor/sidebar/index.js:193
+#: src/editor/sidebar/index.js:166
 msgid "Sponsor Byline Prefix (Optional)"
 msgstr ""
 
 #: dist/editor.js:1
-#: src/editor/sidebar/index.js:194
+#: src/editor/sidebar/index.js:167
 msgid "The prefix for the sponsor attribution that appears in lieu of author byline. If not empty, this field will override the site-wide setting."
 msgstr ""
 
@@ -400,34 +400,33 @@ msgid "Select one or more sponsors:"
 msgstr ""
 
 #: dist/editor.js:1
-#: src/editor/taxonomy-panel/index.js:48
+#: src/editor/taxonomy-panel/index.js:46
 msgid "categories"
 msgstr ""
 
 #: dist/editor.js:1
-#: src/editor/taxonomy-panel/index.js:49
+#: src/editor/taxonomy-panel/index.js:46
 msgid "tags"
 msgstr ""
 
-#. Translators: explanation for applying sponsors to a taxonomy term.
+#. translators: %1$s: "Select" or "Add", %2$s: taxonomy label, %3$s: taxonomy label.
 #: dist/editor.js:4
-#: src/editor/taxonomy-panel/index.js:52
+#: src/editor/taxonomy-panel/index.js:49
 #, js-format
 msgid "%1$s one or more post %2$s to associate this sponsor with those %3$s."
 msgstr ""
 
-#. Translators: "Select" terms if the taxonomy is hierarchical, or "Add" terms if not.
-#: dist/editor.js:6
-#: src/editor/taxonomy-panel/index.js:57
-msgid "Select "
+#: dist/editor.js:4
+#: src/editor/taxonomy-panel/index.js:50
+msgid "Select"
 msgstr ""
 
-#: dist/editor.js:6
-#: src/editor/taxonomy-panel/index.js:57
-msgid "Add "
+#: dist/editor.js:4
+#: src/editor/taxonomy-panel/index.js:50
+msgid "Add"
 msgstr ""
 
-#: dist/editor.js:6
+#: dist/editor.js:4
 #: src/editor/index.js:33
 msgid "Sponsor Settings"
 msgstr ""
