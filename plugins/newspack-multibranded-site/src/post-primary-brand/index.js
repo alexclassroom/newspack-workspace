@@ -68,12 +68,7 @@ const NewspackPostPrimaryBrand = ( { slug } ) => {
 	return (
 		<Flex direction="column" gap="4">
 			{ shouldDisplayPrimaryBrand && (
-				<div
-					className="editor-primary-brand-selector"
-					tabIndex="0"
-					role="group"
-					aria-label={ __( 'Brands', 'newspack-multibranded-site' ) }
-				>
+				<div className="editor-primary-brand-selector" tabIndex="0" role="group" aria-label={ __( 'Brands', 'newspack-multibranded-site' ) }>
 					{ terms.length > 1 && (
 						<SelectControl
 							label={ __( 'Primary brand', 'newspack-multibranded-site' ) }
@@ -114,8 +109,4 @@ function customizeSelector( OriginalComponent ) {
 	};
 }
 
-wp.hooks.addFilter(
-	'editor.PostTaxonomyType',
-	'newspack/multibranded-site/brand-selector-filter',
-	customizeSelector
-);
+wp.hooks.addFilter( 'editor.PostTaxonomyType', 'newspack/multibranded-site/brand-selector-filter', customizeSelector );

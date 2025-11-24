@@ -3,15 +3,20 @@
 	"version": "2.1.0",
 	"description": "A plugin to allow your site to host multiple brands",
 	"license": "GPL-3.0",
-	"browserslist": [
-		"extends @wordpress/browserslist-config"
-	],
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/Automattic/newspack-multibranded-site.git"
+	},
+	"bugs": {
+		"url": "https://github.com/Automattic/newspack-multibranded-site/issues"
+	},
+	"homepage": "https://github.com/Automattic/newspack-multibranded-site#readme",
 	"scripts": {
 		"cm": "git-cz",
 		"semantic-release": "newspack-scripts release --files=newspack-multibranded-site.php",
 		"clean": "rm -rf dist",
 		"build": "npm run clean && newspack-scripts wp-scripts build",
-		"start": "npm ci --legacy-peer-deps && npm run watch",
+		"start": "npm ci && npm run watch",
 		"watch": "npm run clean && newspack-scripts wp-scripts start",
 		"test": "echo 'No JS unit tests in this repository.'",
 		"lint": "npm run lint:scss && npm run lint:js",
@@ -25,35 +30,24 @@
 		"lint:scss": "newspack-scripts wp-scripts lint-style '**/{src,includes}/**/*.scss' --customSyntax postcss-scss",
 		"lint:scss:staged": "newspack-scripts wp-scripts lint-style --customSyntax postcss-scss",
 		"format:scss": "newspack-scripts wp-scripts lint-style '**/{src,includes}/**/*.scss' --customSyntax postcss-scss --fix",
-		"typescript:check": "echo 'No TypeScript files in this repository.'",
 		"release": "npm run build && npm run semantic-release",
 		"release:archive": "rm -rf release && mkdir -p release && rsync -r . ./release/newspack-multibranded-site --exclude-from='./.distignore' && cd release && zip -r newspack-multibranded-site.zip newspack-multibranded-site"
 	},
+	"browserslist": [
+		"extends @wordpress/browserslist-config"
+	],
 	"lint-staged": {
+		"*.{js,jsx,ts,tsx}": "npm run lint:js:staged",
 		"*.scss": "npm run lint:scss:staged",
-		"*.(js|jsx)": "npm run lint:js:staged",
 		"*.php": "npm run lint:php:staged"
 	},
 	"dependencies": {
-		"react": "^18.2.0",
-		"react-dom": "^18.2.0",
-		"react-router-dom": "^6.9.0"
+		"react": "^18.3.0",
+		"react-dom": "^18.3.0",
+		"react-router-dom": "^6.26.1"
 	},
 	"devDependencies": {
-		"@rushstack/eslint-patch": "^1.10.3",
-		"@wordpress/browserslist-config": "^6.0.0",
-		"eslint": "^8.57.0",
-		"lint-staged": "^15.2.0",
-		"newspack-components": "^3.1.0",
-		"newspack-scripts": "^5.5.2",
-		"postcss-scss": "^4.0.9"
-	},
-	"repository": {
-		"type": "git",
-		"url": "git+https://github.com/Automattic/newspack-multibranded-site.git"
-	},
-	"bugs": {
-		"url": "https://github.com/Automattic/newspack-multibranded-site/issues"
-	},
-	"homepage": "https://github.com/Automattic/newspack-multibranded-site#readme"
+		"newspack-components": "^4.2.0",
+		"newspack-scripts": "^5.8.0"
+	}
 }

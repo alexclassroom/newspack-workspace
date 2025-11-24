@@ -50,11 +50,12 @@ class Post_Primary_Brand {
 			filemtime( NEWSPACK_MULTIBRANDED_SITE_PLUGIN_DIR . '/dist/postPrimaryBrand.js' )
 		);
 
+		$page_slug = class_exists( 'Newspack\Newspack' ) ? 'newspack-settings#/additional-brands' : Admin::MULTI_BRANDED_PAGE_SLUG;
 		wp_localize_script(
 			'newspack-post-primary-brand',
 			'newspackPostPrimaryBrandVars',
 			array(
-				'adminURL'                  => admin_url( 'admin.php?page=' . Admin::MULTI_BRANDED_PAGE_SLUG ),
+				'adminURL'                  => admin_url( 'admin.php?page=' . $page_slug ),
 				'taxonomySlug'              => Taxonomy::SLUG,
 				'metaKey'                   => Taxonomy::PRIMARY_META_KEY,
 				'postTypesWithPrimaryBrand' => Meta::get_post_types(),
