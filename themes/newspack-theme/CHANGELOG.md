@@ -1,3 +1,30 @@
+## [2.15.1-alpha.3](https://github.com/Automattic/newspack-theme/compare/v2.15.1-alpha.2...v2.15.1-alpha.3) (2025-11-19)
+
+
+### Bug Fixes
+
+* prevent stretchy text from overflowing stack, row blocks ([#2592](https://github.com/Automattic/newspack-theme/issues/2592)) ([d83b8e8](https://github.com/Automattic/newspack-theme/commit/d83b8e88df4b36339114b6449bc03342aae35df5))
+* update the styles for the new accordion block ([#2593](https://github.com/Automattic/newspack-theme/issues/2593)) ([813699e](https://github.com/Automattic/newspack-theme/commit/813699e9bb0cfa2676aaa46c8f06317b6a5b7f86))
+
+## [2.15.1-alpha.2](https://github.com/Automattic/newspack-theme/compare/v2.15.1-alpha.1...v2.15.1-alpha.2) (2025-11-19)
+
+
+### Bug Fixes
+
+* **contribution-meter:** patterns spacing ([#2591](https://github.com/Automattic/newspack-theme/issues/2591)) ([30c363e](https://github.com/Automattic/newspack-theme/commit/30c363e93387a2d22fbc7c7ee564372808d51e9a))
+* **contribution-meter:** reduce padding for patterns 1 and 2 ([#2594](https://github.com/Automattic/newspack-theme/issues/2594)) ([24dbdda](https://github.com/Automattic/newspack-theme/commit/24dbdda2e6e02a2c4239b96cf29be2a8bf8735e8))
+
+## [2.15.1-alpha.1](https://github.com/Automattic/newspack-theme/compare/v2.15.0...v2.15.1-alpha.1) (2025-11-13)
+
+
+### Bug Fixes
+
+* **ci:** use lts/* node version for CI jobs ([#2586](https://github.com/Automattic/newspack-theme/issues/2586)) ([a59d26b](https://github.com/Automattic/newspack-theme/commit/a59d26b37714c98f5f5481a907181ca5ac0382a0))
+* correct an edge case where single collections are smooshed ([#2578](https://github.com/Automattic/newspack-theme/issues/2578)) ([fa3d777](https://github.com/Automattic/newspack-theme/commit/fa3d777c6ab6b89d8e59804e38c8ad4fd2972c2a))
+* Merge pull request [#2589](https://github.com/Automattic/newspack-theme/issues/2589) from Automattic/trunk ([3a7df20](https://github.com/Automattic/newspack-theme/commit/3a7df2050b25999902456b8552b63ebcaa21504b))
+* prevent theme styles from overriding block styles ([#2575](https://github.com/Automattic/newspack-theme/issues/2575)) ([2aa20b1](https://github.com/Automattic/newspack-theme/commit/2aa20b1a23cde950fc15f96036c3c0e232cab884))
+* update editor styles for floated group blocks ([#2579](https://github.com/Automattic/newspack-theme/issues/2579)) ([a78ba8d](https://github.com/Automattic/newspack-theme/commit/a78ba8dbf8172dfb3eb39e2aed0b93c1c199d5b2))
+
 # [2.15.0](https://github.com/Automattic/newspack-theme/compare/v2.14.4...v2.15.0) (2025-10-30)
 
 
