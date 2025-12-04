@@ -1,3 +1,10 @@
+## [2.15.2](https://github.com/Automattic/newspack-theme/compare/v2.15.1...v2.15.2) (2025-12-04)
+
+
+### Bug Fixes
+
+* make dropcap style more specific ([#2603](https://github.com/Automattic/newspack-theme/issues/2603)) ([38c9761](https://github.com/Automattic/newspack-theme/commit/38c97610f74a167be3a78e08a186954ad9b3d17a))
+
 ## [2.15.1](https://github.com/Automattic/newspack-theme/compare/v2.15.0...v2.15.1) (2025-11-24)
 
 
