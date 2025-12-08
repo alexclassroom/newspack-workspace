@@ -1,9 +1,25 @@
-## [2.15.2](https://github.com/Automattic/newspack-theme/compare/v2.15.1...v2.15.2) (2025-12-04)
+## [2.15.3](https://github.com/Automattic/newspack-theme/compare/v2.15.2...v2.15.3) (2025-12-08)
 
 
 ### Bug Fixes
 
-* make dropcap style more specific ([#2603](https://github.com/Automattic/newspack-theme/issues/2603)) ([38c9761](https://github.com/Automattic/newspack-theme/commit/38c97610f74a167be3a78e08a186954ad9b3d17a))
+* prevent stretchy text from overflowing stack, row blocks ([#2592](https://github.com/Automattic/newspack-theme/issues/2592)) ([9df5cbd](https://github.com/Automattic/newspack-theme/commit/9df5cbd9863548b52fa1cb0988ba08278fbf38e6))
+* update the styles for the new accordion block ([#2593](https://github.com/Automattic/newspack-theme/issues/2593)) ([d995504](https://github.com/Automattic/newspack-theme/commit/d995504831dbdaebe36447897bc939c34e54a071))
+
+## [2.15.3-alpha.1](https://github.com/Automattic/newspack-theme/compare/v2.15.2...v2.15.3-alpha.1) (2025-12-04)
+
+
+### Bug Fixes
+
+* prevent stretchy text from overflowing stack, row blocks ([#2592](https://github.com/Automattic/newspack-theme/issues/2592)) ([9df5cbd](https://github.com/Automattic/newspack-theme/commit/9df5cbd9863548b52fa1cb0988ba08278fbf38e6))
+* update the styles for the new accordion block ([#2593](https://github.com/Automattic/newspack-theme/issues/2593)) ([d995504](https://github.com/Automattic/newspack-theme/commit/d995504831dbdaebe36447897bc939c34e54a071))
+
+## [2.15.2-alpha.1](https://github.com/Automattic/newspack-theme/compare/v2.15.1...v2.15.2-alpha.1) (2025-11-27)
+
+### Bug Fixes
+
+* prevent stretchy text from overflowing stack, row blocks ([#2592](https://github.com/Automattic/newspack-theme/issues/2592)) ([9df5cbd](https://github.com/Automattic/newspack-theme/commit/9df5cbd9863548b52fa1cb0988ba08278fbf38e6))
+* update the styles for the new accordion block ([#2593](https://github.com/Automattic/newspack-theme/issues/2593)) ([d995504](https://github.com/Automattic/newspack-theme/commit/d995504831dbdaebe36447897bc939c34e54a071))
 
 ## [2.15.1](https://github.com/Automattic/newspack-theme/compare/v2.15.0...v2.15.1) (2025-11-24)
 
