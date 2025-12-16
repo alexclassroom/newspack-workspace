@@ -167,7 +167,7 @@ function newspack_body_classes( $classes ) {
 	// Adds a class of has-sidebar when there is a sidebar present and populated.
 	if ( is_active_sidebar( 'sidebar-1' )
 		&& ( ( ! is_archive() && newspack_is_default_template() && ! ( is_front_page() && 'posts' !== get_option( 'show_on_front' ) ) )
-		|| ( is_archive() && 'default' === get_theme_mod( 'archive_layout', 'default' ) ) )
+		|| ( ( is_archive() || is_home() ) && 'default' === get_theme_mod( 'archive_layout', 'default' ) ) )
 	) {
 		$classes[] = 'has-sidebar';
 	} else {
@@ -229,21 +229,25 @@ function newspack_body_classes( $classes ) {
 		$classes[] = 'has-summary';
 	}
 
+	if ( is_home() ) {
+		$classes[] = 'archive';
+	}
+
 	// Adds a class for the archive page layout.
 	$archive_layout = get_theme_mod( 'archive_layout', 'default' );
-	if ( is_archive() && 'default' !== $archive_layout ) {
+	if ( ( is_archive() || is_home() ) && 'default' !== $archive_layout ) {
 		$classes[] = 'archive-' . esc_attr( $archive_layout );
 	}
 
 	// Adds a class for the archive page layout.
 	$archive_list_or_grid = get_theme_mod( 'archive_list_or_grid', 'list' );
-	if ( is_archive() && 'list' !== $archive_list_or_grid ) {
+	if ( ( is_archive() || is_home() ) && 'list' !== $archive_list_or_grid ) {
 		$classes[] = 'archive-grid';
 	}
 
 	// Add a class when using the 'featured latest' archive layout.
 	$feature_latest_post = get_theme_mod( 'archive_feature_latest_post', true );
-	if ( is_archive() && true === $feature_latest_post && ! is_post_type_archive( 'tribe_events' ) ) {
+	if ( ( is_archive() || is_home() ) && true === $feature_latest_post && ! is_post_type_archive( 'tribe_events' ) ) {
 		$classes[] = 'feature-latest';
 	}
 
@@ -476,7 +480,7 @@ function newspack_add_dropdown_icons( $output, $item, $depth, $args ) {
 		$menu_state = 'setState' . $item->ID;
 
 		$output .= sprintf(
-			 '<button aria-expanded="false" class="submenu-expand" [class]="' . $menu_state . ' ? \'submenu-expand open-dropdown\' : \'submenu-expand\'" [aria-expanded]="' . $menu_state . ' ? \'true\' : \'false\'" on="tap:AMP.setState( { ' . $menu_state . ': !' . $menu_state . ' } )" aria-haspopup="true" data-toggle-parent-id="toggle-' . $item->ID . '">
+			'<button aria-expanded="false" class="submenu-expand" [class]="' . $menu_state . ' ? \'submenu-expand open-dropdown\' : \'submenu-expand\'" [aria-expanded]="' . $menu_state . ' ? \'true\' : \'false\'" on="tap:AMP.setState( { ' . $menu_state . ': !' . $menu_state . ' } )" aria-haspopup="true" data-toggle-parent-id="toggle-' . $item->ID . '">
 					%1$s
 					<span class="screen-reader-text" [text]="' . $menu_state . ' ? \'%3$s\' : \'%2$s\'">%2$s</span>
 				</button>',
@@ -634,7 +638,7 @@ function newspack_the_custom_logo() {
 			);
 			?>
 		</a>
-	<?php
+		<?php
 	endif;
 
 	// Otherwise, return the regular logo:
