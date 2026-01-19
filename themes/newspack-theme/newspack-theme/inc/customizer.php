@@ -1081,6 +1081,7 @@ function newspack_customize_register( $wp_customize ) {
 		array(
 			'title' => esc_html__( 'Archive Settings', 'newspack-theme' ),
 			'panel' => 'newspack_template_settings',
+			'description' => esc_html__( 'These settings affect all archives, including the blog posts page.', 'newspack-theme' ),
 		)
 	);
 

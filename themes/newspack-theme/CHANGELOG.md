@@ -1,3 +1,15 @@
+# [2.17.0-alpha.1](https://github.com/Automattic/newspack-theme/compare/v2.16.0...v2.17.0-alpha.1) (2026-01-09)
+
+
+### Bug Fixes
+
+* increase max ad size to allow for label [NPPM-2395] ([#2596](https://github.com/Automattic/newspack-theme/issues/2596)) ([1a8ea56](https://github.com/Automattic/newspack-theme/commit/1a8ea56e9b644fa0b958a6a72e904baca12034b0))
+
+
+### Features
+
+* apply the archive styles to the blog posts page ([#2607](https://github.com/Automattic/newspack-theme/issues/2607)) ([978a103](https://github.com/Automattic/newspack-theme/commit/978a103efe377903cb66b843d8ebe347d4196d3b))
+
 # [2.16.0](https://github.com/Automattic/newspack-theme/compare/v2.15.3...v2.16.0) (2026-01-05)
 
 
