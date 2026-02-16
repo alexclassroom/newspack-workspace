@@ -1,3 +1,10 @@
+## [3.28.2](https://github.com/Automattic/newspack-newsletters/compare/v3.28.1...v3.28.2) (2026-02-16)
+
+
+### Bug Fixes
+
+* pass plugin name to release-wporg job ([#2035](https://github.com/Automattic/newspack-newsletters/issues/2035)) ([a0ba538](https://github.com/Automattic/newspack-newsletters/commit/a0ba538bcd8e46b9436795419b6015b920839970))
+
 ## [3.28.1](https://github.com/Automattic/newspack-newsletters/compare/v3.28.0...v3.28.1) (2026-02-16)
 
 
