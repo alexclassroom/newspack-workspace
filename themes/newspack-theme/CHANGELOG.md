@@ -1,3 +1,10 @@
+# [2.18.0](https://github.com/Automattic/newspack-theme/compare/v2.17.0...v2.18.0) (2026-02-16)
+
+
+### Features
+
+* move some My Account button styles to the theme ([#2618](https://github.com/Automattic/newspack-theme/issues/2618)) ([537de07](https://github.com/Automattic/newspack-theme/commit/537de07c4c941111cd7d021473c543487efbc913))
+
 # [2.18.0-alpha.1](https://github.com/Automattic/newspack-theme/compare/v2.17.0...v2.18.0-alpha.1) (2026-02-05)
 
 
