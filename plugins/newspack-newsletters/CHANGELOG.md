@@ -1,3 +1,10 @@
+## [3.28.1](https://github.com/Automattic/newspack-newsletters/compare/v3.28.0...v3.28.1) (2026-02-16)
+
+
+### Bug Fixes
+
+* force release ([b028a56](https://github.com/Automattic/newspack-newsletters/commit/b028a56f7a6704f966af958533b281f6e7aca9e3))
+
 # [3.28.0](https://github.com/Automattic/newspack-newsletters/compare/v3.27.1...v3.28.0) (2026-02-16)
 
 
