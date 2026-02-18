@@ -1,7 +1,7 @@
 const fontsToLoad = window.newspackFontLoading?.fonts || [];
 Promise.all(
 	fontsToLoad.map( fontName => {
-		const escapedFontName = String( fontName ).replace( /(["\\])/g, '\\$1' );
+		const escapedFontName = String( fontName ).replace( /"/g, '\\"' );
 		return document.fonts.load( `1rem "${ escapedFontName }"` );
 	} )
 ).then( res => {
