@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-02-19T21:38:21+00:00\n"
+"POT-Creation-Date: 2026-02-20T18:10:51+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: newspack-newsletters\n"
@@ -337,8 +337,8 @@ msgid_plural "%d newsletters now have public page disabled."
 msgstr[0] ""
 msgstr[1] ""
 
-#: includes/class-newspack-newsletters-contacts.php:331
-#: includes/class-newspack-newsletters-contacts.php:366
+#: includes/class-newspack-newsletters-contacts.php:323
+#: includes/class-newspack-newsletters-contacts.php:358
 #: includes/class-newspack-newsletters-subscription.php:620
 msgid "Not supported for this provider"
 msgstr ""
@@ -597,11 +597,11 @@ msgstr ""
 msgid "You must be logged in and verified to update your subscriptions."
 msgstr ""
 
-#: includes/class-newspack-newsletters-subscription.php:1054
+#: includes/class-newspack-newsletters-subscription.php:1065
 msgid "You must select newsletters to update."
 msgstr ""
 
-#: includes/class-newspack-newsletters-subscription.php:1056
+#: includes/class-newspack-newsletters-subscription.php:1067
 msgid "Your subscriptions were updated."
 msgstr ""
 
