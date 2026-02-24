@@ -275,10 +275,6 @@ class Newspack_Blocks {
 	 * Enqueue block scripts and styles for view.
 	 */
 	public static function manage_view_scripts() {
-		if ( is_admin() ) {
-			// In editor environment, do nothing.
-			return;
-		}
 		$src_directory  = NEWSPACK_BLOCKS__PLUGIN_DIR . 'src/blocks/';
 		$dist_directory = NEWSPACK_BLOCKS__PLUGIN_DIR . 'dist/';
 		$iterator       = new DirectoryIterator( $src_directory );
@@ -293,6 +289,11 @@ class Newspack_Blocks {
 
 			if ( file_exists( $view_php_path ) ) {
 				include_once $view_php_path;
+				continue;
+			}
+
+			// Skip remaining logic in admin - only needed for frontend asset loading.
+			if ( is_admin() ) {
 				continue;
 			}
 

@@ -6,7 +6,8 @@ import colors from 'newspack-colors';
 /**
  * WordPress dependencies
  */
-import { __, _x } from '@wordpress/i18n';
+import { InnerBlocks } from '@wordpress/block-editor';
+import { __ } from '@wordpress/i18n';
 import { postAuthor } from '@wordpress/icons';
 
 /**
@@ -37,6 +38,7 @@ authorCustomFields.forEach( field => {
 } );
 
 export const settings = {
+	apiVersion: metadata.apiVersion,
 	title,
 	icon: {
 		src: postAuthor,
@@ -44,10 +46,6 @@ export const settings = {
 	},
 	keywords: [ __( 'author', 'newspack-blocks' ), __( 'profile', 'newspack-blocks' ) ],
 	description: __( 'Display an author profile card.', 'newspack-blocks' ),
-	styles: [
-		{ name: 'default', label: _x( 'Default', 'block style', 'newspack-blocks' ), isDefault: true },
-		{ name: 'center', label: _x( 'Centered', 'block style', 'newspack-blocks' ) },
-	],
 	attributes,
 	category,
 	supports: {
@@ -55,5 +53,12 @@ export const settings = {
 		default: '',
 	},
 	edit,
-	save: () => null, // to use view.php
+	// Save inner blocks for nested mode (layoutVersion 2).
+	// For flat mode (layoutVersion 1), return null to use server-side rendering only.
+	save: props => {
+		if ( props.attributes.layoutVersion === 2 ) {
+			return <InnerBlocks.Content />;
+		}
+		return null;
+	},
 };
