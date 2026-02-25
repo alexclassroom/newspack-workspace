@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-02-24T21:23:38+00:00\n"
+"POT-Creation-Date: 2026-02-25T14:48:22+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: newspack-blocks\n"
@@ -513,10 +513,8 @@ msgstr ""
 
 #: src/blocks/author-profile/view.php:112
 #: dist/editor.js:21
-#: dist/editor.js:30
 #: dist/editor.js:51
 #: src/blocks/author-list/index.js:51
-#: src/blocks/author-profile/index.js:52
 #: src/blocks/homepage-articles/index.js:52
 msgctxt "block style"
 msgid "Default"
@@ -524,9 +522,7 @@ msgstr ""
 
 #: src/blocks/author-profile/view.php:120
 #: dist/editor.js:21
-#: dist/editor.js:30
 #: src/blocks/author-list/index.js:52
-#: src/blocks/author-profile/index.js:53
 msgctxt "block style"
 msgid "Centered"
 msgstr ""
