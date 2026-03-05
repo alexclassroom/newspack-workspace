@@ -2,6 +2,7 @@
  * External dependencies
  */
 import { isUndefined, find, pickBy, get } from 'lodash';
+import classnames from 'classnames';
 
 /**
  * WordPress dependencies
@@ -22,7 +23,7 @@ import {
 	Toolbar,
 	ToolbarDropdownMenu,
 } from '@wordpress/components';
-import { InnerBlocks, InspectorControls, BlockControls } from '@wordpress/block-editor';
+import { InnerBlocks, InspectorControls, BlockControls, useBlockProps } from '@wordpress/block-editor';
 import { Fragment, useEffect, useMemo, useState } from '@wordpress/element';
 import { Icon, check, pages } from '@wordpress/icons';
 
@@ -48,6 +49,11 @@ const PostsInserterBlock = ( {
 	blockEditorSettings,
 } ) => {
 	const [ isReady, setIsReady ] = useState( ! attributes.displayFeaturedImage );
+	const blockProps = useBlockProps( {
+		className: classnames( 'newspack-posts-inserter', {
+			'newspack-posts-inserter--loading': ! isReady,
+		} ),
+	} );
 	const stringifiedPostList = JSON.stringify( postList );
 
 	// Stringify added to minimize flicker.
@@ -276,7 +282,7 @@ const PostsInserterBlock = ( {
 				) }
 			</BlockControls>
 
-			<div className={ `newspack-posts-inserter ${ ! isReady ? 'newspack-posts-inserter--loading' : '' }` }>
+			<div { ...blockProps }>
 				<div className="newspack-posts-inserter__header">
 					<Icon icon={ pages } />
 					<span>{ __( 'Posts Inserter', 'newspack-newsletters' ) }</span>
