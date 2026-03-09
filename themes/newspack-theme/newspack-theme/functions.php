@@ -1412,9 +1412,3 @@ if ( class_exists( 'Newspack_Multibranded_Site\Customizations\Theme_Colors' ) ) 
  */
 require get_template_directory() . '/woocommerce/templates.php';
 
-/**
- * Yoast customizations
- */
-if ( class_exists( 'WPSEO_Options' ) ) {
-	require get_template_directory() . '/inc/yoast.php';
-}
