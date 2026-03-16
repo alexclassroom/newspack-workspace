@@ -1,3 +1,18 @@
+# [4.25.0](https://github.com/Automattic/newspack-blocks/compare/v4.24.1...v4.25.0) (2026-03-16)
+
+
+### Bug Fixes
+
+* iframe editor compatibility ([#2289](https://github.com/Automattic/newspack-blocks/issues/2289)) ([cdc0858](https://github.com/Automattic/newspack-blocks/commit/cdc085887f01c28ae1684dde07097951a21ae52e))
+* remove styles config ([#2301](https://github.com/Automattic/newspack-blocks/issues/2301)) ([60eae46](https://github.com/Automattic/newspack-blocks/commit/60eae467b685cacd3f0d36ce62f93aaa934968ec))
+* tweak the payment gateway to include enabled gateways not in get_available_payment_gateways() ([#2306](https://github.com/Automattic/newspack-blocks/issues/2306)) ([f82fe2d](https://github.com/Automattic/newspack-blocks/commit/f82fe2dfe1e20b59efb3a4016afcf9c7d860dc95))
+
+
+### Features
+
+* **author-profile:** add block theme compatibility ([#2286](https://github.com/Automattic/newspack-blocks/issues/2286)) ([d10fe2f](https://github.com/Automattic/newspack-blocks/commit/d10fe2fd525616ad77003afec9db0c901554d349))
+* **author-profile:** allow spacer and separator blocks ([#2300](https://github.com/Automattic/newspack-blocks/issues/2300)) ([0b77d71](https://github.com/Automattic/newspack-blocks/commit/0b77d71292a8e0a2fe56981a39135d68177d828d))
+
 ## [4.24.1](https://github.com/Automattic/newspack-blocks/compare/v4.24.0...v4.24.1) (2026-03-02)
 
 
