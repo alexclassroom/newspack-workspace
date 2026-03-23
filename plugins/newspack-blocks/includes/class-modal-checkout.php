@@ -124,8 +124,13 @@ final class Modal_Checkout {
 		'cod', // Cash on delivery.
 		'ppcp-gateway', // PayPal Payments.
 		'stripe',
-		'stripe-link',
+		'stripe_link', // Stripe Link.
+		'stripe_amazon_pay', // Stripe Amazon Pay.
 		'woocommerce_payments',
+		'woocommerce_payments_apple_pay', // WooPayments Apple Pay.
+		'woocommerce_payments_google_pay', // WooPayments Google Pay.
+		'ppcp-axo-gateway', // PayPal Accelerated Checkout, used by WooPayments.
+
 	];
 
 	/**
