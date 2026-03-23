@@ -1,3 +1,10 @@
+## [4.25.3](https://github.com/Automattic/newspack-blocks/compare/v4.25.2...v4.25.3) (2026-03-23)
+
+
+### Bug Fixes
+
+* update payment gateway check to make more specific ([#2321](https://github.com/Automattic/newspack-blocks/issues/2321)) ([205ae60](https://github.com/Automattic/newspack-blocks/commit/205ae602a1cec474bddc287143fe548fa9035070))
+
 ## [4.25.2](https://github.com/Automattic/newspack-blocks/compare/v4.25.1...v4.25.2) (2026-03-17)
 
 
