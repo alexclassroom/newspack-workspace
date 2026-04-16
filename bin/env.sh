@@ -69,24 +69,31 @@ case $1 in
             case $1 in
                 --worktree)
                     if [[ -z "$2" || "$2" == --* ]]; then
-                        echo "Error: --worktree requires a value (repo:branch)"
+                        echo "Error: --worktree requires a value (plugin:branch)"
                         exit 1
                     fi
                     IFS=':' read -r wt_repo wt_branch <<< "$2"
                     validate_name "$wt_repo" "repo"
                     validate_name "$wt_branch" "branch"
-                    worktree_dir="./worktrees/$wt_repo/$wt_branch"
-                    if [[ ! -d "$NABSPATH/worktrees/$wt_repo/$wt_branch" ]]; then
-                        echo "Creating worktree $wt_repo/$wt_branch..."
-                        "$NABSPATH/bin/worktree.sh" add "$wt_repo" "$wt_branch" || exit 1
+                    # Sanitize branch for directory name (feat/foo -> feat-foo).
+                    safe_branch=$(echo "$wt_branch" | tr '/' '-')
+                    # Create a monorepo worktree at this branch if it doesn't exist.
+                    if [[ ! -d "$NABSPATH/worktrees/$safe_branch" ]]; then
+                        echo "Creating worktree at branch $wt_branch..."
+                        "$NABSPATH/bin/worktree.sh" add "$wt_branch" || exit 1
                     fi
-                    # Resolve container mount point based on project type.
+                    # Mount the specific plugin/theme subdirectory from the worktree.
                     wt_host_path=$(get_repo_host_path "$wt_repo")
+                    if [[ -z "$wt_host_path" ]]; then
+                        echo "Error: unknown project '$wt_repo'"
+                        exit 1
+                    fi
                     if [[ "$wt_host_path" == themes/* ]]; then
                         wt_container_path="/newspack-themes/$wt_repo"
                     else
                         wt_container_path="/newspack-plugins/$wt_repo"
                     fi
+                    worktree_dir="./worktrees/$safe_branch/$wt_host_path"
                     worktree_volumes="$worktree_volumes      - $worktree_dir:$wt_container_path
 "
                     shift 2
