@@ -30,8 +30,9 @@ triggerFetch.use( ( options, next ) => {
 			} );
 		}
 
-		const route = encodeURIComponent( path );
-		const url = `${ remoteSite }/?rest_route=/${ route }`;
+		const [ routePath, queryString ] = path.split( '?' );
+		const route = encodeURIComponent( routePath );
+		const url = `${ remoteSite }/?rest_route=/${ route }${ queryString ? '&' + queryString : '' }`;
 		return next( {
 			method,
 			data,
