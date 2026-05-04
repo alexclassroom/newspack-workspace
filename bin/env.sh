@@ -138,6 +138,7 @@ services:
       - ./logs/env-${env_name}/apache2:/var/log/apache2
       - ./logs/env-${env_name}/php:/var/log/php
       - ./bin:/var/scripts
+      - .:/newspack-monorepo
       - ./plugins:/newspack-plugins
       - ./themes:/newspack-themes
 ${worktree_volumes}      - ./envs/${env_name}/html:/var/www/html
