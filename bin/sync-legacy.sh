@@ -200,12 +200,15 @@ publish_all() {
 # Phase 3: integrate
 # ---------------------------------------------------------------------------
 
-# Drop legacy per-plugin .github/ files and restore workspace:* in any
-# conflicting plugin/theme package.json.
+# Drop legacy per-plugin .github/ (CI runs at the monorepo root) and
+# package-lock.json (the monorepo uses pnpm-lock.yaml at the root; per-plugin
+# lockfiles are vestigial and would otherwise be re-added on every sync run
+# that touches them upstream). Also restore workspace:* in any conflicting
+# plugin/theme package.json.
 apply_structural_overrides() {
-  local name=$1
+  local target=$1
   git rm -rf --ignore-unmatch \
-    "plugins/$name/.github" "themes/$name/.github" \
+    "$target/.github" "$target/package-lock.json" \
     > /dev/null 2>&1 || true
   while IFS= read -r f; do
     case "$f" in
@@ -335,6 +338,7 @@ integrate_all() {
 
   for entry in "${REPOS[@]}"; do
     local name="${entry%%:*}"
+    local target="${entry#*:}"
     local saved
     saved=$(git rev-parse HEAD)
 
@@ -355,7 +359,7 @@ integrate_all() {
       merge_clean=1
     fi
 
-    apply_structural_overrides "$name"
+    apply_structural_overrides "$target"
 
     # newspack-plugin always runs the extracted-package routing — files under
     # plugins/newspack-plugin/packages/{colors,components,icons}/ leak in even
