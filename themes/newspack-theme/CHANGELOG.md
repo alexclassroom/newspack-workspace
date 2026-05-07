@@ -1,3 +1,17 @@
+# [2.22.0-alpha.1](https://github.com/Automattic/newspack-theme/compare/v2.21.0...v2.22.0-alpha.1) (2026-05-07)
+
+
+### Bug Fixes
+
+* add retry for appending existing subtitle to iframed editor ([#2681](https://github.com/Automattic/newspack-theme/issues/2681)) ([de1d7ac](https://github.com/Automattic/newspack-theme/commit/de1d7ac615b733629bf6747323995dd2edefdbbb))
+* **block-theme:** remove MJML image-caption filter moved to newsletters plugin ([#2680](https://github.com/Automattic/newspack-theme/issues/2680)) ([f659a65](https://github.com/Automattic/newspack-theme/commit/f659a65883d820d036d372810cb7beb7fc95ebb0))
+* correct icon block, pullquote block styles, and post title width ahead of WP 7.0 ([#2679](https://github.com/Automattic/newspack-theme/issues/2679)) ([c4a0a75](https://github.com/Automattic/newspack-theme/commit/c4a0a75cb76eecdd89c212efe7fca2ae0ce1c04b))
+
+
+### Features
+
+* move coauthors RSS function to the Newspack Plugin ([#2671](https://github.com/Automattic/newspack-theme/issues/2671)) ([6b00cae](https://github.com/Automattic/newspack-theme/commit/6b00caea3ab456a5bd0bd4b124d9448bbf0d6374))
+
 # [2.21.0](https://github.com/Automattic/newspack-theme/compare/v2.20.3...v2.21.0) (2026-04-13)
 
 
