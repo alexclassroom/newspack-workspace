@@ -257,6 +257,49 @@ normalize_package_repos() {
   done
 }
 
+# Restore workspace:* for any dependency on a workspace-published package
+# (newspack-scripts/components/colors/icons) in any plugin/theme package.json.
+# Legacy commits bump these against published semver (e.g. "^5.9.7"); a clean
+# merge into the monorepo brings that bump in unchallenged, which breaks
+# pnpm's frozen-lockfile install because pnpm-lock.yaml expects workspace:*.
+# Idempotent — safe to call after every merge.
+restore_workspace_deps() {
+  node -e '
+    const fs = require("fs"), path = require("path");
+    const WS_PACKAGES = ["newspack-scripts", "newspack-components", "newspack-colors", "newspack-icons"];
+    const roots = ["plugins", "themes"];
+    const changed = [];
+    for (const r of roots) {
+      if (!fs.existsSync(r)) continue;
+      for (const name of fs.readdirSync(r)) {
+        const pj = path.join(r, name, "package.json");
+        if (!fs.existsSync(pj)) continue;
+        const src = fs.readFileSync(pj, "utf8");
+        const indentMatch = src.match(/\n(\t+|[ ]+)"/);
+        const indent = indentMatch ? indentMatch[1] : "  ";
+        const trail = src.endsWith("\n") ? "\n" : "";
+        const j = JSON.parse(src);
+        let dirty = false;
+        for (const section of ["dependencies", "devDependencies", "peerDependencies"]) {
+          if (!j[section]) continue;
+          for (const pkg of WS_PACKAGES) {
+            if (j[section][pkg] && j[section][pkg] !== "workspace:*") {
+              j[section][pkg] = "workspace:*";
+              dirty = true;
+            }
+          }
+        }
+        if (!dirty) continue;
+        fs.writeFileSync(pj, JSON.stringify(j, null, indent) + trail);
+        changed.push(pj);
+      }
+    }
+    process.stdout.write(changed.join("\0"));
+  ' | while IFS= read -r -d "" f; do
+    git add -- "$f"
+  done
+}
+
 # For newspack-plugin: redirect any path under
 # plugins/newspack-plugin/packages/{colors,components,icons}/ to the workspace
 # path packages/<pkg>/<rest>. Handles three cases:
@@ -411,6 +454,7 @@ integrate_all() {
     fi
 
     normalize_package_repos
+    restore_workspace_deps
 
     if [ -z "$(git diff --name-only --diff-filter=U)" ]; then
       git commit --no-edit > /dev/null
