@@ -44,6 +44,20 @@
 		<exclude-pattern>*/plugins/republication-tracker-tool/*</exclude-pattern>
 	</rule>
 
+	<!-- Newspack custom sniffs. ForbiddenMethods (loose) applies broadly so
+	     callers across the monorepo are nudged toward
+	     Newspack_Newsletters_Contacts. ForbiddenContactsMethods (strict, with
+	     service-providers/ exemption) only makes sense inside the newsletters
+	     plugin, where it disciplines internal callers. The first ref registers
+	     the standard; the per-sniff refs that follow only refine scope. -->
+	<rule ref="./phpcsSniffs"/>
+	<rule ref="phpcsSniffs.Newsletters.ForbiddenMethods">
+		<exclude-pattern>*/plugins/newspack-newsletters/*</exclude-pattern>
+	</rule>
+	<rule ref="phpcsSniffs.Newsletters.ForbiddenContactsMethods">
+		<include-pattern>*/plugins/newspack-newsletters/*</include-pattern>
+	</rule>
+
 	<!-- newspack-theme has classic-theme conventions that pre-date the
 	     stricter commenting/indent sniffs WordPress-Extra enables; preserve
 	     the prior per-theme exclusions rather than reformat the theme. -->
