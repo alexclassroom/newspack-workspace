@@ -5,6 +5,13 @@
 
 * add a box-sizing attribute to the table block to prevent overflow ([#2707](https://github.com/Automattic/newspack-theme/issues/2707)) ([7a44c99](https://github.com/Automattic/newspack-theme/commit/7a44c990d31301157d804191d7865cd1b1885c3a))
 
+## [2.21.2](https://github.com/Automattic/newspack-theme/compare/v2.21.1...v2.21.2) (2026-05-14)
+
+
+### Bug Fixes
+
+* add check for non-archive archive pages ([#2706](https://github.com/Automattic/newspack-theme/issues/2706)) ([c997ace](https://github.com/Automattic/newspack-theme/commit/c997acef8b90ee30b12ed4d71e3bc2a80337a2e3))
+
 ## [2.21.1](https://github.com/Automattic/newspack-theme/compare/v2.21.0...v2.21.1) (2026-05-12)
 
 
