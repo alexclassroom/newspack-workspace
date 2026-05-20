@@ -1,3 +1,17 @@
+## [3.33.2](https://github.com/Automattic/newspack-newsletters/compare/v3.33.1...v3.33.2) (2026-05-19)
+
+
+### Bug Fixes
+
+* make sure newsletter styles are previewed in WP 7.0 ([#2115](https://github.com/Automattic/newspack-newsletters/issues/2115)) ([94b69e7](https://github.com/Automattic/newspack-newsletters/commit/94b69e7a19f6f91e68f976a4a1a5d3429ae51f28))
+
+## [3.33.1](https://github.com/Automattic/newspack-newsletters/compare/v3.33.0...v3.33.1) (2026-05-19)
+
+
+### Bug Fixes
+
+* remove block-level CSS field from Newsletter editor ([#2116](https://github.com/Automattic/newspack-newsletters/issues/2116)) ([6789a29](https://github.com/Automattic/newspack-newsletters/commit/6789a29ecf95c26b3509e7e8de05f0e7a6c91018))
+
 # [3.33.0](https://github.com/Automattic/newspack-newsletters/compare/v3.32.0...v3.33.0) (2026-05-18)
 
 

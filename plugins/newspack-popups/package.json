@@ -40,5 +40,10 @@
 	},
 	"devDependencies": {
 		"newspack-scripts": "^5.9.8"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/Automattic/newspack-workspace.git",
+		"directory": "plugins/newspack-popups"
 	}
 }
