@@ -45,8 +45,8 @@ The Newspack product consists of these interconnected plugins and themes:
 - `newspack-multibranded-site` - Support for multiple brands within a single WordPress site
 
 **Manager (SaaS):**
-- `newspack-manager` - Server-side component for Newspack-as-a-service
-- `newspack-manager-client` - Client plugin that connects sites to Newspack Manager
+- `newspack-manager-admin` - Admin UI on the central hub site (newspack.com); manages and monitors all Newspack sites
+- `newspack-manager` - Companion plugin installed on every managed site; reports data back to the hub
 
 **Syndication:**
 - `republication-tracker-tool` - Tracks content republication across sites
