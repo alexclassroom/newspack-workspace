@@ -49,6 +49,6 @@
 	},
 	"devDependencies": {
 		"classnames": "^2.5.1",
-		"newspack-scripts": "^5.9.8"
+		"newspack-scripts": "workspace:*"
 	}
 }

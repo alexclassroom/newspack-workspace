@@ -298,15 +298,9 @@ importers:
       classnames:
         specifier: ^2.5.1
         version: 2.5.1
-      lodash:
-        specifier: ^4.17.0
-        version: 4.18.1
       newspack-scripts:
         specifier: workspace:*
         version: link:../../packages/scripts
-      prop-types:
-        specifier: ^15.8.0
-        version: 15.8.1
 
   plugins/newspack-blocks:
     dependencies:
@@ -391,9 +385,6 @@ importers:
 
   plugins/newspack-network:
     devDependencies:
-      clsx:
-        specifier: ^2.1.0
-        version: 2.1.1
       newspack-scripts:
         specifier: workspace:*
         version: link:../../packages/scripts
@@ -410,12 +401,9 @@ importers:
         specifier: workspace:*
         version: link:../../packages/components
       qs:
-        specifier: ^6.15.1
-        version: 6.15.1
+        specifier: ^6.15.2
+        version: 6.15.2
     devDependencies:
-      lodash:
-        specifier: ^4.17.0
-        version: 4.18.1
       newspack-scripts:
         specifier: workspace:*
         version: link:../../packages/scripts
@@ -432,8 +420,8 @@ importers:
         specifier: ^2.0.1
         version: 2.0.1
       js-cookie:
-        specifier: ^3.0.5
-        version: 3.0.5
+        specifier: ^3.0.7
+        version: 3.0.7
       moment:
         specifier: ^2.30.1
         version: 2.30.1
@@ -441,8 +429,8 @@ importers:
         specifier: ^3.1.1
         version: 3.1.1(moment@2.30.1)
       qs:
-        specifier: ^6.15.1
-        version: 6.15.1
+        specifier: ^6.15.2
+        version: 6.15.2
       react-router-dom:
         specifier: ^5.3.4
         version: 5.3.4(react@18.3.1)
@@ -453,21 +441,9 @@ importers:
         specifier: ^4.12.0
         version: 4.12.0
     devDependencies:
-      clsx:
-        specifier: ^2.1.0
-        version: 2.1.1
-      lodash:
-        specifier: ^4.17.0
-        version: 4.18.1
       newspack-scripts:
         specifier: workspace:*
         version: link:../../packages/scripts
-      prop-types:
-        specifier: ^15.8.0
-        version: 15.8.1
-      react:
-        specifier: ^18.0.0
-        version: 18.3.1
 
   plugins/newspack-popups:
     dependencies:
@@ -475,15 +451,12 @@ importers:
         specifier: ^2.5.1
         version: 2.5.1
       js-cookie:
-        specifier: ^3.0.5
-        version: 3.0.5
+        specifier: ^3.0.7
+        version: 3.0.7
       newspack-components:
         specifier: workspace:*
         version: link:../../packages/components
     devDependencies:
-      lodash:
-        specifier: ^4.17.0
-        version: 4.18.1
       newspack-scripts:
         specifier: workspace:*
         version: link:../../packages/scripts
@@ -496,30 +469,12 @@ importers:
 
   plugins/newspack-story-budget:
     devDependencies:
-      classnames:
-        specifier: ^2.5.0
-        version: 2.5.1
-      clsx:
-        specifier: ^2.1.0
-        version: 2.1.1
-      lodash:
-        specifier: ^4.17.0
-        version: 4.18.1
       newspack-components:
         specifier: workspace:*
         version: link:../../packages/components
       newspack-scripts:
         specifier: workspace:*
         version: link:../../packages/scripts
-      react-dom:
-        specifier: ^18.0.0
-        version: 18.3.1(react@18.3.1)
-      react-router-dom:
-        specifier: ^6.0.0
-        version: 6.30.3(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
-      redux:
-        specifier: ^5.0.0
-        version: 5.0.1
 
   plugins/republication-tracker-tool:
     devDependencies:
@@ -7026,9 +6981,9 @@ packages:
   jpeg-js@0.4.4:
     resolution: {integrity: sha512-WZzeDOEtTOBK4Mdsar0IqEU5sMr3vSV2RqkAIzUEV2BHnUfKGyswWFPFwK5EeDo93K3FohSHbLAjj0s1Wzd+dg==}
 
-  js-cookie@3.0.5:
-    resolution: {integrity: sha512-cEiJEAEoIbWfCZYKWhVwFuvPX1gETRYPw6LlaTKoxD3s2AkXzkCjnp6h0V77ozyqj0jakteJ4YqDJT830+lVGw==}
-    engines: {node: '>=14'}
+  js-cookie@3.0.7:
+    resolution: {integrity: sha512-z/wZZgDrkNV1eA0ULjM/F9/50Ya8fbzgKneSpoPsXSGd0KnpdtHfOZWK+GcwLk+EZbS4F9RBhU+K2RgzuDaItw==}
+    engines: {node: '>=20'}
 
   js-library-detector@6.7.0:
     resolution: {integrity: sha512-c80Qupofp43y4cJ7+8TTDN/AsDwLi5oOm/plBrWI+iQt485vKXCco+yVmOwEgdo9VOdsYTuV0UlTeetVPTriXA==}
@@ -8819,6 +8774,10 @@ packages:
     resolution: {integrity: sha512-6YHEFRL9mfgcAvql/XhwTvf5jKcOiiupt2FiJxHkiX1z4j7WL8J/jRHYLluORvc1XxB5rV20KoeK00gVJamspg==}
     engines: {node: '>=0.6'}
 
+  qs@6.15.2:
+    resolution: {integrity: sha512-Rzq0KEyX/w/tEybncDgdkZrJgVUsUMk3xjh3t5bv3S1HTAtg+uOYt72+ZfwiQwKdysThkTBdL/rTi6HDmX9Ddw==}
+    engines: {node: '>=0.6'}
+
   querystringify@2.2.0:
     resolution: {integrity: sha512-FIqgj2EUvTa7R50u0rGsyTftzjYmv/a3hO345bZNrqabNqjtgiDMgmo4mkUjd+nzU5oF3dClKqFIPUKybUyqoQ==}
 
@@ -9869,8 +9828,8 @@ packages:
   third-party-web@0.27.0:
     resolution: {integrity: sha512-h0JYX+dO2Zr3abCQpS6/uFjujaOjA1DyDzGQ41+oFn9VW/ARiq9g5ln7qEP9+BTzDpOMyIfsfj4OvfgXAsMUSA==}
 
-  third-party-web@0.29.0:
-    resolution: {integrity: sha512-nBDSJw5B7Sl1YfsATG2XkW5qgUPODbJhXw++BKygi9w6O/NKS98/uY/nR/DxDq2axEjL6halHW1v+jhm/j1DBQ==}
+  third-party-web@0.29.2:
+    resolution: {integrity: sha512-fegtha91tq2DHphyoiBXVHjVi2YG9zFaRnboT9C28tO1en9Y3wJsfspuy40F+u5wl3hHVbw7cnd1b67kEGHb8g==}
 
   through2@2.0.5:
     resolution: {integrity: sha512-/mrRod8xqpA+IHSLyGCQ2s8SPHiCDEeQJSep1jqLYeEUClOFG2Qsh+4FU6G9VeqpZnGW/Su8LQGc4YKni5rYSQ==}
@@ -13320,7 +13279,7 @@ snapshots:
   '@paulirish/trace_engine@0.0.59':
     dependencies:
       legacy-javascript: 0.0.1
-      third-party-web: 0.29.0
+      third-party-web: 0.29.2
 
   '@pkgr/core@0.2.9': {}
 
@@ -19863,7 +19822,7 @@ snapshots:
 
   jpeg-js@0.4.4: {}
 
-  js-cookie@3.0.5: {}
+  js-cookie@3.0.7: {}
 
   js-library-detector@6.7.0: {}
 
@@ -21696,6 +21655,10 @@ snapshots:
     dependencies:
       side-channel: 1.1.0
 
+  qs@6.15.2:
+    dependencies:
+      side-channel: 1.1.0
+
   querystringify@2.2.0: {}
 
   queue-microtask@1.2.3: {}
@@ -23005,7 +22968,7 @@ snapshots:
 
   third-party-web@0.27.0: {}
 
-  third-party-web@0.29.0: {}
+  third-party-web@0.29.2: {}
 
   through2@2.0.5:
     dependencies:

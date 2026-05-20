@@ -19,6 +19,6 @@
 		"url": "https://github.com/Automattic/super-cool-ad-inserter-plugin/issues"
 	},
 	"devDependencies": {
-		"newspack-scripts": "^5.9.8"
+		"newspack-scripts": "workspace:*"
 	}
 }

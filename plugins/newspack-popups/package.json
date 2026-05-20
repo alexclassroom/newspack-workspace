@@ -36,10 +36,10 @@
 	"dependencies": {
 		"classnames": "^2.5.1",
 		"js-cookie": "^3.0.7",
-		"newspack-components": "^4.3.0"
+		"newspack-components": "workspace:*"
 	},
 	"devDependencies": {
-		"newspack-scripts": "^5.9.8"
+		"newspack-scripts": "workspace:*"
 	},
 	"repository": {
 		"type": "git",
