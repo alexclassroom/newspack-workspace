@@ -1,3 +1,10 @@
+## [2.22.1](https://github.com/Automattic/newspack-theme/compare/v2.22.0...v2.22.1) (2026-05-21)
+
+
+### Bug Fixes
+
+* reinstate left border for quotes ([#2720](https://github.com/Automattic/newspack-theme/issues/2720)) ([357a196](https://github.com/Automattic/newspack-theme/commit/357a196633d81e0b99f92fec0cb2d61306cc3141))
+
 # [2.22.0](https://github.com/Automattic/newspack-theme/compare/v2.21.2...v2.22.0) (2026-05-18)
 
 

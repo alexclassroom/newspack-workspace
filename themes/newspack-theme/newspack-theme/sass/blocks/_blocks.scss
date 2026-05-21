@@ -941,12 +941,9 @@ body:not(.wp-child-theme-newspack-joseph):not(.wp-child-theme-newspack-nelson) .
 
 //! Blockquote
 .wp-block-quote {
-	&:not(.is-large),
-	&:not(.is-style-large) {
-		border-width: 2px;
-		border-color: var(--newspack-theme-color-link);
-		padding-top: 0;
-		padding-bottom: 0;
+	&:not(.is-large):not(.is-style-large):not(.is-style-plain) {
+		border-left: 2px solid var(--newspack-theme-color-link);
+		padding: 0 0 0 1em;
 	}
 
 	p {
