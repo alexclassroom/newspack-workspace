@@ -83,6 +83,14 @@ gh_latest() {
 # Latest version published to npm for a package name. Empty if unpublished.
 npm_latest() { npm view "$1" version 2>/dev/null || true; }
 
+# Print the higher of two semver strings (tolerates empty arguments).
+highest_version() {
+  local a="$1" b="$2"
+  [ -z "$a" ] && { echo "$b"; return; }
+  [ -z "$b" ] && { echo "$a"; return; }
+  printf '%s\n%s\n' "$a" "$b" | sort -V | tail -1
+}
+
 created=()
 skipped=()
 
@@ -101,24 +109,27 @@ seed_one() {
   [ -f "$pj" ] || return 0
   is_releasable "$dir" || return 0
 
-  local pkg_name version
+  local pkg_name
   pkg_name=$(pkg_field "$pj" 'name')
   [ -n "$pkg_name" ] || { echo "WARN: no name in $pj, skipping" >&2; return 0; }
 
+  local public
   if [ "$source" = "gh" ]; then
-    version=$(gh_latest "$(basename "$dir")")
+    public=$(gh_latest "$(basename "$dir")")
   else
-    version=$(npm_latest "$pkg_name")
+    public=$(npm_latest "$pkg_name")
   fi
 
-  # No public release found: fall back to the in-repo version so the package
-  # still gets a baseline (see the header note on why an unbaselined package is
-  # not safe to leave to msr).
-  local from="$source"
-  if [ -z "$version" ]; then
-    version=$(pkg_field "$pj" 'version')
-    from="package.json"
-  fi
+  # Baseline = the highest of the last published version and the in-repo
+  # package.json version. Using the max guards both directions: when
+  # package.json is behind a public release (stale synced manifest) the public
+  # version wins; when package.json is ahead of the registry (versions bumped
+  # in-repo but never published, e.g. extracted shared packages) the in-repo
+  # version wins, so the first release is strictly newer and does not rewrite
+  # package.json downward. A package with no version anywhere is skipped.
+  local pjv version
+  pjv=$(pkg_field "$pj" 'version')
+  version=$(highest_version "$public" "$pjv")
   if [ -z "$version" ]; then
     skipped+=("$pkg_name (no version resolvable from $source or package.json)")
     return 0
