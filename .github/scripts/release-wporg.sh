@@ -11,10 +11,14 @@
 #     deployable `release/<plugin>/` folder.
 #
 # Required environment:
-#   WP_ORG_PLUGIN_NAME      WordPress.org plugin slug (also the release/ subdir).
+#   WP_ORG_PLUGIN_NAME      Name of the release/ subdir produced by release:archive.
 #   WP_ORG_PLUGIN_VERSION   Version to deploy (e.g. 3.33.5).
 #   WP_ORG_USERNAME         WordPress.org SVN username.
 #   WP_ORG_PASSWORD         WordPress.org SVN password.
+# Optional:
+#   WP_ORG_PLUGIN_SLUG      WordPress.org slug, when it differs from the subdir
+#                           name (e.g. super-cool-ad-inserter-plugin ships as the
+#                           "super-cool-ad-inserter" slug). Defaults to the name.
 
 set -euo pipefail
 
@@ -23,9 +27,11 @@ set -euo pipefail
 : "${WP_ORG_USERNAME:?WP_ORG_USERNAME is required}"
 : "${WP_ORG_PASSWORD:?WP_ORG_PASSWORD is required}"
 
+WP_ORG_PLUGIN_SLUG="${WP_ORG_PLUGIN_SLUG:-$WP_ORG_PLUGIN_NAME}"
+
 SVN_PLUGINS_URL="https://plugins.svn.wordpress.org"
 SVN_REPO_LOCAL_PATH="release/svn"
-SVN_REPO_URL="$SVN_PLUGINS_URL/$WP_ORG_PLUGIN_NAME"
+SVN_REPO_URL="$SVN_PLUGINS_URL/$WP_ORG_PLUGIN_SLUG"
 SVN_TAG="$WP_ORG_PLUGIN_VERSION"
 
 if [ ! -d "release/$WP_ORG_PLUGIN_NAME" ]; then
