@@ -58,6 +58,10 @@ jobs:
       - name: Resolve released version
         id: ver
         run: echo "version=$(node -p "require('./${{ inputs.plugin-path }}/package.json').version")" >> "$GITHUB_OUTPUT"
+      - name: Install Subversion
+        # ubuntu-latest no longer ships svn; the deploy script needs it (both
+        # the already-published check and the commit).
+        run: sudo apt-get update && sudo apt-get install -y subversion
       - name: Deploy to WordPress.org
         working-directory: ${{ inputs.plugin-path }}
         env:
