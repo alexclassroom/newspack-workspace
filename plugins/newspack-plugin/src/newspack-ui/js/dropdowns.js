@@ -9,7 +9,7 @@ const positionContent = ( dropdown, content, toggle ) => {
 	const rect = content.getBoundingClientRect();
 
 	// If content would overflow the right edge of the viewport.
-	if ( rect.right + rect.width > window.innerWidth ) {
+	if ( rect.right > window.innerWidth ) {
 		content.style.left = 'auto';
 		content.style.right = '0';
 	} else {
@@ -20,7 +20,7 @@ const positionContent = ( dropdown, content, toggle ) => {
 		}
 	}
 	// If content would overflow the bottom edge of the viewport.
-	if ( rect.bottom + rect.height > window.innerHeight ) {
+	if ( rect.bottom > window.innerHeight ) {
 		content.style.top = 'auto';
 		content.style.bottom = `${ toggle.clientHeight + 8 }px`;
 	} else {

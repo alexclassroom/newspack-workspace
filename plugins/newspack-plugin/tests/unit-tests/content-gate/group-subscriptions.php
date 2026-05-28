@@ -540,7 +540,7 @@ class Test_Group_Subscriptions extends \WP_UnitTestCase {
 	/**
 	 * Test that an empty name in update_subscription_settings() stores an
 	 * empty string, which causes get_subscription_settings() to fall back
-	 * to "Unnamed group" when no product name is available.
+	 * to the publisher singular group label when no product name is available.
 	 */
 	public function test_group_name_empty_falls_back_to_default() {
 		$owner_id  = $this->create_reader_user();

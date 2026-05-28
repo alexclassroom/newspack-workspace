@@ -495,16 +495,17 @@ class Test_Group_Subscription_MyAccount extends WP_UnitTestCase {
 			$captured = $location;
 			throw new \Exception( 'redirect_intercepted' );
 		};
+		$allow_host = fn( $hosts ) => array_merge( $hosts, [ 'example.com' ] );
 		add_filter( 'wp_redirect', $capture, 1 );
-		add_filter( 'allowed_redirect_hosts', fn( $hosts ) => array_merge( $hosts, [ 'example.com' ] ) );
+		add_filter( 'allowed_redirect_hosts', $allow_host );
 
 		try {
 			Group_Subscription_MyAccount::handle_leave_group();
 		} catch ( \Exception $e ) {
 			unset( $e ); // expected redirect_intercepted exception.
 		} finally {
-			remove_all_filters( 'wp_redirect' );
-			remove_all_filters( 'allowed_redirect_hosts' );
+			remove_filter( 'wp_redirect', $capture, 1 );
+			remove_filter( 'allowed_redirect_hosts', $allow_host );
 			$_POST = [];
 			$_REQUEST = [];
 		}

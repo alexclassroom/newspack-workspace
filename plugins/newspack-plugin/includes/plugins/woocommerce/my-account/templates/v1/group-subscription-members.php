@@ -347,13 +347,14 @@ $is_completely_empty = empty( $members ) && empty( $all_invites );
 					<h2 class="font-size newspack-ui__font--l"><?php esc_html_e( 'Are you sure?', 'newspack-plugin' ); ?></h2>
 					<p>
 						<?php
-						echo esc_html(
+						echo wp_kses(
 							sprintf(
-								/* translators: 1: member's display name or email, 2: lowercase singular group label. */
+								/* translators: 1: member's display name or email placeholder span, 2: lowercase singular group label. */
 								__( '%1$s will immediately lose access to this %2$s. You can re-invite them later if you change your mind.', 'newspack-plugin' ),
-								'__MEMBER_NAME__',
-								$group_label_lower
-							)
+								'<span data-member-name></span>',
+								esc_html( $group_label_lower )
+							),
+							[ 'span' => [ 'data-member-name' => true ] ]
 						);
 						?>
 					</p>

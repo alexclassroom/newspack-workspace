@@ -38,8 +38,7 @@ domReady( function () {
 	const removeMemberModal = document.getElementById( 'newspack-my-account__group_subscription--confirm-remove-member' );
 	if ( removeMemberModal ) {
 		const memberIdInput = removeMemberModal.querySelector( '[data-remove-member-id]' );
-		const memberNameSlot = removeMemberModal.querySelector( '.newspack-ui__modal__content p' );
-		const memberNameTemplate = memberNameSlot ? memberNameSlot.textContent : '';
+		const memberNameSlot = removeMemberModal.querySelector( '[data-member-name]' );
 		document.addEventListener( 'click', event => {
 			const trigger = event.target.closest( '.newspack-my-account__group_subscription__remove-member' );
 			if ( ! trigger ) {
@@ -50,10 +49,7 @@ domReady( function () {
 				memberIdInput.value = trigger.getAttribute( 'data-member-id' ) || '';
 			}
 			if ( memberNameSlot ) {
-				memberNameSlot.textContent = memberNameTemplate.replace(
-					'__MEMBER_NAME__',
-					trigger.getAttribute( 'data-member-name' ) || ''
-				);
+				memberNameSlot.textContent = trigger.getAttribute( 'data-member-name' ) || '';
 			}
 			removeMemberModal.setAttribute( 'data-state', 'open' );
 		} );

@@ -194,8 +194,9 @@ class Test_Group_Management_Nav extends \WP_UnitTestCase {
 			$redirect_status = $status;
 			throw new \Exception( 'redirect_intercepted' );
 		};
+		$allow_host = fn( $hosts ) => array_merge( $hosts, [ 'example.com' ] );
 		add_filter( 'wp_redirect', $capture, 1, 2 );
-		add_filter( 'allowed_redirect_hosts', fn( $hosts ) => array_merge( $hosts, [ 'example.com' ] ) );
+		add_filter( 'allowed_redirect_hosts', $allow_host );
 
 		try {
 			try {
@@ -208,8 +209,8 @@ class Test_Group_Management_Nav extends \WP_UnitTestCase {
 			$this->assertStringContainsString( '/group/' . $sub->get_id(), $redirect_to );
 			$this->assertSame( 308, $redirect_status );
 		} finally {
-			remove_all_filters( 'wp_redirect' );
-			remove_all_filters( 'allowed_redirect_hosts' );
+			remove_filter( 'wp_redirect', $capture, 1 );
+			remove_filter( 'allowed_redirect_hosts', $allow_host );
 			wp_set_current_user( 0 );
 		}
 	}
@@ -227,8 +228,9 @@ class Test_Group_Management_Nav extends \WP_UnitTestCase {
 			$redirect_to = $location;
 			throw new \Exception( 'redirect_intercepted' );
 		};
+		$allow_host = fn( $hosts ) => array_merge( $hosts, [ 'example.com' ] );
 		add_filter( 'wp_redirect', $capture, 1 );
-		add_filter( 'allowed_redirect_hosts', fn( $hosts ) => array_merge( $hosts, [ 'example.com' ] ) );
+		add_filter( 'allowed_redirect_hosts', $allow_host );
 
 		try {
 			try {
@@ -240,8 +242,8 @@ class Test_Group_Management_Nav extends \WP_UnitTestCase {
 			$this->assertNotNull( $redirect_to );
 			$this->assertStringContainsString( '/group/' . $sub->get_id(), $redirect_to );
 		} finally {
-			remove_all_filters( 'wp_redirect' );
-			remove_all_filters( 'allowed_redirect_hosts' );
+			remove_filter( 'wp_redirect', $capture, 1 );
+			remove_filter( 'allowed_redirect_hosts', $allow_host );
 			wp_set_current_user( 0 );
 		}
 	}
@@ -258,8 +260,9 @@ class Test_Group_Management_Nav extends \WP_UnitTestCase {
 			$redirect_to = $location;
 			throw new \Exception( 'redirect_intercepted' );
 		};
+		$allow_host = fn( $hosts ) => array_merge( $hosts, [ 'example.com' ] );
 		add_filter( 'wp_redirect', $capture, 1 );
-		add_filter( 'allowed_redirect_hosts', fn( $hosts ) => array_merge( $hosts, [ 'example.com' ] ) );
+		add_filter( 'allowed_redirect_hosts', $allow_host );
 
 		try {
 			try {
@@ -271,8 +274,8 @@ class Test_Group_Management_Nav extends \WP_UnitTestCase {
 			$this->assertNotNull( $redirect_to );
 			$this->assertStringNotContainsString( '/group/', $redirect_to );
 		} finally {
-			remove_all_filters( 'wp_redirect' );
-			remove_all_filters( 'allowed_redirect_hosts' );
+			remove_filter( 'wp_redirect', $capture, 1 );
+			remove_filter( 'allowed_redirect_hosts', $allow_host );
 			wp_set_current_user( 0 );
 		}
 	}
@@ -291,8 +294,9 @@ class Test_Group_Management_Nav extends \WP_UnitTestCase {
 			$redirect_to = $location;
 			throw new \Exception( 'redirect_intercepted' );
 		};
+		$allow_host = fn( $hosts ) => array_merge( $hosts, [ 'example.com' ] );
 		add_filter( 'wp_redirect', $capture, 1 );
-		add_filter( 'allowed_redirect_hosts', fn( $hosts ) => array_merge( $hosts, [ 'example.com' ] ) );
+		add_filter( 'allowed_redirect_hosts', $allow_host );
 
 		try {
 			try {
@@ -304,8 +308,8 @@ class Test_Group_Management_Nav extends \WP_UnitTestCase {
 			$this->assertNotNull( $redirect_to );
 			$this->assertStringContainsString( 'is_error=1', $redirect_to );
 		} finally {
-			remove_all_filters( 'wp_redirect' );
-			remove_all_filters( 'allowed_redirect_hosts' );
+			remove_filter( 'wp_redirect', $capture, 1 );
+			remove_filter( 'allowed_redirect_hosts', $allow_host );
 			wp_set_current_user( 0 );
 		}
 	}
