@@ -1,3 +1,8 @@
-// Placeholder so the build script doesn't fail on the release branch,
-// which has no src/ entry points yet. The real config lives on main.
-module.exports = { entry: {} };
+const path = require( 'path' );
+const getBaseWebpackConfig = require( 'newspack-scripts/config/getWebpackConfig' );
+
+const entry = {
+	index: path.join( __dirname, 'src', 'index.js' ),
+};
+
+module.exports = getBaseWebpackConfig( { entry } );
