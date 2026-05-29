@@ -61,9 +61,9 @@ usort(
 				);
 			$subscription_status = $subscription->get_status();
 			$status_classes      = [ 'newspack-ui__badge' ];
-			if ( in_array( $subscription_status, [ 'cancelled', 'expired', 'pending-cancel' ], true ) ) {
+			if ( in_array( $subscription_status, [ 'cancelled', 'expired' ], true ) ) {
 				$status_classes[] = 'newspack-ui__badge--error';
-			} elseif ( in_array( $subscription_status, [ 'on-hold', 'pending', 'processing' ], true ) ) {
+			} elseif ( in_array( $subscription_status, [ 'pending-cancel', 'on-hold', 'pending', 'processing' ], true ) ) {
 				$status_classes[] = 'newspack-ui__badge--warning';
 			} elseif ( 'active' === $subscription_status ) {
 				$status_classes[] = 'newspack-ui__badge--success';

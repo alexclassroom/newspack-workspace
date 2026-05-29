@@ -25,6 +25,7 @@ $invite_link          = Group_Subscription_Invite::get_link_invite( $subscriptio
 $invite_link_url      = $invite_link ? Group_Subscription_Invite::get_link_invite_url( $subscription->get_id(), $current_user_id, $invite_link['key'] ) : '';
 $is_at_limit         = $member_limit > 0 && ( count( $members ) + count( $pending_invites ) ) >= $member_limit;
 $is_manageable       = Group_Subscription_MyAccount::is_subscription_manageable( $subscription );
+$is_active           = Group_Subscription_MyAccount::is_subscription_active( $subscription );
 $active_tab          = ( isset( $_GET['activeTab'] ) && 'invites' === sanitize_key( wp_unslash( $_GET['activeTab'] ) ) ) ? 'invites' : 'members'; // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 $group_label_lower   = Group_Subscription::get_label_lower( 'singular' );
 $is_completely_empty = empty( $members ) && empty( $all_invites );
@@ -61,7 +62,7 @@ $is_completely_empty = empty( $members ) && empty( $all_invites );
 				);
 				?>
 			</p>
-			<?php if ( $is_manageable ) : ?>
+			<?php if ( $is_active ) : ?>
 				<div class="newspack-ui__stack newspack-ui__stack--vertical newspack-ui__stack--gap-2 newspack-my-account__group_subscription__empty-actions">
 					<button type="button" class="newspack-ui__button newspack-ui__button--secondary newspack-ui__button--wide newspack-my-account__subscription--invite-member"><?php esc_html_e( 'Invite by email', 'newspack-plugin' ); ?></button>
 					<button type="button" class="newspack-ui__button newspack-ui__button--ghost newspack-ui__button--wide newspack-my-account__group_subscription__invite-link__copy" data-error-text="<?php echo esc_attr( __( 'Could not copy. Please try again.', 'newspack-plugin' ) ); ?>"><span><?php esc_html_e( 'Copy invite link', 'newspack-plugin' ); ?></span></button>
@@ -198,7 +199,7 @@ $is_completely_empty = empty( $members ) && empty( $all_invites );
 						</button>
 						<div class="newspack-ui__dropdown__content">
 							<ul>
-								<?php if ( $is_manageable ) : ?>
+								<?php if ( $is_active ) : ?>
 								<li>
 									<form method="post" action="<?php echo esc_url( admin_url( 'admin-post.php' ) ); ?>">
 										<input type="hidden" name="action" value="newspack_group_subscription_invite">

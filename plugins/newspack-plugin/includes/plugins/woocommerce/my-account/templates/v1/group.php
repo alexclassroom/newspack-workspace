@@ -26,7 +26,7 @@ $user_id             = get_current_user_id();
 $managed             = Group_Subscription::get_managed_subscriptions_for_user( $user_id );
 $multi_group         = count( $managed ) > 1;
 $subscription_status = $subscription->get_status();
-$is_manageable       = Group_Subscription_MyAccount::is_subscription_manageable( $subscription );
+$is_active           = Group_Subscription_MyAccount::is_subscription_active( $subscription );
 $current_user_id     = $user_id;
 $invite_link         = \Newspack\Group_Subscription_Invite::get_link_invite( $subscription, $current_user_id );
 $members             = Group_Subscription::get_members( $subscription );
@@ -34,9 +34,9 @@ $all_invites         = \Newspack\Group_Subscription_Invite::get_invites( $subscr
 $is_completely_empty = empty( $members ) && empty( $all_invites );
 
 $status_badge_classes = [ 'newspack-ui__badge' ];
-if ( in_array( $subscription_status, [ 'cancelled', 'expired', 'pending-cancel' ], true ) ) {
+if ( in_array( $subscription_status, [ 'cancelled', 'expired' ], true ) ) {
 	$status_badge_classes[] = 'newspack-ui__badge--error';
-} elseif ( in_array( $subscription_status, [ 'on-hold', 'pending', 'processing' ], true ) ) {
+} elseif ( in_array( $subscription_status, [ 'pending-cancel', 'on-hold', 'pending', 'processing' ], true ) ) {
 	$status_badge_classes[] = 'newspack-ui__badge--warning';
 } elseif ( 'active' === $subscription_status ) {
 	$status_badge_classes[] = 'newspack-ui__badge--success';
@@ -62,7 +62,7 @@ if ( in_array( $subscription_status, [ 'cancelled', 'expired', 'pending-cancel' 
 				<a href="<?php echo esc_url( wc_get_endpoint_url( 'view-subscription', $subscription->get_id(), wc_get_page_permalink( 'myaccount' ) ) ); ?>" class="newspack-ui__button newspack-ui__button--secondary">
 					<?php esc_html_e( 'View subscription', 'newspack-plugin' ); ?>
 				</a>
-				<?php if ( $is_manageable && ! $is_completely_empty ) : ?>
+				<?php if ( $is_active && ! $is_completely_empty ) : ?>
 					<div class="newspack-ui__dropdown newspack-my-account__subscription--actions-dropdown">
 						<button class="newspack-ui__button newspack-ui__button--secondary newspack-ui__dropdown__toggle">
 							<?php esc_html_e( 'Invite members', 'newspack-plugin' ); ?>
