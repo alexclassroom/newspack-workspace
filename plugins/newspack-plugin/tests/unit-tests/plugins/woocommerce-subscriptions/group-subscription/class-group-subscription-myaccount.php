@@ -482,7 +482,7 @@ class Test_Group_Subscription_MyAccount extends WP_UnitTestCase {
 	 * @return string Captured redirect URL.
 	 */
 	private function invoke_leave_group_handler( int $subscription_id, string $nonce_action = Group_Subscription_MyAccount::LEAVE_GROUP_NONCE_ACTION ): string {
-		$original_request_method = $_SERVER['REQUEST_METHOD'] ?? null;
+		$original_request_method = $_SERVER['REQUEST_METHOD'] ?? null; // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
 		// phpcs:disable WordPress.Security.NonceVerification.Missing,WordPress.Security.NonceVerification.Recommended
 		$_POST                     = [];
 		$_POST['subscription_id']  = (string) $subscription_id;
