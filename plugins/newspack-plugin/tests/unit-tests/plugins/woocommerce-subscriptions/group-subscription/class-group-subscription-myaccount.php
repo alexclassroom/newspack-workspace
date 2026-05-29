@@ -476,8 +476,8 @@ class Test_Group_Subscription_MyAccount extends WP_UnitTestCase {
 	}
 
 	/**
-	 * Manageable returns false for a cancelled group sub — manager actions
-	 * (invite, cancel-invite, remove-member) must be refused.
+	 * Manageable returns false for a cancelled group sub, so invite and
+	 * remove-member are refused (cancel-invite stays allowed for cleanup).
 	 */
 	public function test_is_subscription_manageable_returns_false_for_cancelled() {
 		$owner_id = $this->create_reader_user();
