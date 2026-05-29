@@ -66,8 +66,8 @@ $is_completely_empty = empty( $members ) && empty( $all_invites );
 				<div class="newspack-ui__stack newspack-ui__stack--vertical newspack-ui__stack--gap-2 newspack-my-account__group_subscription__empty-actions">
 					<button type="button" class="newspack-ui__button newspack-ui__button--secondary newspack-ui__button--wide newspack-my-account__subscription--invite-member"><?php esc_html_e( 'Invite by email', 'newspack-plugin' ); ?></button>
 					<button type="button" class="newspack-ui__button newspack-ui__button--ghost newspack-ui__button--wide newspack-my-account__group_subscription__invite-link__copy" data-error-text="<?php echo esc_attr( __( 'Could not copy. Please try again.', 'newspack-plugin' ) ); ?>"><span><?php esc_html_e( 'Copy invite link', 'newspack-plugin' ); ?></span></button>
-					<button type="button" class="newspack-ui__button newspack-ui__button--ghost newspack-ui__button--wide newspack-my-account__group_subscription__invite-link__confirm-regenerate <?php echo ! $invite_link ? 'hidden' : ''; ?>"><?php esc_html_e( 'Regenerate invite link', 'newspack-plugin' ); ?></button>
-					<button type="button" class="newspack-ui__button newspack-ui__button--ghost newspack-ui__button--wide newspack-ui__button--destructive newspack-my-account__group_subscription__invite-link__confirm-disable <?php echo ! $invite_link ? 'hidden' : ''; ?>"><?php esc_html_e( 'Disable invite link', 'newspack-plugin' ); ?></button>
+					<button type="button" class="newspack-ui__button newspack-ui__button--ghost newspack-ui__button--wide newspack-my-account__group_subscription__invite-link__confirm-regenerate <?php echo esc_attr( ! $invite_link ? 'hidden' : '' ); ?>"><?php esc_html_e( 'Regenerate invite link', 'newspack-plugin' ); ?></button>
+					<button type="button" class="newspack-ui__button newspack-ui__button--ghost newspack-ui__button--wide newspack-ui__button--destructive newspack-my-account__group_subscription__invite-link__confirm-disable <?php echo esc_attr( ! $invite_link ? 'hidden' : '' ); ?>"><?php esc_html_e( 'Disable invite link', 'newspack-plugin' ); ?></button>
 				</div>
 			<?php endif; ?>
 		</div>

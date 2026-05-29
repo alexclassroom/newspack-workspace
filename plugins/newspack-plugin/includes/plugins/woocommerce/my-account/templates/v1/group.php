@@ -76,10 +76,10 @@ if ( in_array( $subscription_status, [ 'cancelled', 'expired' ], true ) ) {
 								<li>
 									<button type="button" class="newspack-ui__button newspack-ui__button--ghost newspack-ui__button--wide newspack-my-account__group_subscription__invite-link__copy" data-error-text="<?php echo esc_attr( __( 'Could not copy. Please try again.', 'newspack-plugin' ) ); ?>"><span><?php esc_html_e( 'Copy invite link', 'newspack-plugin' ); ?></span></button>
 								</li>
-								<li class="<?php echo ! $invite_link ? 'hidden' : ''; ?>">
+								<li class="<?php echo esc_attr( ! $invite_link ? 'hidden' : '' ); ?>">
 									<button type="button" class="newspack-ui__button newspack-ui__button--ghost newspack-ui__button--wide newspack-my-account__group_subscription__invite-link__confirm-regenerate"><?php esc_html_e( 'Regenerate invite link', 'newspack-plugin' ); ?></button>
 								</li>
-								<li class="<?php echo ! $invite_link ? 'hidden' : ''; ?>">
+								<li class="<?php echo esc_attr( ! $invite_link ? 'hidden' : '' ); ?>">
 									<button type="button" class="newspack-ui__button newspack-ui__button--ghost newspack-ui__button--wide newspack-ui__button--destructive newspack-my-account__group_subscription__invite-link__confirm-disable"><?php esc_html_e( 'Disable invite link', 'newspack-plugin' ); ?></button>
 								</li>
 							</ul>
