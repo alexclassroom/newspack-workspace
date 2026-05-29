@@ -51,6 +51,7 @@ domReady( function () {
 			if ( memberNameSlot ) {
 				memberNameSlot.textContent = trigger.getAttribute( 'data-member-name' ) || '';
 			}
+			trigger.closest( '.newspack-ui__dropdown' )?.classList.remove( 'active' );
 			removeMemberModal.setAttribute( 'data-state', 'open' );
 		} );
 	}

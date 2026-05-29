@@ -48,7 +48,12 @@ $grid-gaps: (
 			> * {
 				display: grid;
 				grid-column: 1 / -1;
-				grid-template-columns: subgrid;
+
+				grid-template-columns: var(--newspack-ui-grid-subgrid-cols);
+
+				@supports ( grid-template-columns: subgrid ) {
+					grid-template-columns: subgrid;
+				}
 			}
 		}
 	}

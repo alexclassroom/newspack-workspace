@@ -70,7 +70,7 @@ if ( ! empty( $actions['change_payment_method']['name'] ) ) {
 				$classes[] = 'newspack-ui__badge--success';
 			} elseif ( $subscription->has_status( [ 'cancelled', 'expired' ] ) ) {
 				$classes[] = 'newspack-ui__badge--error';
-			} elseif ( $subscription->has_status( [ 'on-hold', 'pending', 'processing' ] ) ) {
+			} elseif ( $subscription->has_status( [ 'pending-cancel', 'on-hold', 'pending', 'processing' ] ) ) {
 				$classes[] = 'newspack-ui__badge--warning';
 			} else {
 				$classes[] = 'newspack-ui__badge--secondary';
