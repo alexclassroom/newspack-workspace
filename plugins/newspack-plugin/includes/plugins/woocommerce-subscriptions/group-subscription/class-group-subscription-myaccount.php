@@ -51,7 +51,7 @@ class Group_Subscription_MyAccount {
 		add_filter( 'woocommerce_get_query_vars', [ __CLASS__, 'add_manage_members_endpoint' ] );
 		add_filter( 'woocommerce_get_query_vars', [ __CLASS__, 'add_group_endpoint' ] );
 		add_action( 'woocommerce_account_' . self::GROUP_ENDPOINT . '_endpoint', [ __CLASS__, 'resolve_group_landing' ] );
-		add_action( 'woocommerce_account_' . self::MANAGE_MEMBERS_ENDPOINT . '_endpoint', [ __CLASS__, 'render_manage_members_template_redirect' ] );
+		add_action( 'template_redirect', [ __CLASS__, 'redirect_legacy_manage_members' ] );
 		add_filter( 'wcs_get_users_subscriptions', [ __CLASS__, 'inject_member_group_subscriptions' ], 15, 2 );
 		add_filter( 'map_meta_cap', [ __CLASS__, 'grant_group_member_view_order_cap' ], 15, 4 );
 		add_filter( 'wcs_view_subscription_actions', [ __CLASS__, 'view_subscription_actions' ], 13, 3 );
@@ -187,22 +187,19 @@ class Group_Subscription_MyAccount {
 	/**
 	 * Redirect the legacy manage-members endpoint to the new group endpoint.
 	 *
-	 * @param mixed $value Subscription ID passed as the endpoint value.
+	 * Runs on template_redirect, before any output, so wp_safe_redirect() can send
+	 * headers — the endpoint content action fires too late (page already rendering).
 	 */
-	public static function render_manage_members_template_redirect( $value ) {
-		$subscription_id = absint( $value );
-		if ( ! $subscription_id ) {
-			wp_safe_redirect( wc_get_endpoint_url( self::GROUP_ENDPOINT, '', wc_get_page_permalink( 'myaccount' ) ) );
-			exit;
+	public static function redirect_legacy_manage_members() {
+		global $wp;
+		if ( ! isset( $wp->query_vars[ self::MANAGE_MEMBERS_ENDPOINT ] ) ) {
+			return;
 		}
-		wp_safe_redirect(
-			wc_get_endpoint_url(
-				self::GROUP_ENDPOINT,
-				$subscription_id,
-				wc_get_page_permalink( 'myaccount' )
-			),
-			308
-		);
+		$subscription_id = absint( $wp->query_vars[ self::MANAGE_MEMBERS_ENDPOINT ] );
+		$redirect_url    = $subscription_id
+			? wc_get_endpoint_url( self::GROUP_ENDPOINT, $subscription_id, wc_get_page_permalink( 'myaccount' ) )
+			: wc_get_endpoint_url( self::GROUP_ENDPOINT, '', wc_get_page_permalink( 'myaccount' ) );
+		wp_safe_redirect( $redirect_url, $subscription_id ? 308 : 302 );
 		exit;
 	}
 

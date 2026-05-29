@@ -193,9 +193,11 @@ class Test_Group_Management_Nav extends \WP_UnitTestCase {
 	 * Legacy manage-members endpoint redirects to the new group endpoint URL.
 	 */
 	public function test_legacy_manage_members_endpoint_redirects_to_group_endpoint() {
+		global $wp;
 		$owner_id = $this->factory->user->create( [ 'role' => 'subscriber' ] );
 		$sub      = $this->create_subscription( $owner_id, true );
 		wp_set_current_user( $owner_id );
+		$wp->query_vars[ \Newspack\Group_Subscription_MyAccount::MANAGE_MEMBERS_ENDPOINT ] = $sub->get_id();
 
 		$redirect_to     = null;
 		$redirect_status = null;
@@ -210,7 +212,7 @@ class Test_Group_Management_Nav extends \WP_UnitTestCase {
 
 		try {
 			try {
-				\Newspack\Group_Subscription_MyAccount::render_manage_members_template_redirect( $sub->get_id() );
+				\Newspack\Group_Subscription_MyAccount::redirect_legacy_manage_members();
 				$this->fail( 'Expected redirect exception' );
 			} catch ( \Exception $e ) {
 				$this->assertStringContainsString( 'redirect_intercepted', $e->getMessage() );
@@ -221,6 +223,7 @@ class Test_Group_Management_Nav extends \WP_UnitTestCase {
 		} finally {
 			remove_filter( 'wp_redirect', $capture, 1 );
 			remove_filter( 'allowed_redirect_hosts', $allow_host );
+			unset( $wp->query_vars[ \Newspack\Group_Subscription_MyAccount::MANAGE_MEMBERS_ENDPOINT ] );
 			wp_set_current_user( 0 );
 		}
 	}
