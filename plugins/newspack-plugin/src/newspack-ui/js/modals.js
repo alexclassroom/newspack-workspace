@@ -80,9 +80,7 @@ domReady( function () {
 		// Form-submit modals: show a spinner on the submit button while the form
 		// navigates away. No need to remove the class — page reloads. Covers both
 		// shapes: form IS the modal content, or form lives inside a content section.
-		const modalForm = modal.querySelector(
-			'form.newspack-ui__modal__content, .newspack-ui__modal__content form'
-		);
+		const modalForm = modal.querySelector( 'form.newspack-ui__modal__content, .newspack-ui__modal__content form' );
 		if ( modalForm ) {
 			modalForm.addEventListener( 'submit', () => {
 				const submitButton = modalForm.querySelector( 'button[type="submit"]' );

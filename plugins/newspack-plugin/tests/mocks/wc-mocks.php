@@ -590,6 +590,9 @@ function wc_get_product( $product_id ) {
 function wcs_get_subscription_status_name( $status ) {
 	return ucfirst( $status );
 }
+function wcs_get_all_user_actions_for_subscription( $subscription, $user_id ) {
+	return apply_filters( 'wcs_view_subscription_actions', [], $subscription, $user_id );
+}
 function wc_get_template( $template_name, $args = [] ) {
 	$plugin_dir   = dirname( __DIR__, 2 );
 	$templates_dir = $plugin_dir . '/includes/plugins/woocommerce/my-account/templates/v1/';

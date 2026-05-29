@@ -18,6 +18,15 @@ use Newspack\Group_Subscription_Settings;
 class Test_Group_Management_Nav extends \WP_UnitTestCase {
 
 	/**
+	 * Setup before each test.
+	 */
+	public function set_up() {
+		parent::set_up();
+		// Register the menu-items filter under test; production wires it in My_Account_UI_V1::init().
+		add_filter( 'woocommerce_account_menu_items', [ \Newspack\My_Account_UI_V1::class, 'my_account_menu_items' ], 1001 );
+	}
+
+	/**
 	 * Teardown after each test.
 	 */
 	public function tear_down() {

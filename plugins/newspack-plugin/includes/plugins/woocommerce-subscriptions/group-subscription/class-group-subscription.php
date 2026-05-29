@@ -130,6 +130,13 @@ class Group_Subscription {
 			: __( 'Group', 'newspack-plugin' );
 	}
 
+	/**
+	 * Get the lowercased group label for inline use in sentences.
+	 *
+	 * @param string $variant Either 'singular' or 'plural'.
+	 *
+	 * @return string The lowercased label.
+	 */
 	public static function get_label_lower( $variant = 'singular' ) {
 		$label = self::get_label( $variant );
 		return function_exists( 'mb_strtolower' ) ? mb_strtolower( $label ) : strtolower( $label );

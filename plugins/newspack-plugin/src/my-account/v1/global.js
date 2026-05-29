@@ -32,15 +32,13 @@ domReady( () => {
 	// → `wc_add_notice` → `wc_print_notices` after redirect), and WC Blocks renders
 	// success messages as `.wc-block-components-notice-banner.is-success` rather than
 	// the legacy `.woocommerce-message` markup.
-	document
-		.querySelectorAll( '.woocommerce-message, .wc-block-components-notice-banner.is-success' )
-		.forEach( el => {
-			const text = el.textContent.trim();
-			if ( ! text ) {
-				return;
-			}
-			notices.createNotice( text, 'success' );
-			el.remove();
-		} );
+	document.querySelectorAll( '.woocommerce-message, .wc-block-components-notice-banner.is-success' ).forEach( el => {
+		const text = el.textContent.trim();
+		if ( ! text ) {
+			return;
+		}
+		notices.createNotice( text, 'success' );
+		el.remove();
+	} );
 	document.querySelectorAll( '.woocommerce-notices-wrapper:empty' ).forEach( el => el.remove() );
 } );

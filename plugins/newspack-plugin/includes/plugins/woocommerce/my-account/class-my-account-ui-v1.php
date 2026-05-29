@@ -708,6 +708,11 @@ class My_Account_UI_V1 {
 		exit;
 	}
 
+	/**
+	 * Whether to hide payment information for the current reader.
+	 *
+	 * @return bool True when the reader is a group member without their own orders or billing data.
+	 */
 	private static function should_suppress_payment_information() {
 		if ( Memberships::is_active() ) {
 			return false;
@@ -726,6 +731,11 @@ class My_Account_UI_V1 {
 		return ! self::current_user_has_saved_billing_data();
 	}
 
+	/**
+	 * Whether the current reader has saved billing data (payment methods or billing/shipping address).
+	 *
+	 * @return bool
+	 */
 	private static function current_user_has_saved_billing_data() {
 		static $cached = null;
 		if ( null !== $cached ) {

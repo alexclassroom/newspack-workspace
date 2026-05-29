@@ -43,6 +43,9 @@ class Group_Subscription_MyAccount {
 	 */
 	const LEAVE_GROUP_NONCE_ACTION = 'newspack_group_subscription_leave_group';
 
+	/**
+	 * Register hooks for the My Account group subscription UI.
+	 */
 	public static function init() {
 		add_action( 'init', [ __CLASS__, 'flush_rewrite_rules' ] );
 		add_filter( 'woocommerce_get_query_vars', [ __CLASS__, 'add_manage_members_endpoint' ] );
@@ -253,6 +256,13 @@ class Group_Subscription_MyAccount {
 		return ! $subscription->has_status( [ 'cancelled', 'expired', 'trash' ] );
 	}
 
+	/**
+	 * Whether the subscription is active enough to issue new invitations.
+	 *
+	 * @param int|\WC_Subscription $subscription Subscription or ID.
+	 *
+	 * @return bool
+	 */
 	public static function is_subscription_active( $subscription ): bool {
 		$subscription = WooCommerce_Subscriptions::sanitize_subscription( $subscription );
 		if ( ! $subscription instanceof \WC_Subscription ) {
@@ -285,6 +295,13 @@ class Group_Subscription_MyAccount {
 		);
 	}
 
+	/**
+	 * Verify the subscription is active enough to issue invitations, redirecting with an error on failure.
+	 *
+	 * @param int    $subscription_id Subscription ID.
+	 * @param string $redirect_url    URL to redirect to on failure.
+	 * @param string $active_tab      Active tab slug for the redirect.
+	 */
 	private static function verify_active( $subscription_id, $redirect_url, $active_tab ): void {
 		if ( self::is_subscription_active( $subscription_id ) ) {
 			return;
