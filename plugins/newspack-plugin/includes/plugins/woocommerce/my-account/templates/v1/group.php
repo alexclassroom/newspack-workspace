@@ -48,7 +48,9 @@ if ( in_array( $subscription_status, [ 'cancelled', 'expired' ], true ) ) {
 	<header class="newspack-my-account__subscription--header">
 		<div class="newspack-my-account__subscription--title">
 			<?php if ( $multi_group ) : ?>
-				<a href="<?php echo esc_url( wc_get_endpoint_url( Group_Subscription_MyAccount::GROUP_ENDPOINT, '', wc_get_page_permalink( 'myaccount' ) ) ); ?>" class="newspack-my-account__subscription--back-link newspack-ui__button newspack-ui__button--ghost newspack-ui__button--icon newspack-ui__button--small" title="<?php echo esc_attr( sprintf( /* translators: %s: lowercase plural group label (e.g. "groups", "teams"). */ __( 'Back to %s', 'newspack-plugin' ), Group_Subscription::get_label_lower( 'plural' ) ) ); ?>">
+				<?php /* translators: %s: lowercase plural group label (e.g. "groups", "teams"). */ ?>
+				<?php $back_label = sprintf( __( 'Back to %s', 'newspack-plugin' ), Group_Subscription::get_label_lower( 'plural' ) ); ?>
+				<a href="<?php echo esc_url( wc_get_endpoint_url( Group_Subscription_MyAccount::GROUP_ENDPOINT, '', wc_get_page_permalink( 'myaccount' ) ) ); ?>" class="newspack-my-account__subscription--back-link newspack-ui__button newspack-ui__button--ghost newspack-ui__button--icon newspack-ui__button--small" title="<?php echo esc_attr( $back_label ); ?>" aria-label="<?php echo esc_attr( $back_label ); ?>">
 					<?php Newspack_UI_Icons::print_svg( 'chevronLeft' ); ?>
 				</a>
 			<?php endif; ?>
