@@ -426,12 +426,15 @@ class Group_Subscription_MyAccount {
 	 *
 	 * The member-facing protections that hide the owner's billing details live only
 	 * in the v1 templates. On the legacy/core WooCommerce UI those protections are
-	 * absent, so member subscription access must not be granted there.
+	 * absent, so member subscription access must not be granted there. This mirrors
+	 * the conditions under which the v1 templates are actually loaded
+	 * (see WooCommerce_My_Account::init): Reader Activation enabled AND version >= 1.0.0.
 	 *
 	 * @return bool
 	 */
 	private static function is_v1_my_account_active(): bool {
-		return version_compare( WooCommerce_My_Account::get_version(), '1.0.0', '>=' );
+		return Reader_Activation::is_enabled()
+			&& version_compare( WooCommerce_My_Account::get_version(), '1.0.0', '>=' );
 	}
 
 	/**
