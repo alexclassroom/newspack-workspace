@@ -33,8 +33,7 @@ domReady( function () {
 		} );
 	}
 
-	// Handle remove-member confirm modal. Use event delegation so it survives
-	// tab-panel removal/restoration by `setupTabController`.
+	// Handle remove-member confirm modal via event delegation.
 	const removeMemberModal = document.getElementById( 'newspack-my-account__group_subscription--confirm-remove-member' );
 	if ( removeMemberModal ) {
 		const memberIdInput = removeMemberModal.querySelector( '[data-remove-member-id]' );

@@ -47,43 +47,45 @@ export const setupTabController = ( element, classnames ) => {
 	}
 
 	const tab_headers = header ? [ ...header.children ] : [ select ];
+	const isTablist = header && header.getAttribute( 'role' ) === 'tablist';
 
 	const select_content = index => {
 		if ( tab_contents.length === 0 ) {
 			return;
 		}
 
-		// First, restore any previously removed tab contents. Restore in reverse removal
-		// order so each saved nextSibling is back in the DOM before it's referenced, and
-		// guard that it's still a child of tab_body to avoid insertBefore NotFoundError.
-		if ( tab_body._removedContents ) {
-			for ( let i = tab_body._removedContents.length - 1; i >= 0; i-- ) {
-				const { content, nextSibling } = tab_body._removedContents[ i ];
-				if ( nextSibling && nextSibling.parentNode === tab_body ) {
-					tab_body.insertBefore( content, nextSibling );
-				} else {
-					tab_body.appendChild( content );
-				}
-			}
-			delete tab_body._removedContents;
-		}
-
-		// Remove all tab contents except the selected one.
 		const selectedContent = tab_contents[ index ];
-		const removedContents = [];
 
-		tab_contents.forEach( ( content, i ) => {
-			if ( i !== index ) {
-				removedContents.push( { content, nextSibling: content.nextSibling } );
-				content.remove();
+		if ( isTablist ) {
+			// Keep panels in the DOM so each tab's aria-controls target stays valid.
+			tab_contents.forEach( ( content, i ) => content.classList.toggle( 'selected', i === index ) );
+		} else {
+			// Restore previously removed contents in reverse order before removing again.
+			if ( tab_body._removedContents ) {
+				for ( let i = tab_body._removedContents.length - 1; i >= 0; i-- ) {
+					const { content, nextSibling } = tab_body._removedContents[ i ];
+					if ( nextSibling && nextSibling.parentNode === tab_body ) {
+						tab_body.insertBefore( content, nextSibling );
+					} else {
+						tab_body.appendChild( content );
+					}
+				}
+				delete tab_body._removedContents;
 			}
-		} );
 
-		if ( removedContents.length > 0 ) {
-			tab_body._removedContents = removedContents;
+			// Remove all tab contents except the selected one.
+			const removedContents = [];
+			tab_contents.forEach( ( content, i ) => {
+				if ( i !== index ) {
+					removedContents.push( { content, nextSibling: content.nextSibling } );
+					content.remove();
+				}
+			} );
+			if ( removedContents.length > 0 ) {
+				tab_body._removedContents = removedContents;
+			}
+			selectedContent.classList.add( 'selected' );
 		}
-
-		selectedContent.classList.add( 'selected' );
 
 		const radioInputs = selectedContent.querySelectorAll( 'input[type="radio"]' );
 		const checkedRadio = [ ...radioInputs ].find( radio => radio.checked );
@@ -94,7 +96,6 @@ export const setupTabController = ( element, classnames ) => {
 		element.dispatchEvent( new CustomEvent( 'content-selected', { detail: selectedContent } ) );
 	};
 
-	const isTablist = header && header.getAttribute( 'role' ) === 'tablist';
 	const updateAria = activeIndex => {
 		if ( ! isTablist ) {
 			return;

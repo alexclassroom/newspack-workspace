@@ -173,7 +173,13 @@ $is_completely_empty = empty( $members ) && empty( $all_invites );
 		</tbody>
 	</table>
 			</div><!-- .newspack-ui__tabs__panel (members) -->
-			<div class="newspack-ui__tabs__panel<?php echo 'invites' === $active_tab ? ' selected' : ''; ?>">
+			<div
+			id="newspack-my-account__group_subscription__panel-invites"
+			role="tabpanel"
+			aria-labelledby="newspack-my-account__group_subscription__tab-invites"
+			class="newspack-ui__tabs__panel<?php echo 'invites' === $active_tab ? ' selected' : ''; ?>"
+		>
+
 	<?php if ( empty( $all_invites ) ) : ?>
 		<p class="newspack-my-account__group_subscription__panel-info">
 			<?php esc_html_e( 'No pending invitations.', 'newspack-plugin' ); ?>
