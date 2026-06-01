@@ -1,3 +1,20 @@
+# newspack-theme [2.23.0](https://github.com/Automattic/newspack-workspace/compare/newspack-theme@2.22.3...newspack-theme@2.23.0) (2026-06-01)
+
+
+### Bug Fixes
+
+* **a11y:** respect prefers-reduced-motion user preference ([#2687](https://github.com/Automattic/newspack-workspace/issues/2687)) ([ded8b91](https://github.com/Automattic/newspack-workspace/commit/ded8b9148ec896ff7b75935ff42b0aa0701f620a)), closes [#2622](https://github.com/Automattic/newspack-workspace/issues/2622)
+* correct checkout button block padding ([#2686](https://github.com/Automattic/newspack-workspace/issues/2686)) ([7d9d132](https://github.com/Automattic/newspack-workspace/commit/7d9d132d65eefc33fa8e4bf8eb65c5d7a94c2667))
+* hide empty paragraphs to prevent unexpected spacing ([#2708](https://github.com/Automattic/newspack-workspace/issues/2708)) ([66a854f](https://github.com/Automattic/newspack-workspace/commit/66a854fa59726061e2324a1ce30fb444abc8572a))
+* remove extra spacing on linked images ([#2709](https://github.com/Automattic/newspack-workspace/issues/2709)) ([0ff2a2c](https://github.com/Automattic/newspack-workspace/commit/0ff2a2c381052a3b77d56a0d3921a9aa4e4f7ffd))
+* replace display:none with visually-hidden styles in pagination text ([#2688](https://github.com/Automattic/newspack-workspace/issues/2688)) ([b78fb2f](https://github.com/Automattic/newspack-workspace/commit/b78fb2f39e31f551363aeabf1f546173617ff9b7)), closes [#2526](https://github.com/Automattic/newspack-workspace/issues/2526)
+* **template-tags:** resolve loading/fetchpriority conflict in post thumbnail ([74e375a](https://github.com/Automattic/newspack-workspace/commit/74e375a7b9b021d6d633e378bae19592b79a1c47)), closes [#2392](https://github.com/Automattic/newspack-workspace/issues/2392)
+
+
+### Features
+
+* add support for alternative Google Font sources ([#2693](https://github.com/Automattic/newspack-workspace/issues/2693)) ([af61cc3](https://github.com/Automattic/newspack-workspace/commit/af61cc3d76552afe1e289bc529b97b7a59040f6a)), closes [#1976](https://github.com/Automattic/newspack-workspace/issues/1976)
+
 # [2.23.0-alpha.1](https://github.com/Automattic/newspack-theme/compare/v2.22.2...v2.23.0-alpha.1) (2026-05-21)
 
 
