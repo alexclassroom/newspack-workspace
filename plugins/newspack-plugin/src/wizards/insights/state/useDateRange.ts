@@ -57,6 +57,10 @@ const toISO = ( d: Date ): string =>
 /**
  * Compute a range from a preset, anchored to today.
  *
+ * "Last N days" presets produce an inclusive N-day window ending today —
+ * e.g. "Last 7 days" on Jun 7 = Jun 1 → Jun 7 (7 days total). So we
+ * subtract (N - 1) days, not N.
+ *
  * Returns null for 'custom' — the caller supplies start/end directly.
  */
 export const computeRangeForPreset = (
@@ -69,17 +73,17 @@ export const computeRangeForPreset = (
 	const end = toISO( today );
 	if ( preset === 'last-7' ) {
 		const s = new Date( today );
-		s.setDate( s.getDate() - 7 );
+		s.setDate( s.getDate() - 6 );
 		return { start: toISO( s ), end };
 	}
 	if ( preset === 'last-30' ) {
 		const s = new Date( today );
-		s.setDate( s.getDate() - 30 );
+		s.setDate( s.getDate() - 29 );
 		return { start: toISO( s ), end };
 	}
 	if ( preset === 'last-90' ) {
 		const s = new Date( today );
-		s.setDate( s.getDate() - 90 );
+		s.setDate( s.getDate() - 89 );
 		return { start: toISO( s ), end };
 	}
 	if ( preset === 'this-month' ) {

@@ -78,8 +78,11 @@ class Insights_Wizard extends Wizard {
 	 * @return array
 	 */
 	protected function get_boot_config() {
+		// current_datetime() returns DateTimeImmutable; modify() returns a new
+		// instance and does not mutate $today. -29 days yields an inclusive
+		// 30-day window ending today (today + 29 prior days = 30 days).
 		$today      = current_datetime();
-		$thirty_ago = $today->modify( '-30 days' );
+		$thirty_ago = $today->modify( '-29 days' );
 
 		return [
 			/*

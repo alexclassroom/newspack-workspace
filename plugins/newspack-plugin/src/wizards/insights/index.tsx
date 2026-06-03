@@ -37,7 +37,8 @@ const FALLBACK_CONFIG: InsightsBootConfig = {
 			`${ d.getFullYear() }-${ pad( d.getMonth() + 1 ) }-${ pad( d.getDate() ) }`;
 		const today = new Date();
 		const thirtyAgo = new Date( today );
-		thirtyAgo.setDate( thirtyAgo.getDate() - 30 );
+		// Inclusive 30-day window ending today: today + 29 prior days = 30 days.
+		thirtyAgo.setDate( thirtyAgo.getDate() - 29 );
 		return {
 			preset: 'last-30' as const,
 			start: toISO( thirtyAgo ),
