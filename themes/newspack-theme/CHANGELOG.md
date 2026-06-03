@@ -1,3 +1,10 @@
+## newspack-theme [2.23.1](https://github.com/Automattic/newspack-workspace/compare/newspack-theme@2.23.0...newspack-theme@2.23.1) (2026-06-03)
+
+
+### Bug Fixes
+
+* **newspack-theme:** apply ad background color to Broadstreet ads ([#167](https://github.com/Automattic/newspack-workspace/issues/167)) ([fbf469f](https://github.com/Automattic/newspack-workspace/commit/fbf469f1a216f6d52daac99c753da11d52b949e3))
+
 # newspack-theme [2.23.0](https://github.com/Automattic/newspack-workspace/compare/newspack-theme@2.22.3...newspack-theme@2.23.0) (2026-06-01)
 
 
