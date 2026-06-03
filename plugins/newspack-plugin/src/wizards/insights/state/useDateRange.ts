@@ -10,6 +10,7 @@
 /**
  * WordPress dependencies
  */
+import { __ } from '@wordpress/i18n';
 import { useCallback, useEffect, useState } from '@wordpress/element';
 
 export type DateRangePreset =
@@ -32,12 +33,12 @@ export interface DateRangePresetDef {
 }
 
 export const DATE_RANGE_PRESETS: DateRangePresetDef[] = [
-	{ key: 'last-7', label: 'Last 7 days' },
-	{ key: 'last-30', label: 'Last 30 days' },
-	{ key: 'last-90', label: 'Last 90 days' },
-	{ key: 'this-month', label: 'This month' },
-	{ key: 'last-month', label: 'Last month' },
-	{ key: 'custom', label: 'Custom' },
+	{ key: 'last-7', label: __( 'Last 7 days', 'newspack-plugin' ) },
+	{ key: 'last-30', label: __( 'Last 30 days', 'newspack-plugin' ) },
+	{ key: 'last-90', label: __( 'Last 90 days', 'newspack-plugin' ) },
+	{ key: 'this-month', label: __( 'This month', 'newspack-plugin' ) },
+	{ key: 'last-month', label: __( 'Last month', 'newspack-plugin' ) },
+	{ key: 'custom', label: __( 'Custom', 'newspack-plugin' ) },
 ];
 
 const ISO_DATE_RE = /^\d{4}-\d{2}-\d{2}$/;

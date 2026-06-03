@@ -9,6 +9,11 @@
  */
 
 /**
+ * WordPress dependencies
+ */
+import { __ } from '@wordpress/i18n';
+
+/**
  * External dependencies
  */
 import classnames from 'classnames';
@@ -29,14 +34,14 @@ export interface TabDef {
 }
 
 export const ALL_TABS: TabDef[] = [
-	{ key: 'audience', label: 'Audience' },
-	{ key: 'engagement', label: 'Engagement' },
-	{ key: 'conversion', label: 'Conversion Journey' },
-	{ key: 'gates', label: 'Gates' },
-	{ key: 'prompts', label: 'Prompts' },
-	{ key: 'subscribers', label: 'Subscribers' },
-	{ key: 'donors', label: 'Donors' },
-	{ key: 'advertising', label: 'Advertising' },
+	{ key: 'audience', label: __( 'Audience', 'newspack-plugin' ) },
+	{ key: 'engagement', label: __( 'Engagement', 'newspack-plugin' ) },
+	{ key: 'conversion', label: __( 'Conversion Journey', 'newspack-plugin' ) },
+	{ key: 'gates', label: __( 'Gates', 'newspack-plugin' ) },
+	{ key: 'prompts', label: __( 'Prompts', 'newspack-plugin' ) },
+	{ key: 'subscribers', label: __( 'Subscribers', 'newspack-plugin' ) },
+	{ key: 'donors', label: __( 'Donors', 'newspack-plugin' ) },
+	{ key: 'advertising', label: __( 'Advertising', 'newspack-plugin' ) },
 ];
 
 export type TabVisibility = Record< TabKey, boolean >;
@@ -59,7 +64,7 @@ const TabNavigation = ( {
 		<nav
 			className={ classnames( 'newspack-insights__tabs', className ) }
 			role="tablist"
-			aria-label="Insights sections"
+			aria-label={ __( 'Insights sections', 'newspack-plugin' ) }
 		>
 			{ visibleTabs.map( tab => {
 				const isActive = tab.key === activeTab;
