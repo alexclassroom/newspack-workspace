@@ -1,3 +1,10 @@
+## newspack [6.42.1](https://github.com/Automattic/newspack-workspace/compare/newspack@6.42.0...newspack@6.42.1) (2026-06-03)
+
+
+### Bug Fixes
+
+* add contrasting colour to the my account mobile menu button ([#164](https://github.com/Automattic/newspack-workspace/issues/164)) ([94b765c](https://github.com/Automattic/newspack-workspace/commit/94b765ca602aad63df2b12edd15c3208ed3d1e70))
+
 # newspack [6.42.0](https://github.com/Automattic/newspack-workspace/compare/newspack@6.41.3...newspack@6.42.0) (2026-06-01)
 
 
