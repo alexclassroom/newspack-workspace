@@ -86,11 +86,11 @@
 	//
 	// Internal layout (three regions, fixed order):
 	//   label  — top, left-aligned (spec's uppercase chip)
-	//   body   — flex: 1, hero sits at the top of this region and is
-	//            horizontally centered. Vertical position is consistent
-	//            across cards because all cards share the same label
-	//            height + body padding.
-	//   description — pinned to the bottom edge
+	//   body   — flex: 1, hero sits at the top of this region,
+	//            left-aligned. Vertical position consistent across
+	//            cards because all cards share the same label height
+	//            + body padding.
+	//   description — pinned to the bottom edge, left-aligned
 	//
 	// Every card carries the brand-color top accent — no primary/
 	// secondary distinction — so a row reads as one coherent unit.
@@ -118,7 +118,7 @@
 			display: flex;
 			flex-direction: column;
 			justify-content: flex-start; // hero sits at the top, just under the label
-			align-items: center;          // horizontal center only
+			align-items: flex-start;     // left-aligned to match label
 			gap: 8px;
 			padding: 16px 0 0;
 		}
@@ -142,7 +142,7 @@
 			font-variant-numeric: tabular-nums;
 			font-feature-settings: "tnum" 1;
 			font-synthesis: none;
-			text-align: center;
+			text-align: left;
 		}
 
 		&-delta {
@@ -173,7 +173,7 @@
 			font-weight: 400;
 			line-height: 1.4;
 			color: wp-colors.$gray-700;
-			text-align: center;
+			text-align: left;
 		}
 	}
 
