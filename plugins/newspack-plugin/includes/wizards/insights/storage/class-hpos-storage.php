@@ -630,6 +630,7 @@ class HPOS_Storage implements Storage_Interface {
 		// left-joined row is NULL and the churned CASE naturally rejects
 		// them. Subscription Woo writes one `_schedule_cancelled` row per
 		// subscription at most, so no row multiplication.
+
 		/*
 		 * Query at the effective-product level. Woo's convention for
 		 * variable products is to write the PARENT id into the line
