@@ -34,7 +34,10 @@ const ScorecardSection = ( { snapshot, current, previous }: ScorecardSectionProp
 				label={ __( 'Active subscribers', 'newspack-plugin' ) }
 				value={ snapshot.active_subscribers }
 				format="number"
-				description={ __( 'Non-donation, right now', 'newspack-plugin' ) }
+				description={ __(
+					'Distinct customers with at least one active non-donation subscription',
+					'newspack-plugin'
+				) }
 			/>
 			<MetricCard
 				label={ __( 'Monthly recurring revenue', 'newspack-plugin' ) }
