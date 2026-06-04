@@ -32,14 +32,14 @@ const RevenueSection = ( { current, previous }: RevenueSectionProps ) => (
 				value={ current.revenue_gross }
 				format="currency"
 				previousValue={ previous?.revenue_gross }
-				description={ __( 'Subscription orders in window (before refunds)', 'newspack-plugin' ) }
+				description={ __( 'Subscription orders in selected timeframe (before refunds)', 'newspack-plugin' ) }
 			/>
 			<MetricCard
 				label={ __( 'Net revenue', 'newspack-plugin' ) }
 				value={ current.revenue_net }
 				format="currency"
 				previousValue={ previous?.revenue_net }
-				description={ __( 'Gross minus refunds processed in window', 'newspack-plugin' ) }
+				description={ __( 'Gross minus refunds processed in selected timeframe', 'newspack-plugin' ) }
 			/>
 			<MetricCard
 				label={ __( 'Refund rate', 'newspack-plugin' ) }

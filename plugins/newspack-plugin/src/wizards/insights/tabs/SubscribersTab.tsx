@@ -20,7 +20,6 @@ import { __ } from '@wordpress/i18n';
  */
 import type { DateRange } from '../state/useDateRange';
 import useSubscribersData from '../hooks/useSubscribersData';
-import ClassificationBanner from './subscribers/ClassificationBanner';
 import ScorecardSection from './subscribers/ScorecardSection';
 import RevenueSection from './subscribers/RevenueSection';
 import TenureSection from './subscribers/TenureSection';
@@ -59,7 +58,6 @@ const SubscribersTab = ( { range, previousRange }: SubscribersTabProps ) => {
 
 	return (
 		<div className="newspack-insights__subscribers-tab">
-			<ClassificationBanner classification={ data.classification } />
 			<ScorecardSection snapshot={ data.snapshot } current={ data.current } previous={ data.previous } />
 			<RevenueSection current={ data.current } previous={ data.previous } />
 			<TenureSection rows={ data.snapshot.tenure_distribution } />

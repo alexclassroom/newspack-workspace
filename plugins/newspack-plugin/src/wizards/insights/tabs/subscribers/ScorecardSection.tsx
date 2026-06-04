@@ -53,14 +53,14 @@ const ScorecardSection = ( { snapshot, current, previous }: ScorecardSectionProp
 				value={ current.new_subscribers }
 				format="number"
 				previousValue={ previous?.new_subscribers }
-				description={ __( 'First-time non-donation subscribers in window', 'newspack-plugin' ) }
+				description={ __( 'First-time non-donation subscribers in selected timeframe', 'newspack-plugin' ) }
 			/>
 			<MetricCard
 				label={ __( 'Churned subscribers', 'newspack-plugin' ) }
 				value={ current.churned_subscribers }
 				format="number"
 				previousValue={ previous?.churned_subscribers }
-				description={ __( 'Lost all active subscriptions in window', 'newspack-plugin' ) }
+				description={ __( 'Lost all active subscriptions in selected timeframe', 'newspack-plugin' ) }
 			/>
 			<MetricCard
 				label={ __( 'Upcoming renewals (30d)', 'newspack-plugin' ) }

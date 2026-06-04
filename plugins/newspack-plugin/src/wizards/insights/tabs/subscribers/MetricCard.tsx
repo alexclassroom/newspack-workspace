@@ -43,8 +43,8 @@ const MetricCard = ( props: MetricCardProps ) => {
 	const deltaA11y =
 		hasComparison && delta
 			? sprintf(
-					/* translators: %s: signed percent change from previous window */
-					__( '%s vs previous window', 'newspack-plugin' ),
+					/* translators: %s: signed percent change from previous timeframe */
+					__( '%s vs previous timeframe', 'newspack-plugin' ),
 					delta
 			  )
 			: null;

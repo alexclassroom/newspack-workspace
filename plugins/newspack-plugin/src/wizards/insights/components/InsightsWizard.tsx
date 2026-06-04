@@ -127,11 +127,6 @@ const InsightsWizard = ( { config }: InsightsWizardProps ) => {
 							<LastUpdated timestamp={ config.lastUpdated ?? null } />
 						</>
 					) }
-					{ config.settingsUrl && (
-						<a className="newspack-insights__settings-link" href={ config.settingsUrl }>
-							{ __( 'Settings', 'newspack-plugin' ) }
-						</a>
-					) }
 				</div>
 			</header>
 

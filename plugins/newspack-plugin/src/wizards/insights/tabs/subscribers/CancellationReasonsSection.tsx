@@ -42,7 +42,7 @@ const CancellationReasonsSection = ( { rows }: CancellationReasonsSectionProps )
 				<h2 id="newspack-insights-cancellations-heading" className="newspack-insights__section-heading">
 					{ __( 'Cancellation reasons', 'newspack-plugin' ) }
 				</h2>
-				<p className="newspack-insights__section-empty">{ __( 'No cancellations in the selected window.', 'newspack-plugin' ) }</p>
+				<p className="newspack-insights__section-empty">{ __( 'No cancellations in the selected timeframe.', 'newspack-plugin' ) }</p>
 			</section>
 		);
 	}
