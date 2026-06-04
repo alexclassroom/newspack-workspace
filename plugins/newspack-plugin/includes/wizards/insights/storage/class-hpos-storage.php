@@ -203,24 +203,31 @@ class HPOS_Storage implements Storage_Interface {
 		$prefix    = $wpdb->prefix;
 		$donations = $this->id_list( $this->donation_product_ids );
 
-		// Normalize each active subscription's total to a monthly rate.
-		// The CASE statement covers all documented Woo billing periods
-		// at any positive interval N. Daily subscriptions multiply by
-		// thirty and divide by N, treating a month as thirty days.
-		// Weekly subscriptions multiply by fifty-two over twelve and
-		// divide by N. Monthly subscriptions divide by N. Yearly
-		// subscriptions divide by twelve times N.
-		// The ELSE branch is now TRULY conservative — it falls through to
-		// `total / 12`, which undercounts MRR for anything except yearly
-		// (a publisher with weird intervals will see slightly lower MRR
-		// than reality rather than the previous behavior of multiplying
-		// everything to look monthly). A separate diagnostic query below
-		// counts how many subscriptions hit this fallback and logs a
-		// notice via Newspack\Logger so the publisher can correct the
-		// product configuration.
-		//
-		// DISTINCT id-subselect dedupes orders that have more than one
-		// non-donation line item so MRR isn't multiplied.
+		// phpcs:disable Squiz.PHP.CommentedOutCode.Found -- prose with billing math triggers heuristic
+
+		/*
+		 * Normalize each active subscription's total to a monthly rate.
+		 * The CASE statement covers all documented Woo billing periods at
+		 * any positive integer interval N. Daily subscriptions multiply
+		 * the row total by thirty and divide by N, treating a month as
+		 * thirty days. Weekly subscriptions multiply by fifty-two over
+		 * twelve and divide by N. Monthly subscriptions divide by N.
+		 * Yearly subscriptions divide by twelve times N.
+		 *
+		 * The ELSE branch is truly conservative — it falls through to
+		 * total over twelve, which undercounts MRR for anything except
+		 * yearly. A publisher with weird intervals will see slightly
+		 * lower MRR than reality rather than the previous behavior of
+		 * multiplying everything to look monthly. A separate diagnostic
+		 * query below counts subscriptions hitting this fallback and
+		 * logs a notice via Newspack Logger so the publisher can correct
+		 * the product configuration.
+		 *
+		 * The DISTINCT order-id sub-select dedupes subscriptions that
+		 * have more than one non-donation line item so MRR isn't
+		 * multiplied across line items.
+		 */
+		// phpcs:enable Squiz.PHP.CommentedOutCode.Found
 		$sql = "SELECT SUM(
 				CASE
 					WHEN bp.meta_value = 'day'   AND CAST(bi.meta_value AS UNSIGNED) > 0

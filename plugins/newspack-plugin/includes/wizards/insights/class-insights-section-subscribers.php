@@ -21,6 +21,7 @@
 
 namespace Newspack;
 
+use Newspack\Insights\Donation_Product_Classifier;
 use Newspack\Insights\Subscribers_REST_Controller;
 
 defined( 'ABSPATH' ) || exit;
@@ -68,7 +69,8 @@ class Insights_Section_Subscribers {
 	}
 
 	/**
-	 * Register the Tab 6 REST route.
+	 * Register the Tab 6 REST route + delegate donation-classifier cache
+	 * invalidation hooks.
 	 *
 	 * @return void
 	 */
@@ -80,5 +82,6 @@ class Insights_Section_Subscribers {
 				$controller->register_routes();
 			}
 		);
+		Donation_Product_Classifier::register_hooks();
 	}
 }

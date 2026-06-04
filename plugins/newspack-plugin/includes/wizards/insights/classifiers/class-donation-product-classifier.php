@@ -31,6 +31,7 @@
 namespace Newspack\Insights;
 
 use Newspack\Donations;
+use Newspack\WooCommerce_Products;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -96,15 +97,81 @@ class Donation_Product_Classifier {
 	/**
 	 * Flush the cached donation product ID set.
 	 *
-	 * Call after configuring the canonical donation family (changing the
-	 * `newspack_donation_product_id` option), after flipping the
-	 * `_newspack_is_donation` flag on a product, or from the future
-	 * NPPD-1605 cache-invalidation layer.
+	 * Wired by {@see self::register_hooks()} to the relevant Woo
+	 * configuration changes (donation product option, flag postmeta).
+	 * Also callable from the future NPPD-1605 cache-invalidation layer.
 	 *
 	 * @return void
 	 */
 	public static function flush_cache(): void {
 		delete_transient( self::TRANSIENT_KEY );
+	}
+
+	/**
+	 * Register invalidation hooks. Called from
+	 * {@see \Newspack\Insights_Section_Subscribers::register_hooks()}
+	 * during the tab boot so the cache flushes immediately on relevant
+	 * Woo configuration changes (rather than waiting up to 1h for the
+	 * TTL to expire).
+	 *
+	 * Triggers:
+	 *  - `update_option_newspack_donation_product_id` — fires when the
+	 *    canonical Newspack donation parent ID is reconfigured.
+	 *  - `added_post_meta` / `updated_post_meta` / `deleted_post_meta`
+	 *    on the `_newspack_is_donation` flag — fires when a publisher
+	 *    flips the manual donation flag on any product.
+	 *
+	 * The post_meta hooks fire on every meta change site-wide, so the
+	 * callback filters by `$meta_key` and returns early on mismatches —
+	 * the work done in `flush_cache()` is a single `delete_transient()`
+	 * either way, but the early return avoids any function-call
+	 * overhead on hot paths.
+	 *
+	 * @return void
+	 */
+	public static function register_hooks(): void {
+		add_action(
+			'update_option_' . Donations::DONATION_PRODUCT_ID_OPTION,
+			[ self::class, 'flush_cache' ]
+		);
+		add_action(
+			'added_post_meta',
+			[ self::class, 'maybe_flush_on_meta_change' ],
+			10,
+			3
+		);
+		add_action(
+			'updated_post_meta',
+			[ self::class, 'maybe_flush_on_meta_change' ],
+			10,
+			3
+		);
+		add_action(
+			'deleted_post_meta',
+			[ self::class, 'maybe_flush_on_meta_change' ],
+			10,
+			3
+		);
+	}
+
+	/**
+	 * Meta-change callback. Filters to the donation flag key, ignores
+	 * everything else. The four meta_id / meta_value args of the
+	 * underlying hook are reduced to the three that matter for our
+	 * filter.
+	 *
+	 * @param int    $meta_id  Meta ID (unused).
+	 * @param int    $post_id  Post ID (unused — we don't need to know
+	 *                         which product; the classifier recomputes
+	 *                         from scratch).
+	 * @param string $meta_key Meta key being changed.
+	 * @return void
+	 */
+	public static function maybe_flush_on_meta_change( $meta_id, $post_id, $meta_key ): void {
+		if ( WooCommerce_Products::DONATION_FLAG_META_KEY !== $meta_key ) {
+			return;
+		}
+		self::flush_cache();
 	}
 
 	/**
