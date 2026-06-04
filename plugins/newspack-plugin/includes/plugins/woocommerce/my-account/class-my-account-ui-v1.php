@@ -671,7 +671,7 @@ class My_Account_UI_V1 {
 	}
 
 	/**
-	 * Redirect the Orders endpoint to the My Account dashboard for group members with no orders.
+	 * Redirect the Orders endpoint to the My Account dashboard for any user with no orders.
 	 * Pairs with hiding the menu item in `my_account_menu_items()` so bookmarks / typed URLs
 	 * don't dead-end on the empty state.
 	 */
@@ -687,8 +687,10 @@ class My_Account_UI_V1 {
 	}
 
 	/**
-	 * Shared redirect helper: bounce a My Account endpoint to the dashboard when the current
-	 * user is a group-only member (no orders of their own).
+	 * Shared redirect helper: bounce a dead-end My Account endpoint to the dashboard so a
+	 * bookmark / typed URL matches the hidden nav item. The condition mirrors the per-endpoint
+	 * nav-hiding in `my_account_menu_items()`: Orders is hidden for any user with no orders,
+	 * Payment Information for a group member without orders or saved billing data.
 	 *
 	 * @param string $endpoint WooCommerce account endpoint slug.
 	 */
@@ -701,7 +703,10 @@ class My_Account_UI_V1 {
 		if ( \trailingslashit( \wc_get_account_endpoint_url( $endpoint ) ) !== $current_url ) {
 			return;
 		}
-		if ( ! self::should_suppress_payment_information() ) {
+		$should_redirect = 'orders' === $endpoint
+			? ! self::current_user_has_orders()
+			: self::should_suppress_payment_information();
+		if ( ! $should_redirect ) {
 			return;
 		}
 		\wp_safe_redirect( \wc_get_page_permalink( 'myaccount' ) );
