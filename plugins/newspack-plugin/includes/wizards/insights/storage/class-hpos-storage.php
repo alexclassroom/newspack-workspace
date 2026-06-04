@@ -423,7 +423,7 @@ class HPOS_Storage implements Storage_Interface {
 	 * @param DateTimeInterface $end   Window end.
 	 * @return float
 	 */
-	public function get_subscription_refund_rate( DateTimeInterface $start, DateTimeInterface $end ): float {
+	public function get_subscription_refund_rate( DateTimeInterface $start, DateTimeInterface $end ): array {
 		global $wpdb;
 		$prefix         = $wpdb->prefix;
 		$donations      = $this->id_list( $this->donation_product_ids );
@@ -448,7 +448,11 @@ class HPOS_Storage implements Storage_Interface {
 		$orders     = (int) $wpdb->get_var( $orders_sql );
 
 		if ( 0 === $orders ) {
-			return 0.0;
+			return [
+				'value'       => 0.0,
+				'computable'  => false,
+				'denominator' => 0,
+			];
 		}
 
 		// Count refunds in window whose parent order had a subscription product.
@@ -468,7 +472,11 @@ class HPOS_Storage implements Storage_Interface {
 		);
 		$refunds     = (int) $wpdb->get_var( $refunds_sql );
 
-		return $refunds / $orders;
+		return [
+			'value'       => $refunds / $orders,
+			'computable'  => true,
+			'denominator' => $orders,
+		];
 	}
 
 	/**
@@ -558,7 +566,7 @@ class HPOS_Storage implements Storage_Interface {
 	 * @param DateTimeInterface $end   Window end.
 	 * @return float
 	 */
-	public function get_failed_payment_retry_rate( DateTimeInterface $start, DateTimeInterface $end ): float {
+	public function get_failed_payment_retry_rate( DateTimeInterface $start, DateTimeInterface $end ): array {
 		global $wpdb;
 		$prefix    = $wpdb->prefix;
 		$donations = $this->id_list( $this->donation_product_ids );
@@ -594,7 +602,19 @@ class HPOS_Storage implements Storage_Interface {
 		$attempt = (int) ( $row['retry_attempts'] ?? 0 );
 		$success = (int) ( $row['recoveries'] ?? 0 );
 
-		return 0 === $attempt ? 0.0 : $success / $attempt;
+		if ( 0 === $attempt ) {
+			return [
+				'value'       => 0.0,
+				'computable'  => false,
+				'denominator' => 0,
+			];
+		}
+
+		return [
+			'value'       => $success / $attempt,
+			'computable'  => true,
+			'denominator' => $attempt,
+		];
 	}
 
 	/**
