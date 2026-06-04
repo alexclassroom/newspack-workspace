@@ -27,7 +27,8 @@ export interface MetricCardProps {
 	label: string;
 	value: number;
 	format: MetricFormat;
-	previousValue?: number;
+	/** Null is treated the same as undefined — no comparison delta is rendered. */
+	previousValue?: number | null;
 	description?: string;
 	lowerIsBetter?: boolean;
 	/**

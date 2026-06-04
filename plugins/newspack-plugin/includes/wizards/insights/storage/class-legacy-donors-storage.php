@@ -363,7 +363,7 @@ class Legacy_Donors_Storage implements Donors_Storage_Interface {
 	 * @param DateTimeInterface $end   Window end.
 	 * @return float
 	 */
-	public function get_lapsed_donor_recovery_rate( DateTimeInterface $start, DateTimeInterface $end ): float {
+	public function get_lapsed_donor_recovery_rate( DateTimeInterface $start, DateTimeInterface $end ): ?float {
 		$duration         = $end->getTimestamp() - $start->getTimestamp();
 		$prior_end_ts     = $start->getTimestamp() - 1;
 		$prior_start_ts   = $prior_end_ts - $duration;
@@ -414,7 +414,7 @@ class Legacy_Donors_Storage implements Donors_Storage_Interface {
 
 		$lapsed_customer_ids = $wpdb->get_col( $lapsed_sql );
 		if ( empty( $lapsed_customer_ids ) ) {
-			return 0.0;
+			return null;
 		}
 		$lapsed_count = count( $lapsed_customer_ids );
 		$lapsed_list  = $this->id_list( array_map( 'intval', $lapsed_customer_ids ) );
@@ -445,7 +445,7 @@ class Legacy_Donors_Storage implements Donors_Storage_Interface {
 	 * @param DateTimeInterface $end   Window end (unused — see docblock).
 	 * @return float
 	 */
-	public function get_recurring_donor_retention( DateTimeInterface $start, DateTimeInterface $end ): float {
+	public function get_recurring_donor_retention( DateTimeInterface $start, DateTimeInterface $end ): ?float {
 		global $wpdb;
 		$prefix    = $wpdb->prefix;
 		$donations = $this->id_list( $this->donation_product_ids );
@@ -478,13 +478,13 @@ class Legacy_Donors_Storage implements Donors_Storage_Interface {
 		);
 		$rows = $wpdb->get_results( $active_at_start_sql, ARRAY_A );
 		if ( empty( $rows ) ) {
-			return 0.0;
+			return null;
 		}
 
 		$customers_active_at_start = array_unique( array_map( 'intval', array_column( $rows, 'customer_id' ) ) );
 		$denominator               = count( $customers_active_at_start );
 		if ( 0 === $denominator ) {
-			return 0.0;
+			return null;
 		}
 
 		$customer_list = $this->id_list( $customers_active_at_start );

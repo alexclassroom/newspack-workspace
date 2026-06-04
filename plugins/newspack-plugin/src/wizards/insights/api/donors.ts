@@ -58,8 +58,10 @@ export interface DonorsWindow {
 	recurring_revenue: number;
 	total_revenue: number;
 	average_gift: number;
-	lapsed_donor_recovery_rate: number;
-	recurring_donor_retention: number;
+	/** Null when the prior-window lapsed cohort is empty ("no data yet"). */
+	lapsed_donor_recovery_rate: number | null;
+	/** Null when no recurring donors were active at the window start. */
+	recurring_donor_retention: number | null;
 	donations_by_tier: DonorsTierRow[];
 }
 

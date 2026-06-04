@@ -143,22 +143,28 @@ interface Donors_Storage_Interface {
 	/**
 	 * Of donors who lapsed in the prior window of equal length
 	 * preceding `[start, end]`, the fraction who made a new completed
-	 * donation order in `[start, end]`. Range `[0, 1]`. Returns 0 when
-	 * no donors lapsed in the prior window.
+	 * donation order in `[start, end]`. Range `[0, 1]`.
+	 *
+	 * Returns `null` (not 0) when no donors lapsed in the prior window,
+	 * so the UI can distinguish "no data yet" from a real 0% rate.
 	 *
 	 * Prior window = `[start - duration, start - 1 second]` where
 	 * `duration = end - start`.
 	 *
 	 * @param DateTimeInterface $start Current window start.
 	 * @param DateTimeInterface $end   Current window end.
-	 * @return float
+	 * @return float|null Null when the prior-window lapsed cohort is empty.
 	 */
-	public function get_lapsed_donor_recovery_rate( DateTimeInterface $start, DateTimeInterface $end ): float;
+	public function get_lapsed_donor_recovery_rate( DateTimeInterface $start, DateTimeInterface $end ): ?float;
 
 	/**
 	 * Of recurring donation subscriptions that were active at the
 	 * window start, the fraction whose owner customer still has at
 	 * least one active recurring donation subscription right now.
+	 *
+	 * Returns `null` (not 0) when no recurring donors were active at
+	 * the window start, so the UI can distinguish "no data yet" from
+	 * a real 0% retention.
 	 *
 	 * "Active at start" = `_schedule_start <= :start` AND
 	 * (`_schedule_cancelled` empty OR > :start). The end check is
@@ -168,9 +174,9 @@ interface Donors_Storage_Interface {
 	 * @param DateTimeInterface $start Current window start.
 	 * @param DateTimeInterface $end   Current window end (used for
 	 *                                 cache-key disambiguation only).
-	 * @return float
+	 * @return float|null Null when no recurring donors were active at start.
 	 */
-	public function get_recurring_donor_retention( DateTimeInterface $start, DateTimeInterface $end ): float;
+	public function get_recurring_donor_retention( DateTimeInterface $start, DateTimeInterface $end ): ?float;
 
 	/**
 	 * Per-product donor performance breakdown. One entry per parent

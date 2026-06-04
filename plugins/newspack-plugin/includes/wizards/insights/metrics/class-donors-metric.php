@@ -37,7 +37,7 @@ class Donors_Metric {
 	 *
 	 * @var string
 	 */
-	const CACHE_PREFIX = 'newspack_insights_tab7_v2:';
+	const CACHE_PREFIX = 'newspack_insights_tab7_v3:';
 
 	/**
 	 * Cache TTL for windowed and snapshot metrics (30 min).
@@ -264,12 +264,15 @@ class Donors_Metric {
 	/**
 	 * Lapsed donor recovery rate.
 	 *
+	 * Null when the prior-window lapsed cohort is empty — UI uses this
+	 * to render a "no data yet" empty state instead of a misleading 0%.
+	 *
 	 * @param DateTimeInterface $start Window start.
 	 * @param DateTimeInterface $end   Window end.
-	 * @return float
+	 * @return float|null
 	 */
-	public function get_lapsed_donor_recovery_rate( DateTimeInterface $start, DateTimeInterface $end ): float {
-		return (float) $this->cached(
+	public function get_lapsed_donor_recovery_rate( DateTimeInterface $start, DateTimeInterface $end ): ?float {
+		$value = $this->cached(
 			'lapsed_donor_recovery_rate',
 			$this->window_key( $start, $end ),
 			self::TTL_HEAVY,
@@ -277,17 +280,21 @@ class Donors_Metric {
 				return $this->storage->get_lapsed_donor_recovery_rate( $start, $end );
 			}
 		);
+		return null === $value ? null : (float) $value;
 	}
 
 	/**
 	 * Recurring donor retention.
 	 *
+	 * Null when no recurring donors were active at the window start —
+	 * UI uses this to render a "no data yet" empty state.
+	 *
 	 * @param DateTimeInterface $start Window start.
 	 * @param DateTimeInterface $end   Window end.
-	 * @return float
+	 * @return float|null
 	 */
-	public function get_recurring_donor_retention( DateTimeInterface $start, DateTimeInterface $end ): float {
-		return (float) $this->cached(
+	public function get_recurring_donor_retention( DateTimeInterface $start, DateTimeInterface $end ): ?float {
+		$value = $this->cached(
 			'recurring_donor_retention',
 			$this->window_key( $start, $end ),
 			self::TTL_HEAVY,
@@ -295,6 +302,7 @@ class Donors_Metric {
 				return $this->storage->get_recurring_donor_retention( $start, $end );
 			}
 		);
+		return null === $value ? null : (float) $value;
 	}
 
 	/**

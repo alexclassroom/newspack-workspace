@@ -192,6 +192,21 @@
 			color: wp-colors.$gray-700;
 			text-align: left;
 		}
+
+		// Empty-state variant: same card chrome as a populated metric
+		// (preserves grid alignment) but the body slot renders an
+		// explanatory line instead of a hero value. Used by sections
+		// where a per-metric "no data yet" message reads cleaner than
+		// collapsing to a section-wide block.
+		&--empty {
+			.newspack-insights__metric-card-empty-note {
+				margin: 16px 0 0;
+				font-size: 13px;
+				font-weight: 400;
+				line-height: 1.4;
+				color: wp-colors.$gray-700;
+			}
+		}
 	}
 
 	// Table — card wraps the table, table fills (padding 0 on

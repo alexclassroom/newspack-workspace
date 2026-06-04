@@ -372,7 +372,7 @@ class HPOS_Donors_Storage implements Donors_Storage_Interface {
 	 * @param DateTimeInterface $end   Window end.
 	 * @return float
 	 */
-	public function get_lapsed_donor_recovery_rate( DateTimeInterface $start, DateTimeInterface $end ): float {
+	public function get_lapsed_donor_recovery_rate( DateTimeInterface $start, DateTimeInterface $end ): ?float {
 		// Prior window of equal length immediately preceding current.
 		$duration         = $end->getTimestamp() - $start->getTimestamp();
 		$prior_end_ts     = $start->getTimestamp() - 1;
@@ -422,7 +422,7 @@ class HPOS_Donors_Storage implements Donors_Storage_Interface {
 
 		$lapsed_customer_ids = $wpdb->get_col( $lapsed_sql );
 		if ( empty( $lapsed_customer_ids ) ) {
-			return 0.0;
+			return null;
 		}
 		$lapsed_count = count( $lapsed_customer_ids );
 		$lapsed_list  = $this->id_list( array_map( 'intval', $lapsed_customer_ids ) );
@@ -453,7 +453,7 @@ class HPOS_Donors_Storage implements Donors_Storage_Interface {
 	 * @param DateTimeInterface $end   Window end (unused — see docblock).
 	 * @return float
 	 */
-	public function get_recurring_donor_retention( DateTimeInterface $start, DateTimeInterface $end ): float {
+	public function get_recurring_donor_retention( DateTimeInterface $start, DateTimeInterface $end ): ?float {
 		global $wpdb;
 		$prefix    = $wpdb->prefix;
 		$donations = $this->id_list( $this->donation_product_ids );
@@ -487,14 +487,14 @@ class HPOS_Donors_Storage implements Donors_Storage_Interface {
 		);
 		$rows = $wpdb->get_results( $active_at_start_sql, ARRAY_A );
 		if ( empty( $rows ) ) {
-			return 0.0;
+			return null;
 		}
 
 		// Denominator: distinct customers who were active at start.
 		$customers_active_at_start = array_unique( array_map( 'intval', array_column( $rows, 'customer_id' ) ) );
 		$denominator               = count( $customers_active_at_start );
 		if ( 0 === $denominator ) {
-			return 0.0;
+			return null;
 		}
 
 		// Numerator: those customers who still have at least one
