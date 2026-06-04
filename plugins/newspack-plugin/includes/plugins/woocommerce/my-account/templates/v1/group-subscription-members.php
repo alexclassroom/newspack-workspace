@@ -32,7 +32,7 @@ $is_completely_empty = empty( $members ) && empty( $all_invites );
 ?>
 <?php if ( ! $is_manageable ) : ?>
 	<div class="newspack-ui__notice newspack-ui__notice--info newspack-my-account__group_subscription__inactive-notice">
-		<p>
+		<p class="newspack-ui__spacing-top--0 newspack-ui__spacing-bottom--0">
 			<?php
 			echo esc_html(
 				sprintf(

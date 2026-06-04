@@ -74,6 +74,10 @@
 				}
 			}
 		}
+		// Keep the action control and the min-height ::after spacer on one line.
+		td.woocommerce-orders-table__cell-order-actions {
+			white-space: nowrap;
+		}
 		th {
 			color: var(--newspack-ui-color-neutral-60);
 			font-weight: 600;
@@ -83,8 +87,7 @@
 		.woocommerce-Button {
 			@extend .newspack-ui__button--secondary;
 			@extend .newspack-ui__button--x-small;
-			margin-top: calc(var(--newspack-ui-spacer-1) / 2);
-			margin-bottom: calc(var(--newspack-ui-spacer-1) / 2);
+			vertical-align: middle;
 			&.newspack-ui__button--ghost {
 				@extend .newspack-ui__button--ghost;
 			}
