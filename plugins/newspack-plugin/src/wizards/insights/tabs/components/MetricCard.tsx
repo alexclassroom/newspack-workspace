@@ -30,6 +30,14 @@ export interface MetricCardProps {
 	previousValue?: number;
 	description?: string;
 	lowerIsBetter?: boolean;
+	/**
+	 * Short secondary snippet rendered below the value, before the
+	 * delta. Used for compressed paired metrics (e.g. "$X annualized"
+	 * under MRR, "$Y one-time + $Z recurring" under Total Revenue, or
+	 * "N active recurring" under Active Donors) so we can ship the
+	 * paired insight without spending a whole card on it.
+	 */
+	secondary?: string;
 }
 
 const formatValue = ( v: number, fmt: MetricFormat ): string => {
@@ -43,7 +51,7 @@ const formatValue = ( v: number, fmt: MetricFormat ): string => {
 };
 
 const MetricCard = ( props: MetricCardProps ) => {
-	const { label, value, format, previousValue, description, lowerIsBetter = false } = props;
+	const { label, value, format, previousValue, description, lowerIsBetter = false, secondary } = props;
 	const hasComparison = typeof previousValue === 'number';
 	const delta = hasComparison ? formatDelta( value, previousValue as number ) : null;
 	const tone = hasComparison ? deltaTone( value, previousValue as number, lowerIsBetter ) : 'neutral';
@@ -61,6 +69,7 @@ const MetricCard = ( props: MetricCardProps ) => {
 			<div className="newspack-insights__metric-card-label">{ label }</div>
 			<div className="newspack-insights__metric-card-body">
 				<div className="newspack-insights__metric-card-value">{ formatValue( value, format ) }</div>
+				{ secondary && <div className="newspack-insights__metric-card-secondary">{ secondary }</div> }
 				{ hasComparison && delta && (
 					<div
 						className={ `newspack-insights__metric-card-delta newspack-insights__metric-card-delta--${ tone }` }

@@ -153,6 +153,15 @@
 			text-align: left;
 		}
 
+		&-secondary {
+			margin: -4px 0 0;
+			font-size: 13px;
+			font-weight: 400;
+			line-height: 1.4;
+			color: wp-colors.$gray-700;
+			font-variant-numeric: tabular-nums;
+		}
+
 		&-delta {
 			font-size: 13px;
 			font-weight: 600;

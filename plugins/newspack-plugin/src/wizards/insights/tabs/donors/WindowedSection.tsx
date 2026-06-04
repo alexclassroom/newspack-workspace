@@ -2,9 +2,10 @@
  * WindowedSection (NPPD-1617).
  *
  * Tab 7 metrics scoped to the date range picker: new/lapsed donor
- * counts, total/one-time/recurring revenue, and the average gift.
- * Heading is dynamic ("In the last 30 days", "This month", etc.) —
- * same pattern as Tab 6's WindowedSection.
+ * counts, total donation revenue (with an inline one-time + recurring
+ * breakdown as a secondary line), and the average gift. Heading is
+ * dynamic ("In the last 30 days", "This month", etc.) — same pattern
+ * as Tab 6's WindowedSection.
  */
 
 /**
@@ -18,6 +19,7 @@ import { __, sprintf } from '@wordpress/i18n';
 import type { DonorsWindow } from '../../api/donors';
 import type { DateRange } from '../../state/useDateRange';
 import MetricCard from '../components/MetricCard';
+import { formatCurrency } from '../components/format';
 
 export interface WindowedSectionProps {
 	range: DateRange;
@@ -81,21 +83,13 @@ const WindowedSection = ( { range, current, previous }: WindowedSectionProps ) =
 				value={ current.total_revenue }
 				format="currency"
 				previousValue={ previous?.total_revenue }
-				description={ __( 'One-time gifts + recurring renewals in selected timeframe', 'newspack-plugin' ) }
-			/>
-			<MetricCard
-				label={ __( 'One-time donation revenue', 'newspack-plugin' ) }
-				value={ current.one_time_revenue }
-				format="currency"
-				previousValue={ previous?.one_time_revenue }
-				description={ __( 'Gifts from non-recurring donations', 'newspack-plugin' ) }
-			/>
-			<MetricCard
-				label={ __( 'Recurring donation revenue', 'newspack-plugin' ) }
-				value={ current.recurring_revenue }
-				format="currency"
-				previousValue={ previous?.recurring_revenue }
-				description={ __( 'Renewal orders from monthly + yearly donation subscriptions', 'newspack-plugin' ) }
+				secondary={ sprintf(
+					/* translators: 1: one-time gift revenue formatted as currency, 2: recurring renewal revenue formatted as currency */
+					__( '%1$s one-time + %2$s recurring', 'newspack-plugin' ),
+					formatCurrency( current.one_time_revenue ),
+					formatCurrency( current.recurring_revenue )
+				) }
+				description={ __( 'One-time gifts + recurring renewals in this timeframe', 'newspack-plugin' ) }
 			/>
 			<MetricCard
 				label={ __( 'Average gift', 'newspack-plugin' ) }
