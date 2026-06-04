@@ -172,9 +172,13 @@ interface Donors_Storage_Interface {
 	 * least one active recurring donation subscription right now.
 	 *
 	 * "Active at start" = `_schedule_start <= :start` AND
-	 * (`_schedule_cancelled` empty OR > :start). The end check is
-	 * "currently active" (NOW), not "active at :end" — a v1
-	 * simplification documented inline on the query.
+	 * (`_schedule_cancelled` empty/null/`'0'` OR > :start). The
+	 * `'0'` sentinel is WCS's "not cancelled" marker — distinct from
+	 * NULL or '' — so it MUST be treated as "not cancelled" in the
+	 * filter or the denominator silently drops every currently-active
+	 * subscription. The end check is "currently active" (NOW), not
+	 * "active at :end" — a v1 simplification documented inline on
+	 * the query.
 	 *
 	 * Return shape:
 	 *   [

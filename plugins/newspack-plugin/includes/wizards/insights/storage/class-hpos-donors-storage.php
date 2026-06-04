@@ -488,6 +488,7 @@ class HPOS_Donors_Storage implements Donors_Storage_Interface {
 			  AND (
 				cancel_meta.meta_value IS NULL
 				OR cancel_meta.meta_value = ''
+				OR cancel_meta.meta_value = '0'
 				OR cancel_meta.meta_value > %s
 			  )",
 			$this->fmt( $start ),
