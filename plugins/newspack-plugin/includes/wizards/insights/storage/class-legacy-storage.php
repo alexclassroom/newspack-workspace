@@ -125,6 +125,10 @@ class Legacy_Storage implements Storage_Interface {
 
 	/**
 	 * {@inheritDoc}
+	 *
+	 * @param DateTimeInterface $start Window start.
+	 * @param DateTimeInterface $end   Window end.
+	 * @return int
 	 */
 	public function get_new_subscribers_in_window( DateTimeInterface $start, DateTimeInterface $end ): int {
 		global $wpdb;
@@ -154,6 +158,10 @@ class Legacy_Storage implements Storage_Interface {
 
 	/**
 	 * {@inheritDoc}
+	 *
+	 * @param DateTimeInterface $start Window start.
+	 * @param DateTimeInterface $end   Window end.
+	 * @return int
 	 */
 	public function get_churned_subscribers_in_window( DateTimeInterface $start, DateTimeInterface $end ): int {
 		global $wpdb;
@@ -236,6 +244,10 @@ class Legacy_Storage implements Storage_Interface {
 
 	/**
 	 * {@inheritDoc}
+	 *
+	 * @param DateTimeInterface $start Window start.
+	 * @param DateTimeInterface $end   Window end.
+	 * @return float
 	 */
 	public function get_subscription_revenue_gross( DateTimeInterface $start, DateTimeInterface $end ): float {
 		global $wpdb;
@@ -270,6 +282,10 @@ class Legacy_Storage implements Storage_Interface {
 
 	/**
 	 * {@inheritDoc}
+	 *
+	 * @param DateTimeInterface $start Window start.
+	 * @param DateTimeInterface $end   Window end.
+	 * @return float
 	 */
 	public function get_subscription_revenue_net( DateTimeInterface $start, DateTimeInterface $end ): float {
 		global $wpdb;
@@ -316,6 +332,10 @@ class Legacy_Storage implements Storage_Interface {
 
 	/**
 	 * {@inheritDoc}
+	 *
+	 * @param DateTimeInterface $start Window start.
+	 * @param DateTimeInterface $end   Window end.
+	 * @return float
 	 */
 	public function get_subscription_refund_rate( DateTimeInterface $start, DateTimeInterface $end ): float {
 		global $wpdb;
@@ -433,6 +453,10 @@ class Legacy_Storage implements Storage_Interface {
 
 	/**
 	 * {@inheritDoc}
+	 *
+	 * @param DateTimeInterface $start Window start.
+	 * @param DateTimeInterface $end   Window end.
+	 * @return float
 	 */
 	public function get_failed_payment_retry_rate( DateTimeInterface $start, DateTimeInterface $end ): float {
 		global $wpdb;
@@ -468,6 +492,10 @@ class Legacy_Storage implements Storage_Interface {
 
 	/**
 	 * {@inheritDoc}
+	 *
+	 * @param DateTimeInterface $start Window start.
+	 * @param DateTimeInterface $end   Window end.
+	 * @return array
 	 */
 	public function get_performance_by_product( DateTimeInterface $start, DateTimeInterface $end ): array {
 		global $wpdb;
@@ -513,6 +541,10 @@ class Legacy_Storage implements Storage_Interface {
 
 	/**
 	 * {@inheritDoc}
+	 *
+	 * @param DateTimeInterface $start Window start.
+	 * @param DateTimeInterface $end   Window end.
+	 * @return array
 	 */
 	public function get_cancellation_reasons( DateTimeInterface $start, DateTimeInterface $end ): array {
 		global $wpdb;
