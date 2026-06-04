@@ -630,10 +630,25 @@ class HPOS_Storage implements Storage_Interface {
 		// left-joined row is NULL and the churned CASE naturally rejects
 		// them. Subscription Woo writes one `_schedule_cancelled` row per
 		// subscription at most, so no row multiplication.
+		// Query at the effective-product level. Woo's convention for
+		// variable products is to write the PARENT id into the line
+		// item's `_product_id` meta and the actual variation id into a
+		// separate `_variation_id` meta. We COALESCE the latter over
+		// the former so the row resolves to:
+		//   - the variation for variable products (post_parent > 0)
+		//   - the standalone product for simple subs (post_parent = 0)
+		//
+		// The donation filter stays on `_product_id` because the
+		// donation set is keyed by the parent in WC's data model.
+		// Aggregation into parent + nested variations happens in PHP
+		// below.
 		$sql = $wpdb->prepare(
 			"SELECT
-				p.ID AS product_id,
-				p.post_title AS product_name,
+				pv.ID AS variation_id,
+				pv.post_title AS variation_name,
+				pv.post_parent AS parent_id,
+				COALESCE(pp.post_title, '') AS parent_name,
+				COALESCE(period_meta.meta_value, '') AS sub_period,
 				COUNT(DISTINCT CASE WHEN o.status = 'wc-active' THEN o.id END) AS active_subs,
 				COUNT(DISTINCT CASE
 					WHEN o.status IN ('wc-cancelled', 'wc-expired')
@@ -645,16 +660,21 @@ class HPOS_Storage implements Storage_Interface {
 			FROM {$prefix}wc_orders o
 			JOIN {$prefix}woocommerce_order_items oi
 				ON oi.order_id = o.id AND oi.order_item_type = 'line_item'
-			JOIN {$prefix}woocommerce_order_itemmeta oim
-				ON oim.order_item_id = oi.order_item_id AND oim.meta_key = '_product_id'
-			JOIN {$prefix}posts p ON p.ID = CAST(oim.meta_value AS UNSIGNED)
+			JOIN {$prefix}woocommerce_order_itemmeta pid_meta
+				ON pid_meta.order_item_id = oi.order_item_id AND pid_meta.meta_key = '_product_id'
+			LEFT JOIN {$prefix}woocommerce_order_itemmeta vid_meta
+				ON vid_meta.order_item_id = oi.order_item_id AND vid_meta.meta_key = '_variation_id'
+			JOIN {$prefix}posts pv
+				ON pv.ID = COALESCE( NULLIF( CAST(vid_meta.meta_value AS UNSIGNED), 0 ), CAST(pid_meta.meta_value AS UNSIGNED) )
+			LEFT JOIN {$prefix}posts pp ON pp.ID = pv.post_parent
+			LEFT JOIN {$prefix}postmeta period_meta
+				ON period_meta.post_id = pv.ID AND period_meta.meta_key = '_subscription_period'
 			LEFT JOIN {$prefix}wc_orders_meta sch
 				ON sch.order_id = o.id AND sch.meta_key = '_schedule_cancelled'
 			WHERE o.type = 'shop_subscription'
-			  AND oim.meta_value NOT IN ($donations)
-			GROUP BY p.ID, p.post_title
-			ORDER BY active_subs DESC
-			LIMIT 50",
+			  AND pid_meta.meta_value NOT IN ($donations)
+			GROUP BY pv.ID, pv.post_title, pv.post_parent, parent_name, sub_period
+			ORDER BY active_subs DESC",
 			$this->fmt( $start ),
 			$this->fmt( $end )
 		);
@@ -663,19 +683,140 @@ class HPOS_Storage implements Storage_Interface {
 		if ( empty( $rows ) ) {
 			return [];
 		}
-		return array_map(
-			function ( $row ) {
-				return [
-					'product_id'       => (int) $row['product_id'],
-					'product_name'     => (string) $row['product_name'],
-					'active_subs'      => (int) $row['active_subs'],
-					'churned_subs'     => (int) $row['churned_subs'],
-					'active_value'     => (float) $row['active_value'],
-					'lifetime_revenue' => (float) $row['lifetime_revenue'],
+		return $this->aggregate_performance_rows( $rows );
+	}
+
+	/**
+	 * Aggregate flat per-variation rows from the performance SQL into
+	 * the parent + nested variations shape the React layer expects.
+	 *
+	 * For each row:
+	 *   - If parent_id > 0 (variation), attach to its parent's bucket
+	 *     and accumulate the parent's aggregates from the variation's
+	 *     numbers.
+	 *   - If parent_id == 0 (standalone simple/subscription product),
+	 *     emit as a single non-parent entry.
+	 *
+	 * Variation labels come from the _subscription_period meta when
+	 * present (month→Monthly, year→Annual, week→Weekly, day→Daily),
+	 * falling back to the variation post_title stripped of the parent
+	 * name prefix, or 'Variation' as last resort.
+	 *
+	 * Each parent's variations array is sorted by active_subs DESC.
+	 * The outer list is truncated to the top 50 parents/standalones by
+	 * active_subs.
+	 *
+	 * @param array<int, array<string, mixed>> $rows Flat SQL rows.
+	 * @return array<int, array<string, mixed>>
+	 */
+	private function aggregate_performance_rows( array $rows ): array {
+		$parents = [];
+
+		foreach ( $rows as $row ) {
+			$variation_id     = (int) $row['variation_id'];
+			$variation_name   = (string) $row['variation_name'];
+			$parent_id        = (int) $row['parent_id'];
+			$parent_name      = (string) $row['parent_name'];
+			$period           = (string) $row['sub_period'];
+			$active_subs      = (int) $row['active_subs'];
+			$churned_subs     = (int) $row['churned_subs'];
+			$active_value     = (float) $row['active_value'];
+			$lifetime_revenue = (float) $row['lifetime_revenue'];
+
+			if ( $parent_id > 0 ) {
+				// Variation under a parent product.
+				if ( ! isset( $parents[ $parent_id ] ) ) {
+					$parents[ $parent_id ] = [
+						'product_id'       => $parent_id,
+						'name'             => '' !== $parent_name ? $parent_name : __( '(unnamed product)', 'newspack-plugin' ),
+						'is_parent'        => true,
+						'active_subs'      => 0,
+						'churned_subs'     => 0,
+						'active_value'     => 0.0,
+						'lifetime_revenue' => 0.0,
+						'variations'       => [],
+					];
+				}
+				$parents[ $parent_id ]['active_subs']      += $active_subs;
+				$parents[ $parent_id ]['churned_subs']     += $churned_subs;
+				$parents[ $parent_id ]['active_value']     += $active_value;
+				$parents[ $parent_id ]['lifetime_revenue'] += $lifetime_revenue;
+				$parents[ $parent_id ]['variations'][]     = [
+					'variation_id'     => $variation_id,
+					'label'            => $this->variation_label( $period, $variation_name, $parent_name ),
+					'active_subs'      => $active_subs,
+					'churned_subs'     => $churned_subs,
+					'active_value'     => $active_value,
+					'lifetime_revenue' => $lifetime_revenue,
 				];
-			},
-			$rows
+			} else {
+				// Standalone simple/subscription product.
+				$parents[ $variation_id ] = [
+					'product_id'       => $variation_id,
+					'name'             => '' !== $variation_name ? $variation_name : __( '(unnamed product)', 'newspack-plugin' ),
+					'is_parent'        => false,
+					'active_subs'      => $active_subs,
+					'churned_subs'     => $churned_subs,
+					'active_value'     => $active_value,
+					'lifetime_revenue' => $lifetime_revenue,
+				];
+			}
+		}
+
+		// Sort each parent's variations by active_subs DESC.
+		foreach ( $parents as &$entry ) {
+			if ( isset( $entry['variations'] ) ) {
+				usort(
+					$entry['variations'],
+					static function ( $a, $b ) {
+						return $b['active_subs'] <=> $a['active_subs'];
+					}
+				);
+			}
+		}
+		unset( $entry );
+
+		// Sort outer list by aggregated active_subs DESC, top 50.
+		$out = array_values( $parents );
+		usort(
+			$out,
+			static function ( $a, $b ) {
+				return $b['active_subs'] <=> $a['active_subs'];
+			}
 		);
+		return array_slice( $out, 0, 50 );
+	}
+
+	/**
+	 * Pick a variation label. Prefer the period meta translated to a
+	 * human-friendly cadence; fall back to the variation's own title
+	 * with the parent name + ' - ' prefix stripped; last resort is a
+	 * generic "Variation" string.
+	 *
+	 * @param string $period         _subscription_period meta value.
+	 * @param string $variation_name Variation post_title.
+	 * @param string $parent_name    Parent product post_title.
+	 * @return string
+	 */
+	private function variation_label( string $period, string $variation_name, string $parent_name ): string {
+		switch ( strtolower( $period ) ) {
+			case 'day':
+				return __( 'Daily', 'newspack-plugin' );
+			case 'week':
+				return __( 'Weekly', 'newspack-plugin' );
+			case 'month':
+				return __( 'Monthly', 'newspack-plugin' );
+			case 'year':
+				return __( 'Annual', 'newspack-plugin' );
+		}
+		if ( '' !== $variation_name ) {
+			$prefix = $parent_name . ' - ';
+			if ( '' !== $parent_name && 0 === strpos( $variation_name, $prefix ) ) {
+				return substr( $variation_name, strlen( $prefix ) );
+			}
+			return $variation_name;
+		}
+		return __( 'Variation', 'newspack-plugin' );
 	}
 
 	/**

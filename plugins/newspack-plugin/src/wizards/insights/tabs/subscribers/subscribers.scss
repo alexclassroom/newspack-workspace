@@ -275,5 +275,17 @@
 			text-align: right;
 			font-variant-numeric: tabular-nums;
 		}
+
+		// Variation rows sit directly under their parent. Same chrome
+		// as parent rows, no background change, just a lighter text
+		// color and an indent on the Product cell so the nesting reads
+		// at a glance.
+		&-row--variation td {
+			color: wp-colors.$gray-600;
+		}
+
+		&-cell--indented {
+			padding-left: 44px; // 20px base + 24px indent
+		}
 	}
 }

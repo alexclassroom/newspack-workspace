@@ -1,10 +1,11 @@
 /**
  * PerformanceSection (NPPD-1616).
  *
- * Per-product breakdown for subscription products. Top 50
- * by active subscriber count (already limited server-side). Rendered as
- * a sortable-by-server table; client-side sorting is intentionally out
- * of scope for v1 to keep the implementation contained.
+ * Per-product breakdown for subscription products. Top 50 parents (or
+ * standalone simple subs) by active subscriber count (server-limited).
+ * Variable products render as a parent row with their variations
+ * indented underneath. The parent row's aggregates equal the SUM of
+ * its variation rows.
  *
  * lifetime_revenue is an approximation (sum of renewal-amount rows
  * across active + churned subs); a true LTV waits on the BigQuery
@@ -15,6 +16,7 @@
  * WordPress dependencies
  */
 import { __ } from '@wordpress/i18n';
+import { Fragment } from '@wordpress/element';
 
 /**
  * Internal dependencies
@@ -76,13 +78,25 @@ const PerformanceSection = ( { rows }: PerformanceSectionProps ) => {
 					</thead>
 					<tbody>
 						{ rows.map( row => (
-							<tr key={ row.product_id }>
-								<td>{ row.product_name }</td>
-								<td className="newspack-insights__table-num">{ formatNumber( row.active_subs ) }</td>
-								<td className="newspack-insights__table-num">{ formatNumber( row.churned_subs ) }</td>
-								<td className="newspack-insights__table-num">{ formatCurrency( row.active_value ) }</td>
-								<td className="newspack-insights__table-num">{ formatCurrency( row.lifetime_revenue ) }</td>
-							</tr>
+							<Fragment key={ row.product_id }>
+								<tr>
+									<td>{ row.name }</td>
+									<td className="newspack-insights__table-num">{ formatNumber( row.active_subs ) }</td>
+									<td className="newspack-insights__table-num">{ formatNumber( row.churned_subs ) }</td>
+									<td className="newspack-insights__table-num">{ formatCurrency( row.active_value ) }</td>
+									<td className="newspack-insights__table-num">{ formatCurrency( row.lifetime_revenue ) }</td>
+								</tr>
+								{ row.is_parent &&
+									row.variations?.map( v => (
+										<tr key={ `${ row.product_id }-${ v.variation_id }` } className="newspack-insights__table-row--variation">
+											<td className="newspack-insights__table-cell--indented">{ v.label }</td>
+											<td className="newspack-insights__table-num">{ formatNumber( v.active_subs ) }</td>
+											<td className="newspack-insights__table-num">{ formatNumber( v.churned_subs ) }</td>
+											<td className="newspack-insights__table-num">{ formatCurrency( v.active_value ) }</td>
+											<td className="newspack-insights__table-num">{ formatCurrency( v.lifetime_revenue ) }</td>
+										</tr>
+									) ) }
+							</Fragment>
 						) ) }
 					</tbody>
 				</table>

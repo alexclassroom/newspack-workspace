@@ -148,21 +148,40 @@ interface Storage_Interface {
 	public function get_failed_payment_retry_rate( DateTimeInterface $start, DateTimeInterface $end ): float;
 
 	/**
-	 * Per-product performance for non-donation subscription products. One row
-	 * per product, ordered by active subscriber count descending, top 50:
+	 * Per-product performance for non-donation subscription products.
+	 * One entry per parent product (or standalone simple/subscription
+	 * product), ordered by aggregated active subscriber count
+	 * descending, top 50. Parent entries carry a `variations` array
+	 * with one entry per variation, sorted by active_subs descending:
 	 *
 	 *   [
-	 *     'product_id'      => int,
-	 *     'product_name'    => string,
-	 *     'active_subs'     => int,
-	 *     'churned_subs'    => int,
-	 *     'active_value'    => float,
-	 *     'lifetime_revenue' => float,  // approximate; sum of renewal-amount rows
+	 *     'product_id'       => int,
+	 *     'name'             => string,
+	 *     'is_parent'        => bool,    // true when this entry has variations
+	 *     'active_subs'      => int,     // parent: SUM of variation active_subs
+	 *     'churned_subs'     => int,     // parent: SUM (windowed)
+	 *     'active_value'     => float,   // parent: SUM
+	 *     'lifetime_revenue' => float,   // parent: SUM (approximate; see Tab 6 doc)
+	 *     'variations'       => [        // parents only; absent for is_parent=false
+	 *       [
+	 *         'variation_id'     => int,
+	 *         'label'            => string,  // 'Monthly' / 'Annual' / etc
+	 *         'active_subs'      => int,
+	 *         'churned_subs'     => int,     // windowed
+	 *         'active_value'     => float,
+	 *         'lifetime_revenue' => float,
+	 *       ],
+	 *       ...
+	 *     ],
 	 *   ]
+	 *
+	 * `churned_subs` is windowed to `[$start, $end]`. The other three
+	 * aggregates are current-state / lifetime (see HPOS_Storage's
+	 * column-scope comment).
 	 *
 	 * @param DateTimeInterface $start Inclusive window start.
 	 * @param DateTimeInterface $end   Inclusive window end.
-	 * @return array<int, array{product_id: int, product_name: string, active_subs: int, churned_subs: int, active_value: float, lifetime_revenue: float}>
+	 * @return array<int, array<string, mixed>>
 	 */
 	public function get_performance_by_product( DateTimeInterface $start, DateTimeInterface $end ): array;
 

@@ -38,13 +38,25 @@ export interface SubscribersSnapshot {
 	upcoming_renewals_30d: UpcomingRenewals;
 }
 
-export interface PerformanceRow {
-	product_id: number;
-	product_name: string;
+export interface PerformanceVariationRow {
+	variation_id: number;
+	label: string;
 	active_subs: number;
 	churned_subs: number;
 	active_value: number;
 	lifetime_revenue: number;
+}
+
+export interface PerformanceRow {
+	product_id: number;
+	name: string;
+	is_parent: boolean;
+	active_subs: number;
+	churned_subs: number;
+	active_value: number;
+	lifetime_revenue: number;
+	/** Present only when `is_parent` is true. Sorted by active_subs descending. */
+	variations?: PerformanceVariationRow[];
 }
 
 export interface CancellationReasonRow {
