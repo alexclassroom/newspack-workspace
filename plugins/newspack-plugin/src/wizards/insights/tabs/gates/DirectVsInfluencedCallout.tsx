@@ -1,10 +1,13 @@
 /**
  * DirectVsInfluencedCallout (NPPD-1604).
  *
- * Small dismissable info callout immediately below the Section 1
- * caption, explaining the Direct vs Influenced distinction used by
- * Sections 2 and 3. Per spec, dismissal is session-only (no persisted
- * "don't show again" — the callout reappears on page reload).
+ * Small dismissable info callout rendered at the top of the Gates
+ * tab (immediately below the Phase 1 preview banner, above Section
+ * 1's heading). The Direct vs Influenced framing is foundational to
+ * Sections 2 and 3, so publishers should see it before reading any
+ * section that uses the terms. Per spec, dismissal is session-only
+ * (no persisted "don't show again" — the callout reappears on
+ * page reload).
  */
 
 /**
@@ -36,7 +39,7 @@ const DirectVsInfluencedCallout = () => {
 				<p>
 					<strong>{ __( 'Influenced', 'newspack-plugin' ) }</strong>{ ' ' }
 					{ __(
-						'conversions count readers who saw a gate within a lookback window (7 days for free, 14 days for paid) but converted later, possibly elsewhere on the site.',
+						'conversions count readers who saw a gate and then converted within a lookback window (7 days for free conversions, 14 days for paid). The conversion may happen later, possibly on a different page than the gate.',
 						'newspack-plugin'
 					) }
 				</p>

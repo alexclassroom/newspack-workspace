@@ -30,7 +30,7 @@ const PaidReaderConversionSection = ( { current, previous }: PaidReaderConversio
 		</h2>
 		<p className="newspack-insights__section-caption">
 			{ __(
-				'How effectively paywall gates convert visitors into paying subscribers. Direct counts subscriptions tagged to a gate; Influenced counts subscriptions by readers who saw a paywall in the last 14 days. Revenue is computed from actual Woo orders, not gate-event amounts.',
+				'How effectively paywall gates convert visitors into paying subscribers. Direct counts subscriptions tagged to a gate. Influenced counts readers who saw a paywall and then subscribed within 14 days. Revenue is computed from actual Woo orders, not gate-event amounts.',
 				'newspack-plugin'
 			) }
 		</p>
@@ -46,7 +46,7 @@ const PaidReaderConversionSection = ( { current, previous }: PaidReaderConversio
 			<MetricCard
 				{ ...scalarToMetricCardProps( {
 					label: __( 'Paywall Conversion (Influenced, 14d)', 'newspack-plugin' ),
-					description: __( 'Subscribers who saw a paywall in the prior 14 days ÷ readers who saw a paywall', 'newspack-plugin' ),
+					description: __( 'Readers who subscribed within 14 days of seeing a paywall ÷ readers who saw a paywall', 'newspack-plugin' ),
 					current: current.paywall_conversion_influenced_14d,
 					previous: previous?.paywall_conversion_influenced_14d,
 				} ) }
