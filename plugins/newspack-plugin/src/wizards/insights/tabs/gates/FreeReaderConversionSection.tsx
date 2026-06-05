@@ -29,7 +29,7 @@ const FreeReaderConversionSection = ( { current, previous }: FreeReaderConversio
 		</h2>
 		<p className="newspack-insights__section-caption">
 			{ __(
-				'How effectively registration gates convert visitors into registered readers. Direct counts conversions tagged to a gate; Influenced counts conversions by readers who saw a gate within the last 7 days.',
+				'How effectively registration gates convert visitors into registered readers. Direct counts conversions tagged to a gate. Influenced counts readers who saw a registration gate and then registered within 7 days.',
 				'newspack-plugin'
 			) }
 		</p>
@@ -46,7 +46,7 @@ const FreeReaderConversionSection = ( { current, previous }: FreeReaderConversio
 				{ ...scalarToMetricCardProps( {
 					label: __( 'Regwall Conversion (Influenced, 7d)', 'newspack-plugin' ),
 					description: __(
-						'Registered readers who saw a registration gate in the prior 7 days ÷ readers who saw a registration gate',
+						'Readers who registered within 7 days of seeing a registration gate ÷ readers who saw a registration gate',
 						'newspack-plugin'
 					),
 					current: current.regwall_conversion_influenced_7d,

@@ -23,6 +23,7 @@ import { __ } from '@wordpress/i18n';
 import type { DateRange } from '../state/useDateRange';
 import useGatesData from '../hooks/useGatesData';
 import PreviewBanner from './gates/PreviewBanner';
+import DirectVsInfluencedCallout from './gates/DirectVsInfluencedCallout';
 import GateExposureSection from './gates/GateExposureSection';
 import FreeReaderConversionSection from './gates/FreeReaderConversionSection';
 import PaidReaderConversionSection from './gates/PaidReaderConversionSection';
@@ -62,6 +63,7 @@ const GatesTab = ( { range, previousRange }: GatesTabProps ) => {
 	return (
 		<div className="newspack-insights__gates-tab">
 			{ data.tab_pending && <PreviewBanner /> }
+			<DirectVsInfluencedCallout />
 			<GateExposureSection current={ data.current } previous={ data.previous } />
 			<FreeReaderConversionSection current={ data.current } previous={ data.previous } />
 			<PaidReaderConversionSection current={ data.current } previous={ data.previous } />

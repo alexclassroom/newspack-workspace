@@ -2,7 +2,10 @@
  * GateExposureSection (NPPD-1604, Section 1).
  *
  * Top-of-funnel exposure scorecards. Four cards in a single row.
- * Caption + Direct-vs-Influenced callout below the heading.
+ * The Direct vs Influenced explainer used to live below this
+ * section's caption but moved to the tab top (above Section 1) so
+ * publishers encounter the framing before any section that uses
+ * the terms — see {@see GatesTab}.
  */
 
 /**
@@ -15,7 +18,6 @@ import { __ } from '@wordpress/i18n';
  */
 import type { GatesWindow } from '../../api/gates';
 import MetricCard from '../components/MetricCard';
-import DirectVsInfluencedCallout from './DirectVsInfluencedCallout';
 import { scalarToMetricCardProps } from './scalarToCard';
 
 export interface GateExposureSectionProps {
@@ -31,7 +33,6 @@ const GateExposureSection = ( { current, previous }: GateExposureSectionProps ) 
 		<p className="newspack-insights__section-caption">
 			{ __( 'Top of the funnel. How many readers see gates in this timeframe.', 'newspack-plugin' ) }
 		</p>
-		<DirectVsInfluencedCallout />
 		<div className="newspack-insights__metric-grid">
 			<MetricCard
 				{ ...scalarToMetricCardProps( {
