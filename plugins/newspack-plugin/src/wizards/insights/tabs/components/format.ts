@@ -48,6 +48,19 @@ export const formatCurrency = ( n: number ): string => currencyFormatter.format(
 /** Format a fraction in [0, 1] as a percent: 0.123 -> "12.3%". */
 export const formatPercent = ( fraction: number ): string => percentFormatter.format( fraction );
 
+/** Format a duration in seconds as m:ss (or h:mm:ss past an hour): 142 -> "2:22". */
+export const formatDuration = ( seconds: number ): string => {
+	const total = Math.max( 0, Math.round( seconds ) );
+	const hrs = Math.floor( total / 3600 );
+	const mins = Math.floor( ( total % 3600 ) / 60 );
+	const secs = total % 60;
+	const pad = ( n: number ): string => String( n ).padStart( 2, '0' );
+	if ( hrs > 0 ) {
+		return `${ hrs }:${ pad( mins ) }:${ pad( secs ) }`;
+	}
+	return `${ mins }:${ pad( secs ) }`;
+};
+
 /**
  * Percent change between current and previous, formatted with sign.
  * Returns null when previous is 0 (no defined ratio).

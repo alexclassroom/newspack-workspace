@@ -1,0 +1,255 @@
+/**
+ * Shared styles for the GA4-backed Insights tabs (Audience, Engagement — NPPD-1649):
+ * graceful-failure card states, chart/table grids, tab-local viz (pie/bar/line),
+ * and the connect banner. Scorecard / metric-grid base styles live in
+ * components/sections.scss and are not redefined here.
+ */
+
+@use "~@wordpress/base-styles/colors" as wp-colors;
+
+// Categorical series palette for charts. Hardcoded because a chart needs
+// distinct, stable category colors; applied via the --series-color custom
+// property so each viz element can map it to fill / stroke / background.
+.is-series-0 { --series-color: #1c5ea8; }
+.is-series-1 { --series-color: #3eb24f; }
+.is-series-2 { --series-color: #d98b27; }
+.is-series-3 { --series-color: #8a4fbd; }
+.is-series-4 { --series-color: #c0392b; }
+.is-series-5 { --series-color: #1f8a8a; }
+.is-series-6 { --series-color: #6b7785; }
+
+.newspack-insights {
+	&__chart-grid {
+		display: grid;
+		grid-template-columns: repeat( auto-fit, minmax( 280px, 1fr ) );
+		gap: 24px;
+		margin: 16px 0;
+	}
+
+	&__table-grid {
+		display: grid;
+		grid-template-columns: repeat( auto-fit, minmax( 320px, 1fr ) );
+		gap: 24px;
+		margin: 16px 0;
+	}
+
+	&__chart-card {
+		border: 1px solid wp-colors.$gray-200;
+		border-radius: 4px;
+		padding: 16px;
+
+		&-title {
+			font-size: 14px;
+			font-weight: 600;
+			margin: 0 0 4px;
+			color: wp-colors.$gray-900;
+		}
+
+		&-caption {
+			font-size: 13px;
+			color: wp-colors.$gray-600;
+			margin: 0 0 12px;
+		}
+	}
+
+	// Graceful-failure card states (overlay / error).
+	&__metric-card-value--muted {
+		color: wp-colors.$gray-400;
+	}
+
+	&__metric-card-note {
+		font-size: 12px;
+		color: wp-colors.$gray-600;
+		margin-top: 4px;
+		line-height: 1.4;
+
+		code {
+			font-size: 11px;
+			background: wp-colors.$gray-100;
+			padding: 1px 4px;
+			border-radius: 2px;
+		}
+	}
+
+	// Tables.
+	&__table {
+		width: 100%;
+		border-collapse: collapse;
+		font-size: 13px;
+
+		th,
+		td {
+			text-align: left;
+			padding: 8px 12px;
+			border-bottom: 1px solid wp-colors.$gray-100;
+		}
+
+		th {
+			color: wp-colors.$gray-700;
+			font-weight: 600;
+		}
+
+		.is-right {
+			text-align: right;
+			font-variant-numeric: tabular-nums;
+		}
+	}
+
+	&__table-note {
+		font-size: 13px;
+		color: wp-colors.$gray-600;
+		padding: 12px 0;
+	}
+
+	&__chart-empty {
+		font-size: 13px;
+		color: wp-colors.$gray-600;
+		padding: 24px 0;
+		text-align: center;
+	}
+
+	// Pie / donut.
+	&__pie {
+		display: flex;
+		flex-wrap: wrap;
+		align-items: center;
+		gap: 16px;
+	}
+
+	&__pie-svg {
+		width: 120px;
+		height: 120px;
+		transform: rotate( -90deg );
+	}
+
+	&__pie-track {
+		fill: none;
+		stroke: wp-colors.$gray-100;
+		stroke-width: 4;
+	}
+
+	&__pie-segment {
+		fill: none;
+		stroke: var( --series-color );
+		stroke-width: 4;
+	}
+
+	&__pie-legend {
+		list-style: none;
+		margin: 0;
+		padding: 0;
+		flex: 1;
+		min-width: 160px;
+
+		li {
+			display: flex;
+			align-items: center;
+			gap: 8px;
+			font-size: 12px;
+			margin-bottom: 4px;
+		}
+	}
+
+	&__legend-swatch {
+		display: inline-block;
+		width: 10px;
+		height: 10px;
+		border-radius: 2px;
+		background: var( --series-color );
+		flex-shrink: 0;
+	}
+
+	&__legend-label {
+		flex: 1;
+		color: wp-colors.$gray-800;
+	}
+
+	&__legend-value {
+		color: wp-colors.$gray-600;
+		font-variant-numeric: tabular-nums;
+	}
+
+	// Bars.
+	&__bars {
+		display: flex;
+		align-items: flex-end;
+		gap: 4px;
+		height: 160px;
+	}
+
+	&__bar-col {
+		flex: 1;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		height: 100%;
+	}
+
+	&__bar-track {
+		flex: 1;
+		width: 100%;
+		display: flex;
+		align-items: flex-end;
+	}
+
+	&__bar-fill {
+		width: 100%;
+		background: var( --series-color );
+		border-radius: 2px 2px 0 0;
+		min-height: 1px;
+	}
+
+	&__bar-label {
+		font-size: 10px;
+		color: wp-colors.$gray-600;
+		margin-top: 4px;
+		white-space: nowrap;
+		overflow: hidden;
+		text-overflow: ellipsis;
+		max-width: 100%;
+	}
+
+	// Line.
+	&__line-svg {
+		width: 100%;
+		height: 160px;
+	}
+
+	&__line-area {
+		fill: var( --series-color );
+		opacity: 0.12;
+	}
+
+	&__line-stroke {
+		stroke: var( --series-color );
+		stroke-width: 2;
+		vector-effect: non-scaling-stroke;
+	}
+
+	&__line-meta {
+		display: flex;
+		justify-content: space-between;
+		font-size: 11px;
+		color: wp-colors.$gray-600;
+		margin-top: 4px;
+	}
+
+	// Connect banner (tab-level OAuth error).
+	&__connect-banner {
+		border: 1px solid wp-colors.$gray-200;
+		border-radius: 4px;
+		padding: 48px 24px;
+		text-align: center;
+		background: wp-colors.$white;
+
+		&-text {
+			font-size: 15px;
+			color: wp-colors.$gray-800;
+			margin: 0 0 16px;
+		}
+
+		&-cta {
+			font-weight: 600;
+		}
+	}
+}

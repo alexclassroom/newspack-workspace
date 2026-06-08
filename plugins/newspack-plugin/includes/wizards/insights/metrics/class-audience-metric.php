@@ -107,6 +107,17 @@ final class Audience_Metric {
 	}
 
 	/**
+	 * Realistic fixture payload for UI smoke testing without a GA4 connection.
+	 * Returned by the REST controller when NEWSPACK_INSIGHTS_FIXTURE_MODE is on.
+	 * Same { current, previous } shape the live controller assembles.
+	 *
+	 * @return array
+	 */
+	public static function get_fixture(): array {
+		return require NEWSPACK_ABSPATH . 'includes/wizards/insights/fixtures/audience-fixture.php';
+	}
+
+	/**
 	 * Immediately-preceding window of equal length.
 	 *
 	 * @param string $start_date YYYY-MM-DD.

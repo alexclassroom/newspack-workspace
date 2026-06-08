@@ -95,6 +95,16 @@ final class Engagement_Metric {
 	}
 
 	/**
+	 * Realistic fixture payload for UI smoke testing without a GA4 connection.
+	 * Returned by the REST controller when NEWSPACK_INSIGHTS_FIXTURE_MODE is on.
+	 *
+	 * @return array
+	 */
+	public static function get_fixture(): array {
+		return require NEWSPACK_ABSPATH . 'includes/wizards/insights/fixtures/engagement-fixture.php';
+	}
+
+	/**
 	 * Immediately-preceding window of equal length.
 	 *
 	 * @param string $start_date YYYY-MM-DD.
