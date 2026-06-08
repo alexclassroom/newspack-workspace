@@ -346,6 +346,43 @@ final class GA4_Custom_Dimensions {
 	}
 
 	/**
+	 * List the event parameter names of every custom dimension currently
+	 * registered on the connected GA4 property.
+	 *
+	 * Unlike status(), this returns the full set actually present on the
+	 * property — not just the intersection with Newspack's standard set — so
+	 * callers can authoritatively check whether an arbitrary `customEvent:`
+	 * dimension (e.g. `post_id`) is available before querying the Data API.
+	 *
+	 * Reuses the same Newspack-OAuth-then-Site-Kit auth fallback and property
+	 * resolution as the rest of this class.
+	 *
+	 * @return string[]|\WP_Error Registered parameter names, or WP_Error if the
+	 *                            property or Admin API can't be reached.
+	 */
+	public static function get_registered_parameter_names() {
+		$property_id = self::get_property_id();
+		if ( ! $property_id ) {
+			return new \WP_Error( 'newspack_ga4_dimensions', 'No GA4 property ID configured in Site Kit.' );
+		}
+
+		$existing = self::with_admin_client(
+			function ( $client, $source ) use ( $property_id ) {
+				try {
+					return $client->list_custom_dimensions( $property_id );
+				} catch ( \Throwable $e ) {
+					return new \WP_Error( 'newspack_ga4_dimensions', 'Failed listing custom dimensions: ' . $e->getMessage() );
+				}
+			}
+		);
+		if ( is_wp_error( $existing ) ) {
+			return $existing;
+		}
+
+		return array_values( array_filter( array_column( $existing, 'parameterName' ) ) );
+	}
+
+	/**
 	 * Provision Newspack's standard GA4 custom dimensions.
 	 *
 	 * Idempotent: existing dimensions on the property are detected by
