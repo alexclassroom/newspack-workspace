@@ -47,6 +47,17 @@ final class Client {
 	const DATA_API_URL = 'https://analyticsdata.googleapis.com/v1beta/properties';
 
 	/**
+	 * Per-request memo of registered EVENT-scoped custom-dimension parameter
+	 * names (or a WP_Error), keyed by property ID. Orchestrators issue several
+	 * reports per request — and batch_run_reports() calls run_report() in a loop
+	 * — so the registered-dimension lookup (an Admin API round-trip) is cached
+	 * for the duration of the request to avoid amplifying calls and latency.
+	 *
+	 * @var array<string,string[]|\WP_Error>
+	 */
+	private static $registered_dimensions_cache = [];
+
+	/**
 	 * Run a single GA4 Data API report.
 	 *
 	 * @param string $property_id The publisher's GA4 property ID (numeric, no "properties/" prefix).
@@ -66,10 +77,17 @@ final class Client {
 	 *   - HTTP/network errors bubble up from wp_remote_post() as their own WP_Error.
 	 */
 	public static function run_report( string $property_id, array $body ) {
+		if ( '' === trim( $property_id ) ) {
+			return new \WP_Error(
+				'invalid_property_id',
+				__( 'A GA4 property ID is required to run a report.', 'newspack-plugin' )
+			);
+		}
+
 		// Authoritative custom-dimension pre-check, before spending the API call.
 		$requested = self::extract_custom_dimensions( $body );
 		if ( ! empty( $requested ) ) {
-			$registered = GA4_Custom_Dimensions::get_registered_parameter_names();
+			$registered = self::get_registered_parameter_names_cached( $property_id );
 			// Only block on a definitive answer. If the registered list can't be
 			// resolved (WP_Error), fall through and let the Data API respond — a
 			// genuinely missing dimension surfaces as an API error rather than
@@ -144,6 +162,22 @@ final class Client {
 	}
 
 	/**
+	 * Registered EVENT-scoped custom-dimension parameter names for a property,
+	 * memoized for the duration of the request. The result (success or WP_Error)
+	 * is cached so repeated reports in one request — including batch runs — make
+	 * at most one Admin API lookup per property.
+	 *
+	 * @param string $property_id The GA4 property ID.
+	 * @return string[]|\WP_Error
+	 */
+	private static function get_registered_parameter_names_cached( string $property_id ) {
+		if ( ! array_key_exists( $property_id, self::$registered_dimensions_cache ) ) {
+			self::$registered_dimensions_cache[ $property_id ] = GA4_Custom_Dimensions::get_registered_parameter_names();
+		}
+		return self::$registered_dimensions_cache[ $property_id ];
+	}
+
+	/**
 	 * Resolve a Google access token from Newspack's existing OAuth connection.
 	 *
 	 * @return string|\WP_Error
@@ -201,6 +235,15 @@ final class Client {
 		if ( ! empty( $body['dimensionFilter'] ) && is_array( $body['dimensionFilter'] ) ) {
 			$names = array_merge( $names, self::extract_from_filter_expression( $body['dimensionFilter'] ) );
 		}
+
+		// Drop empty names (e.g. a bare "customEvent:" with no parameter) so they
+		// never reach the missing-dimension diff or the user-facing message.
+		$names = array_filter(
+			$names,
+			function ( $name ) {
+				return '' !== $name;
+			}
+		);
 
 		return array_values( array_unique( $names ) );
 	}

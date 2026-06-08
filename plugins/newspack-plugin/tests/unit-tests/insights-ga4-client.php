@@ -169,6 +169,34 @@ class Newspack_Test_Insights_GA4_Client extends WP_UnitTestCase {
 	}
 
 	/**
+	 * A bare `customEvent:` reference with no parameter name is dropped rather
+	 * than surfacing as an empty entry in the missing-dimension diff/message.
+	 */
+	public function test_extract_custom_dimensions_drops_empty_param() {
+		$body = [
+			'dimensions' => [
+				[ 'name' => 'customEvent:' ],
+				[ 'name' => 'customEvent:post_id' ],
+			],
+		];
+
+		$this->assertSame(
+			[ 'post_id' ],
+			$this->invoke_private( 'extract_custom_dimensions', [ $body ] )
+		);
+	}
+
+	/**
+	 * Returns a clear WP_Error from run_report() for an empty/whitespace
+	 * property ID before doing any other work.
+	 */
+	public function test_run_report_rejects_empty_property_id() {
+		$result = Client::run_report( '   ', [ 'metrics' => [ [ 'name' => 'totalUsers' ] ] ] );
+		$this->assertWPError( $result );
+		$this->assertSame( 'invalid_property_id', $result->get_error_code() );
+	}
+
+	/**
 	 * Returns a WP_Error from get_registered_parameter_names() when no GA4
 	 * property is configured in Site Kit — the guard that lets run_report() fall
 	 * through to the live API rather than wrongly reporting every dimension as missing.
@@ -177,11 +205,13 @@ class Newspack_Test_Insights_GA4_Client extends WP_UnitTestCase {
 		$previous = get_option( 'googlesitekit_analytics-4_settings', false );
 		delete_option( 'googlesitekit_analytics-4_settings' );
 
-		$result = GA4_Custom_Dimensions::get_registered_parameter_names();
-		$this->assertWPError( $result );
-
-		if ( false !== $previous ) {
-			update_option( 'googlesitekit_analytics-4_settings', $previous );
+		try {
+			$result = GA4_Custom_Dimensions::get_registered_parameter_names();
+			$this->assertWPError( $result );
+		} finally {
+			if ( false !== $previous ) {
+				update_option( 'googlesitekit_analytics-4_settings', $previous );
+			}
 		}
 	}
 }

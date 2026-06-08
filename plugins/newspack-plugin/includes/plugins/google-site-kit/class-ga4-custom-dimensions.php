@@ -346,19 +346,24 @@ final class GA4_Custom_Dimensions {
 	}
 
 	/**
-	 * List the event parameter names of every custom dimension currently
+	 * List the parameter names of every EVENT-scoped custom dimension currently
 	 * registered on the connected GA4 property.
 	 *
-	 * Unlike status(), this returns the full set actually present on the
-	 * property — not just the intersection with Newspack's standard set — so
-	 * callers can authoritatively check whether an arbitrary `customEvent:`
+	 * Scoped to EVENT dimensions specifically because the Data API references
+	 * those as `customEvent:<param>` (USER-scoped dimensions are `customUser:`),
+	 * so callers checking a `customEvent:` reference must not be satisfied by a
+	 * same-named USER-scoped dimension.
+	 *
+	 * Unlike status(), this returns the full event-scoped set actually present
+	 * on the property — not just the intersection with Newspack's standard set —
+	 * so callers can authoritatively check whether an arbitrary `customEvent:`
 	 * dimension (e.g. `post_id`) is available before querying the Data API.
 	 *
 	 * Reuses the same Newspack-OAuth-then-Site-Kit auth fallback and property
 	 * resolution as the rest of this class.
 	 *
-	 * @return string[]|\WP_Error Registered parameter names, or WP_Error if the
-	 *                            property or Admin API can't be reached.
+	 * @return string[]|\WP_Error Registered event-scoped parameter names, or
+	 *                            WP_Error if the property or Admin API can't be reached.
 	 */
 	public static function get_registered_parameter_names() {
 		$property_id = self::get_property_id();
@@ -379,7 +384,14 @@ final class GA4_Custom_Dimensions {
 			return $existing;
 		}
 
-		return array_values( array_filter( array_column( $existing, 'parameterName' ) ) );
+		$event_scoped = array_filter(
+			$existing,
+			function ( $dimension ) {
+				return isset( $dimension['scope'] ) && 'EVENT' === $dimension['scope'];
+			}
+		);
+
+		return array_values( array_filter( array_column( $event_scoped, 'parameterName' ) ) );
 	}
 
 	/**
