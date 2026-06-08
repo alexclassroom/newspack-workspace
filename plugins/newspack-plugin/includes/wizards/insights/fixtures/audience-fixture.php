@@ -10,10 +10,11 @@
  *
  * Deliberately exercises every render path:
  *   - realistic, varied values across scorecards, tables, charts, pies
- *   - custom_dimension_missing overlay: newsletter_subscriber_rate
- *   - generic error: local_reader_rate
+ *   - custom_dimension_missing overlay: newsletter_subscriber_composition (pie)
+ *   - two-series timeseries: new_vs_returning_over_time
  *   - hidden_in_v1: returning_reader_rate_strict
  *   - comparison deltas in both directions (previous window differs)
+ *   (the generic-error path is exercised by the Engagement fixture)
  *
  * @package Newspack
  */
@@ -87,7 +88,6 @@ $build = function ( float $f ) use ( $scalar, $rate, $breakdown, $table, $series
 		'sessions'                           => $scalar( (int) round( 281200 * $f ), 'count' ),
 		'pageviews'                          => $scalar( (int) round( 612900 * $f ), 'count' ),
 		'avg_sessions_per_reader'            => $scalar( round( 2.19 * $f, 2 ), 'decimal' ),
-		'engaged_session_rate'               => $rate( (int) round( 168720 * $f ), 281200 ),
 
 		// Time trends.
 		'active_readers_over_time'           => [
@@ -107,15 +107,19 @@ $build = function ( float $f ) use ( $scalar, $rate, $breakdown, $table, $series
 				],
 			]
 		),
+		// Two parallel series (new vs returning) on a shared date axis, with
+		// realistic divergence — returning readers run lower and steadier.
 		'new_vs_returning_over_time'         => [
 			'rows'       => array_map(
-				function ( $point ) {
+				function ( $new_point, $returning_point ) {
 					return [
-						'date'    => $point['date'],
-						'readers' => $point['active_readers'],
+						'date'      => $new_point['date'],
+						'new'       => $new_point['active_readers'],
+						'returning' => $returning_point['active_readers'],
 					];
 				},
-				$series( 30, (int) round( 4300 * $f ), 0.25 )
+				$series( 30, (int) round( 2600 * $f ), 0.30 ),
+				$series( 30, (int) round( 1700 * $f ), 0.10 )
 			),
 			'computable' => true,
 			'type'       => 'timeseries',
@@ -251,15 +255,8 @@ $build = function ( float $f ) use ( $scalar, $rate, $breakdown, $table, $series
 				],
 			]
 		),
-		// Overlay state: custom dimension not registered.
-		'newsletter_subscriber_rate'         => [
-			'value'      => null,
-			'computable' => false,
-			'overlay'    => [
-				'type'       => 'custom_dimension_missing',
-				'dimensions' => [ 'is_newsletter_subscriber' ],
-			],
-		],
+		// Overlay state (custom dimension not registered) — demonstrated on the
+		// composition pie now that the standalone rate scorecards are gone.
 		'newsletter_subscriber_composition'  => [
 			'value'      => null,
 			'computable' => false,
@@ -268,7 +265,6 @@ $build = function ( float $f ) use ( $scalar, $rate, $breakdown, $table, $series
 				'dimensions' => [ 'is_newsletter_subscriber' ],
 			],
 		],
-		'logged_in_reader_rate'              => $rate( (int) round( 38500 * $f ), 128430 ),
 		'logged_in_vs_anonymous_composition' => $breakdown(
 			[
 				[
@@ -346,14 +342,6 @@ $build = function ( float $f ) use ( $scalar, $rate, $breakdown, $table, $series
 				],
 			]
 		),
-		// Error state: coverage area not configured.
-		'local_reader_rate'                  => [
-			'value'      => null,
-			'computable' => false,
-			'type'       => 'rate',
-			'error'      => 'Local Reader Rate is unavailable: no coverage area configured.',
-		],
-
 		// Content performance.
 		'top_pages'                          => $table(
 			[
@@ -385,6 +373,48 @@ $build = function ( float $f ) use ( $scalar, $rate, $breakdown, $table, $series
 					'unique_readers' => (int) round( 8100 * $f ),
 					'pageviews'      => (int) round( 9800 * $f ),
 				],
+				[
+					'post_id'        => '39444',
+					'page_path'      => '/2026/05/mayor-interview',
+					'page_title'     => 'An hour with the mayor: the full interview',
+					'unique_readers' => (int) round( 7400 * $f ),
+					'pageviews'      => (int) round( 8600 * $f ),
+				],
+				[
+					'post_id'        => '40455',
+					'page_path'      => '/2026/06/farmers-market-guide',
+					'page_title'     => 'The 2026 farmers market guide',
+					'unique_readers' => (int) round( 6300 * $f ),
+					'pageviews'      => (int) round( 7900 * $f ),
+				],
+				[
+					'post_id'        => '39988',
+					'page_path'      => '/2026/05/housing-explainer',
+					'page_title'     => 'Why rents keep climbing: an explainer',
+					'unique_readers' => (int) round( 5500 * $f ),
+					'pageviews'      => (int) round( 6700 * $f ),
+				],
+				[
+					'post_id'        => '40133',
+					'page_path'      => '/2026/05/election-results',
+					'page_title'     => 'Live results: the spring municipal election',
+					'unique_readers' => (int) round( 4800 * $f ),
+					'pageviews'      => (int) round( 6100 * $f ),
+				],
+				[
+					'post_id'        => '40522',
+					'page_path'      => '/2026/06/restaurant-openings',
+					'page_title'     => 'Six restaurants opening this summer',
+					'unique_readers' => (int) round( 4100 * $f ),
+					'pageviews'      => (int) round( 5200 * $f ),
+				],
+				[
+					'post_id'        => '39777',
+					'page_path'      => '/2026/05/school-board-recap',
+					'page_title'     => 'School board recap: what you missed',
+					'unique_readers' => (int) round( 3600 * $f ),
+					'pageviews'      => (int) round( 4400 * $f ),
+				],
 			]
 		),
 		'top_authors_by_reader_count'        => $table(
@@ -403,6 +433,41 @@ $build = function ( float $f ) use ( $scalar, $rate, $breakdown, $table, $series
 					'author'         => 'Priya Nair',
 					'unique_readers' => (int) round( 19300 * $f ),
 					'pageviews'      => (int) round( 24100 * $f ),
+				],
+				[
+					'author'         => 'Daniel Cho',
+					'unique_readers' => (int) round( 15800 * $f ),
+					'pageviews'      => (int) round( 20400 * $f ),
+				],
+				[
+					'author'         => 'Aisha Bello',
+					'unique_readers' => (int) round( 13100 * $f ),
+					'pageviews'      => (int) round( 16700 * $f ),
+				],
+				[
+					'author'         => 'Tom Whitfield',
+					'unique_readers' => (int) round( 10900 * $f ),
+					'pageviews'      => (int) round( 13500 * $f ),
+				],
+				[
+					'author'         => 'Sofia Romano',
+					'unique_readers' => (int) round( 9200 * $f ),
+					'pageviews'      => (int) round( 11800 * $f ),
+				],
+				[
+					'author'         => 'Marcus Lee',
+					'unique_readers' => (int) round( 7600 * $f ),
+					'pageviews'      => (int) round( 9400 * $f ),
+				],
+				[
+					'author'         => 'Hannah Berg',
+					'unique_readers' => (int) round( 6100 * $f ),
+					'pageviews'      => (int) round( 7700 * $f ),
+				],
+				[
+					'author'         => 'Omar Haddad',
+					'unique_readers' => (int) round( 4800 * $f ),
+					'pageviews'      => (int) round( 6200 * $f ),
 				],
 			]
 		),

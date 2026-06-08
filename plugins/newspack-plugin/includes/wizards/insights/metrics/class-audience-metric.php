@@ -173,7 +173,6 @@ final class Audience_Metric {
 			'sessions'                           => self::sessions_via_ga4( $pid, $start_date, $end_date ),
 			'pageviews'                          => self::pageviews_via_ga4( $pid, $start_date, $end_date ),
 			'avg_sessions_per_reader'            => self::avg_sessions_per_reader_via_ga4( $pid, $start_date, $end_date ),
-			'engaged_session_rate'               => self::engaged_session_rate_via_ga4( $pid, $start_date, $end_date ),
 			// Time trends.
 			'active_readers_over_time'           => self::active_readers_over_time_via_ga4( $pid, $start_date, $end_date ),
 			'new_vs_returning_counts'            => self::new_vs_returning_counts_via_ga4( $pid, $start_date, $end_date ),
@@ -183,16 +182,13 @@ final class Audience_Metric {
 			// Traffic sources.
 			'traffic_sources_breakdown'          => self::traffic_sources_breakdown_via_ga4( $pid, $start_date, $end_date ),
 			'top_campaigns'                      => self::top_campaigns_via_ga4( $pid, $start_date, $end_date ),
-			// Composition.
+			// Composition (pies only).
 			'device_breakdown'                   => self::device_breakdown_via_ga4( $pid, $start_date, $end_date ),
-			'newsletter_subscriber_rate'         => self::newsletter_subscriber_rate_via_ga4( $pid, $start_date, $end_date ),
 			'newsletter_subscriber_composition'  => self::newsletter_subscriber_composition_via_ga4( $pid, $start_date, $end_date ),
-			'logged_in_reader_rate'              => self::logged_in_reader_rate_via_ga4( $pid, $start_date, $end_date ),
 			'logged_in_vs_anonymous_composition' => self::logged_in_vs_anonymous_composition_via_ga4( $pid, $start_date, $end_date ),
 			// Geographic.
 			'top_regions'                        => self::top_regions_via_ga4( $pid, $start_date, $end_date ),
 			'top_cities'                         => self::top_cities_via_ga4( $pid, $start_date, $end_date ),
-			'local_reader_rate'                  => self::local_reader_rate_via_ga4( $pid, $start_date, $end_date ),
 			// Content performance.
 			'top_pages'                          => self::top_pages_via_ga4( $pid, $start_date, $end_date ),
 			'top_authors_by_reader_count'        => self::top_authors_by_reader_count_via_ga4( $pid, $start_date, $end_date ),
@@ -216,7 +212,6 @@ final class Audience_Metric {
 			'sessions',
 			'pageviews',
 			'avg_sessions_per_reader',
-			'engaged_session_rate',
 			'active_readers_over_time',
 			'new_vs_returning_counts',
 			'new_vs_returning_over_time',
@@ -225,13 +220,10 @@ final class Audience_Metric {
 			'traffic_sources_breakdown',
 			'top_campaigns',
 			'device_breakdown',
-			'newsletter_subscriber_rate',
 			'newsletter_subscriber_composition',
-			'logged_in_reader_rate',
 			'logged_in_vs_anonymous_composition',
 			'top_regions',
 			'top_cities',
-			'local_reader_rate',
 			'top_pages',
 			'top_authors_by_reader_count',
 		];
@@ -319,27 +311,6 @@ final class Audience_Metric {
 	}
 
 	/**
-	 * Engaged Session Rate — engagementRate (already a 0-1 ratio).
-	 *
-	 * @param string $pid Property ID.
-	 * @param string $s   Start date.
-	 * @param string $e   End date.
-	 * @return array
-	 */
-	private static function engaged_session_rate_via_ga4( string $pid, string $s, string $e ): array {
-		$result = self::safe_run_report( $pid, self::body( $s, $e, [], [ 'engagementRate' ] ) );
-		if ( isset( $result['error'] ) || isset( $result['overlay'] ) ) {
-			return $result;
-		}
-		$raw = $result['raw']['rows'][0]['metricValues'][0]['value'] ?? null;
-		return [
-			'value'      => null === $raw ? 0.0 : (float) $raw,
-			'computable' => null !== $raw,
-			'type'       => 'rate',
-		];
-	}
-
-	/**
 	 * Active Readers Over Time — date / totalUsers.
 	 *
 	 * @param string $pid Property ID.
@@ -368,7 +339,9 @@ final class Audience_Metric {
 	}
 
 	/**
-	 * New vs Returning Over Time — date + newVsReturning / totalUsers.
+	 * New vs Returning Over Time — date + newVsReturning / totalUsers, pivoted
+	 * into one wide row per date carrying parallel `new` and `returning` series
+	 * so the UI can draw two color-coded lines on a shared x-axis.
 	 *
 	 * @param string $pid Property ID.
 	 * @param string $s   Start date.
@@ -379,7 +352,38 @@ final class Audience_Metric {
 		$body             = self::body( $s, $e, [ 'date', 'newVsReturning' ], [ 'totalUsers' ] );
 		$body['orderBys'] = [ [ 'dimension' => [ 'dimensionName' => 'date' ] ] ];
 		$result           = self::safe_run_report( $pid, $body );
-		return self::rows( $result, [ 'date', 'reader_type' ], [ 'readers' ], 'timeseries' );
+		if ( isset( $result['error'] ) || isset( $result['overlay'] ) ) {
+			return $result;
+		}
+		$by_date = [];
+		foreach ( $result['raw']['rows'] ?? [] as $row ) {
+			$date = $row['dimensionValues'][0]['value'] ?? '';
+			if ( '' === $date ) {
+				continue;
+			}
+			$type = strtolower( $row['dimensionValues'][1]['value'] ?? '' );
+			$val  = (int) ( $row['metricValues'][0]['value'] ?? 0 );
+			if ( ! isset( $by_date[ $date ] ) ) {
+				$by_date[ $date ] = [
+					'date'      => $date,
+					'new'       => 0,
+					'returning' => 0,
+				];
+			}
+			// GA4 returns "new" / "returning" (plus an occasional empty bucket
+			// for unknown); fold anything that isn't "returning" into new.
+			if ( 'returning' === $type ) {
+				$by_date[ $date ]['returning'] += $val;
+			} else {
+				$by_date[ $date ]['new'] += $val;
+			}
+		}
+		ksort( $by_date );
+		return [
+			'rows'       => array_values( $by_date ),
+			'computable' => true,
+			'type'       => 'timeseries',
+		];
 	}
 
 	/**
@@ -494,19 +498,6 @@ final class Audience_Metric {
 	 */
 
 	/**
-	 * Newsletter Subscriber Rate — customEvent:is_newsletter_subscriber.
-	 *
-	 * @param string $pid Property ID.
-	 * @param string $s   Start date.
-	 * @param string $e   End date.
-	 * @return array
-	 */
-	private static function newsletter_subscriber_rate_via_ga4( string $pid, string $s, string $e ): array {
-		$result = self::safe_run_report( $pid, self::body( $s, $e, [ 'customEvent:is_newsletter_subscriber' ], [ 'totalUsers' ] ) );
-		return self::yes_rate( $result );
-	}
-
-	/**
 	 * Newsletter Subscriber Composition — same query, two-slice pie.
 	 *
 	 * @param string $pid Property ID.
@@ -517,19 +508,6 @@ final class Audience_Metric {
 	private static function newsletter_subscriber_composition_via_ga4( string $pid, string $s, string $e ): array {
 		$result = self::safe_run_report( $pid, self::body( $s, $e, [ 'customEvent:is_newsletter_subscriber' ], [ 'totalUsers' ] ) );
 		return self::yes_composition( $result, __( 'Newsletter subscriber', 'newspack-plugin' ), __( 'Not subscribed', 'newspack-plugin' ) );
-	}
-
-	/**
-	 * Logged-In Reader Rate — customEvent:logged_in.
-	 *
-	 * @param string $pid Property ID.
-	 * @param string $s   Start date.
-	 * @param string $e   End date.
-	 * @return array
-	 */
-	private static function logged_in_reader_rate_via_ga4( string $pid, string $s, string $e ): array {
-		$result = self::safe_run_report( $pid, self::body( $s, $e, [ 'customEvent:logged_in' ], [ 'totalUsers' ] ) );
-		return self::yes_rate( $result );
 	}
 
 	/**
@@ -593,99 +571,6 @@ final class Audience_Metric {
 		$body['limit'] = 25;
 		$result        = self::safe_run_report( $pid, $body );
 		return self::rows( $result, [ 'author' ], [ 'unique_readers', 'pageviews' ], 'table' );
-	}
-
-	/**
-	 * Local Reader Rate — geo report merged in PHP against configured tuples.
-	 * Hidden (not_configured) when no coverage area is set.
-	 *
-	 * @param string $pid Property ID.
-	 * @param string $s   Start date.
-	 * @param string $e   End date.
-	 * @return array
-	 */
-	private static function local_reader_rate_via_ga4( string $pid, string $s, string $e ): array {
-		$filters = get_option( 'newspack_insights_local_geo_filters', [] );
-		if ( ! is_array( $filters ) || empty( $filters ) ) {
-			return [
-				'value'          => null,
-				'computable'     => false,
-				'type'           => 'rate',
-				'not_configured' => true,
-			];
-		}
-
-		$body          = self::body( $s, $e, [ 'country', 'region', 'city', 'metro' ], [ 'totalUsers' ] );
-		$body['limit'] = 100000;
-		$result        = self::safe_run_report( $pid, $body );
-		if ( isset( $result['error'] ) || isset( $result['overlay'] ) ) {
-			return $result;
-		}
-
-		// This rate is computed from the full geo row set in PHP, so a truncated
-		// response would silently skew the numerator/denominator. GA4 reports the
-		// total matching row count in `rowCount`; if it exceeds the rows actually
-		// returned, bail with an explicit error rather than reporting a wrong rate.
-		$returned_rows = count( $result['raw']['rows'] ?? [] );
-		$row_count     = isset( $result['raw']['rowCount'] ) ? (int) $result['raw']['rowCount'] : $returned_rows;
-		if ( $row_count > $returned_rows ) {
-			return [
-				'value'      => null,
-				'computable' => false,
-				'type'       => 'rate',
-				'error'      => __( 'Local Reader Rate could not be computed: the geo breakdown exceeded the row limit and was truncated.', 'newspack-plugin' ),
-			];
-		}
-
-		$total = 0;
-		$local = 0;
-		foreach ( $result['raw']['rows'] ?? [] as $row ) {
-			$geo   = [
-				'country' => $row['dimensionValues'][0]['value'] ?? '',
-				'region'  => $row['dimensionValues'][1]['value'] ?? '',
-				'city'    => $row['dimensionValues'][2]['value'] ?? '',
-				'metro'   => $row['dimensionValues'][3]['value'] ?? '',
-			];
-			$users = (int) ( $row['metricValues'][0]['value'] ?? 0 );
-			$total += $users;
-			if ( self::geo_matches_any( $geo, $filters ) ) {
-				$local += $users;
-			}
-		}
-		return [
-			'value'       => $total > 0 ? $local / $total : 0,
-			'computable'  => $total > 0,
-			'type'        => 'rate',
-			'numerator'   => $local,
-			'denominator' => $total,
-		];
-	}
-
-	/**
-	 * Whether a geo row matches any configured filter tuple. Each tuple's
-	 * present (non-empty) fields must all equal the row's values.
-	 *
-	 * @param array $geo     Row geo [country, region, city, metro].
-	 * @param array $filters Array of partial geo tuples.
-	 * @return bool
-	 */
-	private static function geo_matches_any( array $geo, array $filters ): bool {
-		foreach ( $filters as $tuple ) {
-			if ( ! is_array( $tuple ) ) {
-				continue;
-			}
-			$match = true;
-			foreach ( [ 'country', 'region', 'city', 'metro' ] as $field ) {
-				if ( ! empty( $tuple[ $field ] ) && $tuple[ $field ] !== ( $geo[ $field ] ?? '' ) ) {
-					$match = false;
-					break;
-				}
-			}
-			if ( $match ) {
-				return true;
-			}
-		}
-		return false;
 	}
 
 	/*
@@ -867,35 +752,6 @@ final class Audience_Metric {
 			'rows'       => $out,
 			'computable' => true,
 			'type'       => $type,
-		];
-	}
-
-	/**
-	 * Rate from a yes/no custom-dimension split (numerator = 'yes').
-	 *
-	 * @param array $result safe_run_report result.
-	 * @return array
-	 */
-	private static function yes_rate( array $result ): array {
-		if ( isset( $result['error'] ) || isset( $result['overlay'] ) ) {
-			return $result;
-		}
-		$num   = 0;
-		$total = 0;
-		foreach ( $result['raw']['rows'] ?? [] as $row ) {
-			$dim   = $row['dimensionValues'][0]['value'] ?? '';
-			$users = (int) ( $row['metricValues'][0]['value'] ?? 0 );
-			$total += $users;
-			if ( 'yes' === $dim ) {
-				$num += $users;
-			}
-		}
-		return [
-			'value'       => $total > 0 ? $num / $total : 0,
-			'computable'  => $total > 0,
-			'type'        => 'rate',
-			'numerator'   => $num,
-			'denominator' => $total,
 		];
 	}
 

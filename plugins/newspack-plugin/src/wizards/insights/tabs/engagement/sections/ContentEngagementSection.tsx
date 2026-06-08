@@ -41,13 +41,16 @@ const ContentEngagementSection = ( { current }: SectionProps ) => (
 			</div>
 			<div>
 				<h3 className="newspack-insights__chart-card-title">{ __( 'Articles by Completion Rate', 'newspack-plugin' ) }</h3>
+				<p className="newspack-insights__chart-card-caption">
+					{ __( '% of reads that reached the end of each article.', 'newspack-plugin' ) }
+				</p>
 				<MetricTable
 					payload={ current.articles_by_completion_rate }
 					emptyMessage={ __( 'No scroll-completion data in this timeframe.', 'newspack-plugin' ) }
 					columns={ [
 						PAGE_COL,
 						{ key: 'readers', label: __( 'Readers', 'newspack-plugin' ), format: 'number', align: 'right' },
-						{ key: 'completion_rate', label: __( 'Completion', 'newspack-plugin' ), format: 'percent', align: 'right' },
+						{ key: 'completion_rate', label: __( 'Read to end', 'newspack-plugin' ), format: 'percent', align: 'right' },
 					] }
 				/>
 			</div>

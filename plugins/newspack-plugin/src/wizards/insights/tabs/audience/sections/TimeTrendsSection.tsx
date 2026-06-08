@@ -37,7 +37,13 @@ const TimeTrendsSection = ( { current }: SectionProps ) => (
 				<LineChart points={ toSeries( current.active_readers_over_time, 'date', 'active_readers' ) } formatLabel={ formatShortDate } />
 			</ChartCard>
 			<ChartCard title={ __( 'New vs Returning Over Time', 'newspack-plugin' ) } payload={ current.new_vs_returning_over_time }>
-				<LineChart points={ toSeries( current.new_vs_returning_over_time, 'date', 'readers' ) } formatLabel={ formatShortDate } />
+				<LineChart
+					series={ [
+						{ name: __( 'New', 'newspack-plugin' ), points: toSeries( current.new_vs_returning_over_time, 'date', 'new' ) },
+						{ name: __( 'Returning', 'newspack-plugin' ), points: toSeries( current.new_vs_returning_over_time, 'date', 'returning' ) },
+					] }
+					formatLabel={ formatShortDate }
+				/>
 			</ChartCard>
 			<ChartCard title={ __( 'Readership by Day of Week', 'newspack-plugin' ) } payload={ current.readership_by_day_of_week }>
 				<BarChart bars={ toSeries( current.readership_by_day_of_week, 'day_of_week', 'active_readers' ) } />
