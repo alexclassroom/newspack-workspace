@@ -11,14 +11,17 @@ import { __ } from '@wordpress/i18n';
  * Internal dependencies
  */
 import type { InsightsWindow } from '../../../api/audience';
+import type { DateRange } from '../../../state/useDateRange';
 import type { MetricPayload } from '../../components/metrics';
 import { uniformValue } from '../../components/metrics';
+import DateScope from '../../components/DateScope';
 import MetricTable from '../../components/MetricTable';
 import ScopePill from '../../components/ScopePill';
 
 export interface SectionProps {
 	current: InsightsWindow;
 	previous: InsightsWindow | null;
+	range: DateRange;
 }
 
 const ROW_LIMIT = 10;
@@ -28,7 +31,7 @@ const READERS_COL = { key: 'readers', label: __( 'Readers', 'newspack-plugin' ),
 // both the hidden Country column and the inline scope pill, kept in sync.
 const countryScope = ( payload?: MetricPayload ): string | null => uniformValue( ( payload?.rows ?? [] ).slice( 0, ROW_LIMIT ), 'country' );
 
-const GeographicSection = ( { current }: SectionProps ) => {
+const GeographicSection = ( { current, range }: SectionProps ) => {
 	const regionsScope = countryScope( current.top_regions );
 	const citiesScope = countryScope( current.top_cities );
 
@@ -38,6 +41,7 @@ const GeographicSection = ( { current }: SectionProps ) => {
 				{ __( 'Geographic', 'newspack-plugin' ) }
 			</h2>
 			<p className="newspack-insights__section-caption">{ __( 'Where your readers are.', 'newspack-plugin' ) }</p>
+			<DateScope range={ range } />
 			<div className="newspack-insights__table-grid newspack-insights__table-grid--cols-2">
 				<div>
 					<h3 className="newspack-insights__chart-card-title">

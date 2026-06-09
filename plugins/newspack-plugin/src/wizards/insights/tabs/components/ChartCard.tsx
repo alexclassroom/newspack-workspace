@@ -16,12 +16,14 @@ import type { MetricPayload } from './metrics';
 
 export interface ChartCardProps {
 	title: string;
+	/** Small temporal-scope subhead above the title (e.g. "Day to day"). */
+	subhead?: string;
 	caption?: string;
 	payload?: MetricPayload;
 	children: React.ReactNode;
 }
 
-const ChartCard = ( { title, caption, payload, children }: ChartCardProps ) => {
+const ChartCard = ( { title, subhead, caption, payload, children }: ChartCardProps ) => {
 	if ( ! payload || payload.hidden_in_v1 ) {
 		return null;
 	}
@@ -37,6 +39,7 @@ const ChartCard = ( { title, caption, payload, children }: ChartCardProps ) => {
 
 	return (
 		<div className="newspack-insights__chart-card">
+			{ subhead && <p className="newspack-insights__chart-card-subhead">{ subhead }</p> }
 			<h3 className="newspack-insights__chart-card-title">{ title }</h3>
 			{ caption && <p className="newspack-insights__chart-card-caption">{ caption }</p> }
 			{ body }

@@ -67,20 +67,80 @@
 		border-radius: 0;
 	}
 
-	// Inline scope pill next to a table title (e.g. "Showing: United States").
-	// Muted, smaller than the title, vertically centered with the title text.
+	// Inline scope pill next to a table title (e.g. "Showing: United States") —
+	// full-pill shape, muted, vertically centered with the title text.
 	&__scope-pill {
 		display: inline-block;
 		margin-left: 8px;
 		padding: 2px 8px;
-		border-radius: 5px;
+		border-radius: 12px;
 		background: wp-colors.$gray-100;
 		color: wp-colors.$gray-700;
 		font-size: 12px;
-		font-weight: 400;
+		font-weight: 500;
 		line-height: 1.4;
 		vertical-align: middle;
 		white-space: nowrap;
+	}
+
+	// Temporal-scope subhead above a chart title (e.g. "Day to day").
+	&__chart-card-subhead {
+		margin: 0 0 2px;
+		font-size: 13px;
+		font-weight: 400;
+		color: wp-colors.$gray-600;
+	}
+
+	// Date-range scope caption under a windowed section's description. Pulled up
+	// tight against the description (the section's 16px flex gap is too much).
+	&__date-scope {
+		margin: -12px 0 0;
+		font-size: 12px;
+		color: wp-colors.$gray-600;
+	}
+
+	// Engagement Reader Segments takeaway cards — scorecard chrome (border, top
+	// accent, padding) with a headline / sub / bottom-pinned mini-bar layout.
+	&__takeaway-card {
+		display: flex;
+		flex-direction: column;
+		height: 100%;
+		min-height: 180px;
+		padding: 24px 28px;
+		background-color: #fff;
+		border: 1px solid wp-colors.$gray-200;
+		border-top: 3px solid var( --wp-admin-theme-color );
+		border-radius: 4px;
+	}
+
+	&__takeaway-headline {
+		margin: 0;
+		font-size: 18px;
+		font-weight: 500;
+		line-height: 1.35;
+		color: wp-colors.$gray-900;
+	}
+
+	&__takeaway-sub {
+		margin: 6px 0 0;
+		font-size: 13px;
+		color: wp-colors.$gray-700;
+	}
+
+	&__takeaway-empty {
+		margin: 0;
+		font-size: 13px;
+		color: wp-colors.$gray-600;
+	}
+
+	// Mini bar chart pinned to the card bottom (~60px tall).
+	&__takeaway-chart {
+		margin-top: auto;
+		padding-top: 16px;
+	}
+
+	&__takeaway-chart &__bars {
+		height: 60px;
 	}
 
 	// Standalone table heading (Geographic / Content performance, where each

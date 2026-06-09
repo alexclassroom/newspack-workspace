@@ -172,6 +172,7 @@ final class Audience_Metric {
 			'active_readers'                     => self::active_readers_via_ga4( $pid, $start_date, $end_date ),
 			'pageviews'                          => self::pageviews_via_ga4( $pid, $start_date, $end_date ),
 			'avg_sessions_per_reader'            => self::avg_sessions_per_reader_via_ga4( $pid, $start_date, $end_date ),
+			'newsletter_signups'                 => self::newsletter_signups_via_ga4( $pid, $start_date, $end_date ),
 			// Time trends.
 			'new_vs_returning_over_time'         => self::new_vs_returning_over_time_via_ga4( $pid, $start_date, $end_date ),
 			'readership_by_day_of_week'          => self::readership_by_day_of_week_via_ga4( $pid, $start_date, $end_date ),
@@ -210,6 +211,7 @@ final class Audience_Metric {
 			'active_readers',
 			'pageviews',
 			'avg_sessions_per_reader',
+			'newsletter_signups',
 			'new_vs_returning_over_time',
 			'readership_by_day_of_week',
 			'readership_by_hour_of_day',
@@ -293,6 +295,32 @@ final class Audience_Metric {
 			'numerator'   => $sessions,
 			'denominator' => $users,
 		];
+	}
+
+	/**
+	 * Newsletter Signups — count of `np_newsletter_subscribed` events in the
+	 * window. Fires on every successful Newspack newsletter signup (Registration
+	 * block, Subscription Form block, account-creation modal, My Account →
+	 * Newsletters). Counts signup *events*, not unique readers; direct-from-ESP
+	 * signups outside Newspack flows are not captured. Zero is a valid result.
+	 *
+	 * @param string $pid Property ID.
+	 * @param string $s   Start date.
+	 * @param string $e   End date.
+	 * @return array
+	 */
+	private static function newsletter_signups_via_ga4( string $pid, string $s, string $e ): array {
+		$body                    = self::body( $s, $e, [], [ 'eventCount' ] );
+		$body['dimensionFilter'] = [
+			'filter' => [
+				'fieldName'    => 'eventName',
+				'stringFilter' => [
+					'matchType' => 'EXACT',
+					'value'     => 'np_newsletter_subscribed',
+				],
+			],
+		];
+		return self::scalar( self::safe_run_report( $pid, $body ), 'count' );
 	}
 
 	/**

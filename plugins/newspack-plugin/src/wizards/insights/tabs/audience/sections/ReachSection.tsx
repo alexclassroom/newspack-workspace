@@ -13,20 +13,24 @@ import { __ } from '@wordpress/i18n';
  * Internal dependencies
  */
 import type { InsightsWindow } from '../../../api/audience';
+import type { DateRange } from '../../../state/useDateRange';
 import Scorecard from '../../components/Scorecard';
+import DateScope from '../../components/DateScope';
 
 export interface SectionProps {
 	current: InsightsWindow;
 	previous: InsightsWindow | null;
+	range: DateRange;
 }
 
-const ReachSection = ( { current, previous }: SectionProps ) => (
+const ReachSection = ( { current, previous, range }: SectionProps ) => (
 	<section className="newspack-insights__section" aria-labelledby="newspack-insights-audience-reach">
 		<h2 id="newspack-insights-audience-reach" className="newspack-insights__section-heading">
 			{ __( 'Reach', 'newspack-plugin' ) }
 		</h2>
 		<p className="newspack-insights__section-caption">{ __( 'Your reach this period.', 'newspack-plugin' ) }</p>
-		<div className="newspack-insights__metric-grid newspack-insights__metric-grid--cols-3">
+		<DateScope range={ range } />
+		<div className="newspack-insights__metric-grid newspack-insights__metric-grid--cols-4">
 			<Scorecard
 				label={ __( 'Active Readers', 'newspack-plugin' ) }
 				description={ __( 'How many people read you', 'newspack-plugin' ) }
@@ -44,6 +48,12 @@ const ReachSection = ( { current, previous }: SectionProps ) => (
 				description={ __( 'How often readers come back', 'newspack-plugin' ) }
 				current={ current.avg_sessions_per_reader }
 				previous={ previous?.avg_sessions_per_reader }
+			/>
+			<Scorecard
+				label={ __( 'Newsletter Signups', 'newspack-plugin' ) }
+				description={ __( 'New subscribers this period', 'newspack-plugin' ) }
+				current={ current.newsletter_signups }
+				previous={ previous?.newsletter_signups }
 			/>
 		</div>
 	</section>

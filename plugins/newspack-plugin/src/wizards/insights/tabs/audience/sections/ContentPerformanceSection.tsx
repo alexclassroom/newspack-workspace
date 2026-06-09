@@ -11,19 +11,23 @@ import { __ } from '@wordpress/i18n';
  * Internal dependencies
  */
 import type { InsightsWindow } from '../../../api/audience';
+import type { DateRange } from '../../../state/useDateRange';
+import DateScope from '../../components/DateScope';
 import MetricTable from '../../components/MetricTable';
 
 export interface SectionProps {
 	current: InsightsWindow;
 	previous: InsightsWindow | null;
+	range: DateRange;
 }
 
-const ContentPerformanceSection = ( { current }: SectionProps ) => (
+const ContentPerformanceSection = ( { current, range }: SectionProps ) => (
 	<section className="newspack-insights__section" aria-labelledby="newspack-insights-audience-content">
 		<h2 id="newspack-insights-audience-content" className="newspack-insights__section-heading">
 			{ __( 'Content performance', 'newspack-plugin' ) }
 		</h2>
 		<p className="newspack-insights__section-caption">{ __( "What's getting read.", 'newspack-plugin' ) }</p>
+		<DateScope range={ range } />
 		<div className="newspack-insights__table-grid">
 			<div>
 				<h3 className="newspack-insights__chart-card-title">{ __( 'Top Pages', 'newspack-plugin' ) }</h3>

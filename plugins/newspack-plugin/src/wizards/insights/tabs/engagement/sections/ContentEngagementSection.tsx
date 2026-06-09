@@ -11,21 +11,25 @@ import { __ } from '@wordpress/i18n';
  * Internal dependencies
  */
 import type { InsightsWindow } from '../../../api/audience';
+import type { DateRange } from '../../../state/useDateRange';
+import DateScope from '../../components/DateScope';
 import MetricTable from '../../components/MetricTable';
 
 export interface SectionProps {
 	current: InsightsWindow;
 	previous: InsightsWindow | null;
+	range: DateRange;
 }
 
 const PAGE_COL = { key: 'page_title', label: __( 'Article', 'newspack-plugin' ) };
 
-const ContentEngagementSection = ( { current }: SectionProps ) => (
+const ContentEngagementSection = ( { current, range }: SectionProps ) => (
 	<section className="newspack-insights__section" aria-labelledby="newspack-insights-engagement-content">
 		<h2 id="newspack-insights-engagement-content" className="newspack-insights__section-heading">
 			{ __( 'Content engagement', 'newspack-plugin' ) }
 		</h2>
 		<p className="newspack-insights__section-caption">{ __( 'What holds reader attention.', 'newspack-plugin' ) }</p>
+		<DateScope range={ range } />
 		<div className="newspack-insights__table-grid">
 			<div>
 				<h3 className="newspack-insights__chart-card-title">{ __( 'Most-Read Articles', 'newspack-plugin' ) }</h3>

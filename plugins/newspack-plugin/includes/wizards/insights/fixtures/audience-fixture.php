@@ -78,6 +78,7 @@ $build = function ( float $f ) use ( $scalar, $breakdown, $table, $series, $star
 		'active_readers'                     => $scalar( (int) round( 128430 * $f ), 'count' ),
 		'pageviews'                          => $scalar( (int) round( 612900 * $f ), 'count' ),
 		'avg_sessions_per_reader'            => $scalar( round( 2.19 * $f, 2 ), 'decimal' ),
+		'newsletter_signups'                 => $scalar( (int) round( 1840 * $f ), 'count' ),
 
 		// Time trends.
 		// Two parallel series (new vs returning) on a shared date axis, with

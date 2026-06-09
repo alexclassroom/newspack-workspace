@@ -67,12 +67,12 @@ const AudienceTab = ( { range, previousRange }: AudienceTabProps ) => {
 
 	return (
 		<div className="newspack-insights__audience-tab">
-			<ReachSection current={ current } previous={ previous } />
+			<ReachSection current={ current } previous={ previous } range={ range } />
 			<CompositionSection current={ current } previous={ previous } />
-			<TimeTrendsSection current={ current } previous={ previous } />
-			<TrafficSourcesSection current={ current } previous={ previous } />
-			<GeographicSection current={ current } previous={ previous } />
-			<ContentPerformanceSection current={ current } previous={ previous } />
+			<TimeTrendsSection current={ current } previous={ previous } range={ range } />
+			<TrafficSourcesSection current={ current } previous={ previous } range={ range } />
+			<GeographicSection current={ current } previous={ previous } range={ range } />
+			<ContentPerformanceSection current={ current } previous={ previous } range={ range } />
 		</div>
 	);
 };

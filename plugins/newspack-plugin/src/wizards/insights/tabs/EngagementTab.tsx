@@ -62,9 +62,9 @@ const EngagementTab = ( { range, previousRange }: EngagementTabProps ) => {
 
 	return (
 		<div className="newspack-insights__engagement-tab">
-			<QualitySection current={ current } previous={ previous } />
-			<ContentEngagementSection current={ current } previous={ previous } />
-			<ReaderSegmentsSection current={ current } previous={ previous } />
+			<QualitySection current={ current } previous={ previous } range={ range } />
+			<ContentEngagementSection current={ current } previous={ previous } range={ range } />
+			<ReaderSegmentsSection current={ current } previous={ previous } range={ range } />
 		</div>
 	);
 };
