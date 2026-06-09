@@ -76,16 +76,10 @@ $build = function ( float $f ) use ( $scalar, $breakdown, $table, $series, $star
 
 		// Reach.
 		'active_readers'                     => $scalar( (int) round( 128430 * $f ), 'count' ),
-		'sessions'                           => $scalar( (int) round( 281200 * $f ), 'count' ),
 		'pageviews'                          => $scalar( (int) round( 612900 * $f ), 'count' ),
 		'avg_sessions_per_reader'            => $scalar( round( 2.19 * $f, 2 ), 'decimal' ),
 
 		// Time trends.
-		'active_readers_over_time'           => [
-			'rows'       => $series( 30, (int) round( 4300 * $f ), 0.25 ),
-			'computable' => true,
-			'type'       => 'timeseries',
-		],
 		// Two parallel series (new vs returning) on a shared date axis, with
 		// realistic divergence — returning readers run lower and steadier.
 		'new_vs_returning_over_time'         => [

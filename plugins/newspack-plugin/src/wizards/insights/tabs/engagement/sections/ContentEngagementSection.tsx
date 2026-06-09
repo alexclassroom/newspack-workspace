@@ -25,7 +25,7 @@ const ContentEngagementSection = ( { current }: SectionProps ) => (
 		<h2 id="newspack-insights-engagement-content" className="newspack-insights__section-heading">
 			{ __( 'Content engagement', 'newspack-plugin' ) }
 		</h2>
-		<p className="newspack-insights__section-caption">{ __( 'Which articles and authors hold reader attention.', 'newspack-plugin' ) }</p>
+		<p className="newspack-insights__section-caption">{ __( 'What holds reader attention.', 'newspack-plugin' ) }</p>
 		<div className="newspack-insights__table-grid">
 			<div>
 				<h3 className="newspack-insights__chart-card-title">{ __( 'Most-Read Articles', 'newspack-plugin' ) }</h3>

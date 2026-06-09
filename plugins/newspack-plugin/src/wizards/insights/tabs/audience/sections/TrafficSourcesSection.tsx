@@ -26,9 +26,7 @@ const TrafficSourcesSection = ( { current }: SectionProps ) => (
 		<h2 id="newspack-insights-audience-traffic" className="newspack-insights__section-heading">
 			{ __( 'Traffic sources', 'newspack-plugin' ) }
 		</h2>
-		<p className="newspack-insights__section-caption">
-			{ __( 'Where your readers come from, and which campaigns drive them.', 'newspack-plugin' ) }
-		</p>
+		<p className="newspack-insights__section-caption">{ __( 'Where your readers come from.', 'newspack-plugin' ) }</p>
 		{ /* Channel breakdown (left ~40%) reads as a unit with the campaigns
 		     driving each channel (right ~60%) — NPPD-1649 fix #3. */ }
 		<div className="newspack-insights__traffic-grid">

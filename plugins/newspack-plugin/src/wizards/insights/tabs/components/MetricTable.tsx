@@ -11,7 +11,7 @@
 /**
  * WordPress dependencies
  */
-import { __ } from '@wordpress/i18n';
+import { __, sprintf } from '@wordpress/i18n';
 
 /**
  * Internal dependencies
@@ -33,7 +33,28 @@ export interface MetricTableProps {
 	columns: MetricTableColumn[];
 	emptyMessage: string;
 	rowLimit?: number;
+	/**
+	 * Key of a column to collapse when every displayed row shares the same
+	 * meaningful value (e.g. "country"). The column is hidden and a "Showing
+	 * {value}" caption is shown above the table. Unset / empty / "(not set)"
+	 * values never collapse, so data-quality gaps stay visible.
+	 */
+	collapseColumn?: string;
 }
+
+const UNSET_VALUES = [ '', '(not set)' ];
+
+/** Returns the shared value if `key` is uniform-and-meaningful across rows, else null. */
+const uniformValue = ( rows: MetricRow[], key: string ): string | null => {
+	if ( rows.length === 0 ) {
+		return null;
+	}
+	const first = rows[ 0 ][ key ];
+	if ( first === null || first === undefined || UNSET_VALUES.includes( String( first ) ) ) {
+		return null;
+	}
+	return rows.every( row => row[ key ] === first ) ? String( first ) : null;
+};
 
 const formatCell = ( value: string | number | null, format?: MetricTableColumn[ 'format' ] ): string => {
 	if ( value === null || value === undefined ) {
@@ -56,7 +77,7 @@ const formatCell = ( value: string | number | null, format?: MetricTableColumn[ 
 	return String( value );
 };
 
-const MetricTable = ( { payload, columns, emptyMessage, rowLimit = 10 }: MetricTableProps ) => {
+const MetricTable = ( { payload, columns, emptyMessage, rowLimit = 10, collapseColumn }: MetricTableProps ) => {
 	if ( payload?.overlay ) {
 		return <MetricNote overlay={ payload.overlay } />;
 	}
@@ -73,6 +94,10 @@ const MetricTable = ( { payload, columns, emptyMessage, rowLimit = 10 }: MetricT
 		return <p className="newspack-insights__section-empty">{ emptyMessage }</p>;
 	}
 
+	// Collapse a uniform column (e.g. country) into a caption above the table.
+	const collapsedValue = collapseColumn ? uniformValue( rows, collapseColumn ) : null;
+	const displayColumns = collapsedValue !== null ? columns.filter( col => col.key !== collapseColumn ) : columns;
+
 	const numClass = ( col: MetricTableColumn ) => ( col.align === 'right' ? 'newspack-insights__table-num' : undefined );
 
 	return (
@@ -85,11 +110,20 @@ const MetricTable = ( { payload, columns, emptyMessage, rowLimit = 10 }: MetricT
 					<span>{ __( 'Singular content filter unavailable; showing all URLs.', 'newspack-plugin' ) }</span>
 				</p>
 			) }
+			{ collapsedValue !== null && (
+				<p className="newspack-insights__chart-card-caption">
+					{ sprintf(
+						/* translators: %s: the single value shared by every row (e.g. a country name). */
+						__( 'Showing %s', 'newspack-plugin' ),
+						collapsedValue
+					) }
+				</p>
+			) }
 			<div className="newspack-insights__table-wrap">
 				<table className="newspack-insights__table">
 					<thead>
 						<tr>
-							{ columns.map( col => (
+							{ displayColumns.map( col => (
 								<th key={ col.key } className={ numClass( col ) }>
 									{ col.label }
 								</th>
@@ -99,7 +133,7 @@ const MetricTable = ( { payload, columns, emptyMessage, rowLimit = 10 }: MetricT
 					<tbody>
 						{ rows.map( ( row, i ) => (
 							<tr key={ i }>
-								{ columns.map( col => (
+								{ displayColumns.map( col => (
 									<td key={ col.key } className={ numClass( col ) }>
 										{ formatCell( row[ col.key ] ?? null, col.format ) }
 									</td>

@@ -23,7 +23,7 @@ const ContentPerformanceSection = ( { current }: SectionProps ) => (
 		<h2 id="newspack-insights-audience-content" className="newspack-insights__section-heading">
 			{ __( 'Content performance', 'newspack-plugin' ) }
 		</h2>
-		<p className="newspack-insights__section-caption">{ __( 'Your most-read pages and authors in this timeframe.', 'newspack-plugin' ) }</p>
+		<p className="newspack-insights__section-caption">{ __( "What's getting read.", 'newspack-plugin' ) }</p>
 		<div className="newspack-insights__table-grid">
 			<div>
 				<h3 className="newspack-insights__chart-card-title">{ __( 'Top Pages', 'newspack-plugin' ) }</h3>

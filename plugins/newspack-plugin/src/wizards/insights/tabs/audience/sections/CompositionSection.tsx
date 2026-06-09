@@ -27,17 +27,27 @@ const CompositionSection = ( { current }: SectionProps ) => (
 		<h2 id="newspack-insights-audience-composition" className="newspack-insights__section-heading">
 			{ __( 'Audience composition', 'newspack-plugin' ) }
 		</h2>
-		<p className="newspack-insights__section-caption">
-			{ __( 'Who your readers are — subscribers, logged-in status, and devices.', 'newspack-plugin' ) }
-		</p>
+		<p className="newspack-insights__section-caption">{ __( "Who's reading you.", 'newspack-plugin' ) }</p>
 		<div className="newspack-insights__chart-grid newspack-insights__chart-grid--cols-4">
-			<ChartCard title={ __( 'Newsletter Subscriber Composition', 'newspack-plugin' ) } payload={ current.newsletter_subscriber_composition }>
+			<ChartCard
+				title={ __( 'Newsletter Subscriber Composition', 'newspack-plugin' ) }
+				caption={ __( 'Your newsletter subscribers vs the rest', 'newspack-plugin' ) }
+				payload={ current.newsletter_subscriber_composition }
+			>
 				<PieChart segments={ toSeries( current.newsletter_subscriber_composition, 'label', 'value' ) } />
 			</ChartCard>
-			<ChartCard title={ __( 'Logged-In vs Anonymous', 'newspack-plugin' ) } payload={ current.logged_in_vs_anonymous_composition }>
+			<ChartCard
+				title={ __( 'Logged-In vs Anonymous', 'newspack-plugin' ) }
+				caption={ __( "Who's signed in", 'newspack-plugin' ) }
+				payload={ current.logged_in_vs_anonymous_composition }
+			>
 				<PieChart segments={ toSeries( current.logged_in_vs_anonymous_composition, 'label', 'value' ) } />
 			</ChartCard>
-			<ChartCard title={ __( 'Device Breakdown', 'newspack-plugin' ) } payload={ current.device_breakdown }>
+			<ChartCard
+				title={ __( 'Device Breakdown', 'newspack-plugin' ) }
+				caption={ __( 'What devices your readers use', 'newspack-plugin' ) }
+				payload={ current.device_breakdown }
+			>
 				<PieChart segments={ toSeries( current.device_breakdown, 'device', 'readers' ) } />
 			</ChartCard>
 			<ChartCard

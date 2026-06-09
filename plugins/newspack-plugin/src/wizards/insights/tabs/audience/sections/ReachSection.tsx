@@ -25,31 +25,23 @@ const ReachSection = ( { current, previous }: SectionProps ) => (
 		<h2 id="newspack-insights-audience-reach" className="newspack-insights__section-heading">
 			{ __( 'Reach', 'newspack-plugin' ) }
 		</h2>
-		<p className="newspack-insights__section-caption">
-			{ __( 'How many readers and sessions you reached in this timeframe.', 'newspack-plugin' ) }
-		</p>
-		<div className="newspack-insights__metric-grid newspack-insights__metric-grid--cols-4">
+		<p className="newspack-insights__section-caption">{ __( 'Your reach this period.', 'newspack-plugin' ) }</p>
+		<div className="newspack-insights__metric-grid newspack-insights__metric-grid--cols-3">
 			<Scorecard
 				label={ __( 'Active Readers', 'newspack-plugin' ) }
-				description={ __( 'Distinct readers in this timeframe', 'newspack-plugin' ) }
+				description={ __( 'How many people read you', 'newspack-plugin' ) }
 				current={ current.active_readers }
 				previous={ previous?.active_readers }
 			/>
 			<Scorecard
-				label={ __( 'Sessions', 'newspack-plugin' ) }
-				description={ __( 'Total visits in this timeframe', 'newspack-plugin' ) }
-				current={ current.sessions }
-				previous={ previous?.sessions }
-			/>
-			<Scorecard
 				label={ __( 'Pageviews', 'newspack-plugin' ) }
-				description={ __( 'Total page loads in this timeframe', 'newspack-plugin' ) }
+				description={ __( 'Total page views', 'newspack-plugin' ) }
 				current={ current.pageviews }
 				previous={ previous?.pageviews }
 			/>
 			<Scorecard
 				label={ __( 'Avg Sessions per Reader', 'newspack-plugin' ) }
-				description={ __( 'How often a typical reader comes back', 'newspack-plugin' ) }
+				description={ __( 'How often readers come back', 'newspack-plugin' ) }
 				current={ current.avg_sessions_per_reader }
 				previous={ previous?.avg_sessions_per_reader }
 			/>

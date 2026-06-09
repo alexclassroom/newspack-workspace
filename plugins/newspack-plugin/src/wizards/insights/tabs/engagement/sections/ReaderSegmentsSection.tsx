@@ -27,7 +27,7 @@ const ReaderSegmentsSection = ( { current }: SectionProps ) => (
 		<h2 id="newspack-insights-engagement-segments" className="newspack-insights__section-heading">
 			{ __( 'Reader segments', 'newspack-plugin' ) }
 		</h2>
-		<p className="newspack-insights__section-caption">{ __( 'How engagement differs across devices and reader types.', 'newspack-plugin' ) }</p>
+		<p className="newspack-insights__section-caption">{ __( 'How engagement varies by segment.', 'newspack-plugin' ) }</p>
 		<div className="newspack-insights__table-grid">
 			<div>
 				<h3 className="newspack-insights__chart-card-title">{ __( 'Engagement by Device Type', 'newspack-plugin' ) }</h3>

@@ -32,6 +32,7 @@ const GeographicSection = ( { current }: SectionProps ) => (
 				<MetricTable
 					payload={ current.top_regions }
 					emptyMessage={ __( 'No data in this timeframe.', 'newspack-plugin' ) }
+					collapseColumn="country"
 					columns={ [
 						{ key: 'country', label: __( 'Country', 'newspack-plugin' ) },
 						{ key: 'region', label: __( 'Region', 'newspack-plugin' ) },
@@ -44,6 +45,7 @@ const GeographicSection = ( { current }: SectionProps ) => (
 				<MetricTable
 					payload={ current.top_cities }
 					emptyMessage={ __( 'No data in this timeframe.', 'newspack-plugin' ) }
+					collapseColumn="country"
 					columns={ [
 						{ key: 'country', label: __( 'Country', 'newspack-plugin' ) },
 						{ key: 'region', label: __( 'Region', 'newspack-plugin' ) },

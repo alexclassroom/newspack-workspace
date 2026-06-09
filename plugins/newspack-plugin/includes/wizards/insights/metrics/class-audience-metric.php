@@ -170,11 +170,9 @@ final class Audience_Metric {
 			],
 			// Reach.
 			'active_readers'                     => self::active_readers_via_ga4( $pid, $start_date, $end_date ),
-			'sessions'                           => self::sessions_via_ga4( $pid, $start_date, $end_date ),
 			'pageviews'                          => self::pageviews_via_ga4( $pid, $start_date, $end_date ),
 			'avg_sessions_per_reader'            => self::avg_sessions_per_reader_via_ga4( $pid, $start_date, $end_date ),
 			// Time trends.
-			'active_readers_over_time'           => self::active_readers_over_time_via_ga4( $pid, $start_date, $end_date ),
 			'new_vs_returning_over_time'         => self::new_vs_returning_over_time_via_ga4( $pid, $start_date, $end_date ),
 			'readership_by_day_of_week'          => self::readership_by_day_of_week_via_ga4( $pid, $start_date, $end_date ),
 			'readership_by_hour_of_day'          => self::readership_by_hour_of_day_via_ga4( $pid, $start_date, $end_date ),
@@ -210,10 +208,8 @@ final class Audience_Metric {
 	private static function compute_via_bq( string $start_date, string $end_date ): array {
 		$keys = [
 			'active_readers',
-			'sessions',
 			'pageviews',
 			'avg_sessions_per_reader',
-			'active_readers_over_time',
 			'new_vs_returning_over_time',
 			'readership_by_day_of_week',
 			'readership_by_hour_of_day',
@@ -262,19 +258,6 @@ final class Audience_Metric {
 	}
 
 	/**
-	 * Sessions — sessions.
-	 *
-	 * @param string $pid Property ID.
-	 * @param string $s   Start date.
-	 * @param string $e   End date.
-	 * @return array
-	 */
-	private static function sessions_via_ga4( string $pid, string $s, string $e ): array {
-		$result = self::safe_run_report( $pid, self::body( $s, $e, [], [ 'sessions' ] ) );
-		return self::scalar( $result, 'count' );
-	}
-
-	/**
 	 * Pageviews — screenPageViews (conventional Data API metric).
 	 *
 	 * @param string $pid Property ID.
@@ -310,21 +293,6 @@ final class Audience_Metric {
 			'numerator'   => $sessions,
 			'denominator' => $users,
 		];
-	}
-
-	/**
-	 * Active Readers Over Time — date / totalUsers.
-	 *
-	 * @param string $pid Property ID.
-	 * @param string $s   Start date.
-	 * @param string $e   End date.
-	 * @return array
-	 */
-	private static function active_readers_over_time_via_ga4( string $pid, string $s, string $e ): array {
-		$body                = self::body( $s, $e, [ 'date' ], [ 'totalUsers' ] );
-		$body['orderBys']    = [ [ 'dimension' => [ 'dimensionName' => 'date' ] ] ];
-		$result              = self::safe_run_report( $pid, $body );
-		return self::rows( $result, [ 'date' ], [ 'active_readers' ], 'timeseries' );
 	}
 
 	/**
