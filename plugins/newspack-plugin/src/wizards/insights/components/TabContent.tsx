@@ -122,7 +122,10 @@ const TabContent = ( { activeTab, range, previousRange }: TabContentProps ) => {
 			id={ `newspack-insights-panel-${ activeTab }` }
 			aria-labelledby={ `newspack-insights-tab-${ activeTab }` }
 		>
-			<TabErrorBoundary>
+			{ /* Keyed by activeTab so switching tabs remounts the boundary and
+			     clears any error from a failed chunk load — otherwise the error
+			     UI would persist across tabs and lock the content area. */ }
+			<TabErrorBoundary key={ activeTab }>
 				<Suspense fallback={ <Fallback /> }>{ renderTab() }</Suspense>
 			</TabErrorBoundary>
 		</div>

@@ -4,11 +4,18 @@
  * Per spec at ~/Sites/insights-docs/component-design-spec.md. Owns
  * page-level layout (header, tab nav, tab content area) plus styles for
  * the chrome-only components (DateRangePicker, ComparisonToggle,
- * LastUpdated, tab stub). Per-component metric viz styles live in
+ * LastUpdated, tab stub).
+ *
+ * Also forwards the shared cross-tab chrome — sections, metric cards,
+ * tables, tab loading/error — from `tabs/components/sections.scss` so
+ * every tab inherits them without having to import on its own.
+ *
+ * Per-component metric viz styles live in
  * packages/components/src/<component>/ and don't belong here.
  */
 
 @use "~@wordpress/base-styles/colors" as wp-colors;
+@use "tabs/components/sections";
 
 .newspack-insights {
 	max-width: 1200px;
