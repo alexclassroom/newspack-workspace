@@ -359,14 +359,20 @@ final class GA4_Custom_Dimensions {
 	 * so callers can authoritatively check whether an arbitrary `customEvent:`
 	 * dimension (e.g. `post_id`) is available before querying the Data API.
 	 *
-	 * Reuses the same Newspack-OAuth-then-Site-Kit auth fallback and property
-	 * resolution as the rest of this class.
+	 * Reuses the same Newspack-OAuth-then-Site-Kit auth fallback as the rest of
+	 * this class.
+	 *
+	 * @param string|null $property_id GA4 property ID to list dimensions for. When
+	 *                                 null (default), resolves Site Kit's configured
+	 *                                 property. Pass an explicit ID so the Admin API
+	 *                                 lookup matches the Data API property being
+	 *                                 queried (the lists can differ per property).
 	 *
 	 * @return string[]|\WP_Error Registered event-scoped parameter names, or
 	 *                            WP_Error if the property or Admin API can't be reached.
 	 */
-	public static function get_registered_parameter_names() {
-		$property_id = self::get_property_id();
+	public static function get_registered_parameter_names( ?string $property_id = null ) {
+		$property_id = $property_id ?? self::get_property_id();
 		if ( ! $property_id ) {
 			return new \WP_Error( 'newspack_ga4_dimensions', 'No GA4 property ID configured in Site Kit.' );
 		}

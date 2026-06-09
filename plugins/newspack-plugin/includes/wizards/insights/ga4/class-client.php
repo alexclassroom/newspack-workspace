@@ -172,7 +172,9 @@ final class Client {
 	 */
 	private static function get_registered_parameter_names_cached( string $property_id ) {
 		if ( ! array_key_exists( $property_id, self::$registered_dimensions_cache ) ) {
-			self::$registered_dimensions_cache[ $property_id ] = GA4_Custom_Dimensions::get_registered_parameter_names();
+			// Pass the queried property through so the Admin API lookup matches the
+			// Data API property — not whatever Site Kit happens to have configured.
+			self::$registered_dimensions_cache[ $property_id ] = GA4_Custom_Dimensions::get_registered_parameter_names( $property_id );
 		}
 		return self::$registered_dimensions_cache[ $property_id ];
 	}
