@@ -38,28 +38,31 @@ const PieChart = ( { segments }: PieChartProps ) => {
 	let offset = 0;
 	return (
 		<div className="newspack-insights__pie">
-			<svg viewBox="0 0 42 42" className="newspack-insights__pie-svg" role="img" aria-label={ __( 'Breakdown chart', 'newspack-plugin' ) }>
-				<circle className="newspack-insights__pie-track" cx="21" cy="21" r={ RADIUS } />
-				{ segments.map( ( segment, i ) => {
-					const fraction = segment.value / total;
-					const dash = fraction * CIRCUMFERENCE;
-					// No hover tooltip on pie segments — the legend already shows
-					// label + value + percent (NPPD-1649 fix #6).
-					const circle = (
-						<circle
-							key={ segment.label }
-							className={ `newspack-insights__pie-segment is-series-${ i % 7 }` }
-							cx="21"
-							cy="21"
-							r={ RADIUS }
-							strokeDasharray={ `${ dash } ${ CIRCUMFERENCE - dash }` }
-							strokeDashoffset={ CIRCUMFERENCE / 4 - offset }
-						/>
-					);
-					offset += dash;
-					return circle;
-				} ) }
-			</svg>
+			{ /* Pie centered in the middle slot; legend anchored to the bottom (NPPD-1649 alignment). */ }
+			<div className="newspack-insights__pie-figure">
+				<svg viewBox="0 0 42 42" className="newspack-insights__pie-svg" role="img" aria-label={ __( 'Breakdown chart', 'newspack-plugin' ) }>
+					<circle className="newspack-insights__pie-track" cx="21" cy="21" r={ RADIUS } />
+					{ segments.map( ( segment, i ) => {
+						const fraction = segment.value / total;
+						const dash = fraction * CIRCUMFERENCE;
+						// No hover tooltip on pie segments — the legend already shows
+						// label + value + percent (NPPD-1649 fix #6).
+						const circle = (
+							<circle
+								key={ segment.label }
+								className={ `newspack-insights__pie-segment is-series-${ i % 7 }` }
+								cx="21"
+								cy="21"
+								r={ RADIUS }
+								strokeDasharray={ `${ dash } ${ CIRCUMFERENCE - dash }` }
+								strokeDashoffset={ CIRCUMFERENCE / 4 - offset }
+							/>
+						);
+						offset += dash;
+						return circle;
+					} ) }
+				</svg>
+			</div>
 			<ul className="newspack-insights__pie-legend">
 				{ segments.map( ( segment, i ) => (
 					<li key={ segment.label }>

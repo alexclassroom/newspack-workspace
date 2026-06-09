@@ -35,6 +35,9 @@
 	}
 
 	&__chart-card {
+		display: flex;
+		flex-direction: column;
+		height: 100%; // stretch to the row's tallest card so pies can center
 		border: 1px solid wp-colors.$gray-200;
 		border-radius: 4px;
 		padding: 16px;
@@ -43,8 +46,11 @@
 		&-title {
 			font-size: 14px;
 			font-weight: 600;
+			line-height: 1.3;
 			margin: 0 0 4px;
 			color: wp-colors.$gray-900;
+			// Reserve two lines so single- and two-line titles align across a row.
+			min-height: calc( 14px * 1.3 * 2 );
 		}
 
 		&-caption {
@@ -91,22 +97,33 @@
 		text-align: center;
 	}
 
-	// Pie / donut. Contained pie + legend — never full-row sprawl (NPPD-1649
-	// fix #3): the unit caps its width and left-aligns inside whatever card or
-	// grid column holds it.
+	// Pie / donut — three-slot stack inside the card (NPPD-1649 alignment):
+	// title is the card's top slot; the figure fills the middle and centers the
+	// pie; the legend anchors to the bottom. Fills the card height so pies in a
+	// row line up vertically regardless of title/description length.
 	&__pie {
 		display: flex;
-		flex-wrap: wrap;
+		flex: 1;
+		flex-direction: column;
+		min-height: 0;
+	}
+
+	// Middle slot: pie centered both axes in the remaining space.
+	&__pie-figure {
+		flex: 1;
+		display: flex;
 		align-items: center;
-		gap: 16px;
-		max-width: 420px;
+		justify-content: center;
+		min-height: 0;
+		padding: 12px 0;
 	}
 
 	&__pie-svg {
-		width: 120px;
-		height: 120px;
+		width: 100%;
+		max-width: 150px;
+		height: auto;
+		aspect-ratio: 1 / 1;
 		transform: rotate( -90deg );
-		flex-shrink: 0;
 	}
 
 	&__pie-track {
@@ -126,12 +143,12 @@
 		}
 	}
 
+	// Bottom slot: legend anchored to the card bottom, left-aligned, full width.
 	&__pie-legend {
 		list-style: none;
-		margin: 0;
+		margin: auto 0 0;
 		padding: 0;
-		flex: 1;
-		min-width: 160px;
+		width: 100%;
 
 		li {
 			display: flex;
@@ -139,6 +156,10 @@
 			gap: 8px;
 			font-size: 12px;
 			margin-bottom: 6px;
+		}
+
+		li:last-child {
+			margin-bottom: 0;
 		}
 	}
 
@@ -441,9 +462,10 @@
 // campaigns table (~60%) — NPPD-1649 fix #3.
 .newspack-insights__traffic-grid {
 	display: grid;
-	grid-template-columns: minmax( 0, 2fr ) minmax( 0, 3fr );
+	// Pie card ~35% (stacked, narrower-and-taller), campaigns table ~65%.
+	grid-template-columns: minmax( 0, 35fr ) minmax( 0, 65fr );
 	gap: 24px;
-	align-items: start;
+	align-items: stretch;
 
 	@media ( max-width: 782px ) {
 		grid-template-columns: 1fr;

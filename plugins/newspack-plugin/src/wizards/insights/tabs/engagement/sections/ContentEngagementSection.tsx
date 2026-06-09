@@ -41,9 +41,6 @@ const ContentEngagementSection = ( { current }: SectionProps ) => (
 			</div>
 			<div>
 				<h3 className="newspack-insights__chart-card-title">{ __( 'Articles by Completion Rate', 'newspack-plugin' ) }</h3>
-				<p className="newspack-insights__chart-card-caption">
-					{ __( '% of reads that reached the end of each article.', 'newspack-plugin' ) }
-				</p>
 				<MetricTable
 					payload={ current.articles_by_completion_rate }
 					emptyMessage={ __( 'No scroll-completion data in this timeframe.', 'newspack-plugin' ) }
