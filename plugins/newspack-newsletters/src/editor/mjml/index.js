@@ -122,11 +122,27 @@ function MJML() {
 				throw new Error( `${ errorMessage }${ refreshedHtml.error?.message ? `: ${ refreshedHtml.error?.message }` : '.' }` );
 			}
 
-			await apiFetch( {
+			// Save the refreshed HTML to post meta. Persisted out-of-band (not via
+			// savePost) to avoid re-triggering this post-save refresh.
+			const updatedRecord = await apiFetch( {
 				data: { meta: { [ newspack_email_editor_data.email_html_meta ]: refreshedHtml.html } },
 				method: 'POST',
 				path: `/wp/v2/${ postType }/${ postId }`,
 			} );
+
+			// Reconcile the editor's persisted baseline with the saved record so the
+			// updateMetaValue() above isn't left as a phantom "unsaved" edit. The
+			// rendered HTML embeds a server timestamp, so it never matches the prior
+			// baseline and would otherwise keep the post permanently dirty after every
+			// save (false "unsaved changes" prompt). See NPPM-2722.
+			//
+			// invalidateCache is false: this only refreshes the persisted baseline (so
+			// the email-HTML edit becomes transient), without discarding any unrelated
+			// edits the user may have made during the refresh — the editor stays the
+			// source of truth for those.
+			if ( updatedRecord ) {
+				receiveEntityRecords( 'postType', postType, [ updatedRecord ], undefined, false );
+			}
 
 			// Layouts have no ESP campaign — these would 404 noisily.
 			if ( isSupportedESP && ! isLayoutEditor() ) {
