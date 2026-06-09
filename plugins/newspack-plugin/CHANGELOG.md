@@ -1,3 +1,10 @@
+## newspack [6.42.6](https://github.com/Automattic/newspack-workspace/compare/newspack@6.42.5...newspack@6.42.6) (2026-06-09)
+
+
+### Bug Fixes
+
+* **access-control:** make email domain matching case-insensitive ([#255](https://github.com/Automattic/newspack-workspace/issues/255)) ([c410158](https://github.com/Automattic/newspack-workspace/commit/c4101587227801514f4e078652876677e5bde7b8))
+
 ## newspack [6.42.5](https://github.com/Automattic/newspack-workspace/compare/newspack@6.42.4...newspack@6.42.5) (2026-06-09)
 
 
