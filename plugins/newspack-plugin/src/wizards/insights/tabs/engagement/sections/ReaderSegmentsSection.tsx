@@ -15,16 +15,13 @@ import { __, sprintf } from '@wordpress/i18n';
  * Internal dependencies
  */
 import type { InsightsWindow } from '../../../api/audience';
-import type { DateRange } from '../../../state/useDateRange';
 import type { MetricPayload, MetricRow } from '../../components/metrics';
 import { formatDecimal, formatDuration } from '../../components/format';
-import DateScope from '../../components/DateScope';
 import TakeawayCard from '../viz/TakeawayCard';
 
 export interface SectionProps {
 	current: InsightsWindow;
 	previous: InsightsWindow | null;
-	range: DateRange;
 }
 
 const rowsOf = ( payload?: MetricPayload ): MetricRow[] => ( Array.isArray( payload?.rows ) ? ( payload as MetricPayload ).rows ?? [] : [] );
@@ -154,7 +151,7 @@ const newsletterTakeaway = ( payload?: MetricPayload ): Takeaway => {
 	};
 };
 
-const ReaderSegmentsSection = ( { current, range }: SectionProps ) => {
+const ReaderSegmentsSection = ( { current }: SectionProps ) => {
 	const device = deviceTakeaway( current.engagement_by_device_type );
 	const returning = returningTakeaway( current.engagement_by_returning_vs_new );
 	const newsletter = newsletterTakeaway( current.engagement_by_newsletter_status );
@@ -165,7 +162,6 @@ const ReaderSegmentsSection = ( { current, range }: SectionProps ) => {
 				{ __( 'Reader segments', 'newspack-plugin' ) }
 			</h2>
 			<p className="newspack-insights__section-caption">{ __( 'How engagement varies by segment.', 'newspack-plugin' ) }</p>
-			<DateScope range={ range } />
 			<div className="newspack-insights__chart-grid newspack-insights__chart-grid--cols-3">
 				<TakeawayCard payload={ current.engagement_by_device_type } headline={ device.headline } sub={ device.sub } bars={ device.bars } />
 				<TakeawayCard

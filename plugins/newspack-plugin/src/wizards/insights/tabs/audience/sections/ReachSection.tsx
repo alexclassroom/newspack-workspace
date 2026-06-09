@@ -13,23 +13,19 @@ import { __ } from '@wordpress/i18n';
  * Internal dependencies
  */
 import type { InsightsWindow } from '../../../api/audience';
-import type { DateRange } from '../../../state/useDateRange';
 import Scorecard from '../../components/Scorecard';
-import DateScope from '../../components/DateScope';
 
 export interface SectionProps {
 	current: InsightsWindow;
 	previous: InsightsWindow | null;
-	range: DateRange;
 }
 
-const ReachSection = ( { current, previous, range }: SectionProps ) => (
+const ReachSection = ( { current, previous }: SectionProps ) => (
 	<section className="newspack-insights__section" aria-labelledby="newspack-insights-audience-reach">
 		<h2 id="newspack-insights-audience-reach" className="newspack-insights__section-heading">
 			{ __( 'Reach', 'newspack-plugin' ) }
 		</h2>
 		<p className="newspack-insights__section-caption">{ __( 'Your reach this period.', 'newspack-plugin' ) }</p>
-		<DateScope range={ range } />
 		<div className="newspack-insights__metric-grid newspack-insights__metric-grid--cols-4">
 			<Scorecard
 				label={ __( 'Active Readers', 'newspack-plugin' ) }

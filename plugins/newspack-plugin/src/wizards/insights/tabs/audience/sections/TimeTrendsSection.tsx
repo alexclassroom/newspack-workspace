@@ -13,9 +13,7 @@ import { __ } from '@wordpress/i18n';
  * Internal dependencies
  */
 import type { InsightsWindow } from '../../../api/audience';
-import type { DateRange } from '../../../state/useDateRange';
 import ChartCard from '../../components/ChartCard';
-import DateScope from '../../components/DateScope';
 import { toSeries } from '../../components/metrics';
 import { formatShortDate } from '../../components/format';
 import LineChart from '../viz/LineChart';
@@ -24,10 +22,9 @@ import BarChart from '../viz/BarChart';
 export interface SectionProps {
 	current: InsightsWindow;
 	previous: InsightsWindow | null;
-	range: DateRange;
 }
 
-const TimeTrendsSection = ( { current, range }: SectionProps ) => (
+const TimeTrendsSection = ( { current }: SectionProps ) => (
 	<section className="newspack-insights__section" aria-labelledby="newspack-insights-audience-trends">
 		<h2 id="newspack-insights-audience-trends" className="newspack-insights__section-heading">
 			{ __( 'Time trends', 'newspack-plugin' ) }
@@ -35,7 +32,6 @@ const TimeTrendsSection = ( { current, range }: SectionProps ) => (
 		<p className="newspack-insights__section-caption">
 			{ __( 'When your readers show up across the period, by day of week, and by hour of day.', 'newspack-plugin' ) }
 		</p>
-		<DateScope range={ range } />
 		{ /* New vs Returning takes the full width; the two day/hour bar charts share the row below. */ }
 		<ChartCard
 			subhead={ __( 'Day to day', 'newspack-plugin' ) }

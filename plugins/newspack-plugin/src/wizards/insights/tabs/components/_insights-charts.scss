@@ -91,14 +91,6 @@
 		color: wp-colors.$gray-600;
 	}
 
-	// Date-range scope caption under a windowed section's description. Pulled up
-	// tight against the description (the section's 16px flex gap is too much).
-	&__date-scope {
-		margin: -12px 0 0;
-		font-size: 12px;
-		color: wp-colors.$gray-600;
-	}
-
 	// Engagement Reader Segments takeaway cards — scorecard chrome (border, top
 	// accent, padding) with a headline / sub / bottom-pinned mini-bar layout.
 	&__takeaway-card {
@@ -209,21 +201,19 @@
 		transform: rotate( -90deg );
 	}
 
+	// Donut band thickness. The chart is a stroked circle (r=16 in a 42 viewBox),
+	// so stroke-width *is* the ring thickness; 8 makes the band ~2x thicker with
+	// a smaller hole than the original 4 (NPPD-1649 — "more color, less air").
 	&__pie-track {
 		fill: none;
 		stroke: wp-colors.$gray-100;
-		stroke-width: 4;
+		stroke-width: 8;
 	}
 
 	&__pie-segment {
 		fill: none;
 		stroke: var( --series-color );
-		stroke-width: 4;
-		transition: stroke-width 0.1s ease;
-
-		&:hover {
-			stroke-width: 6;
-		}
+		stroke-width: 8;
 	}
 
 	// Bottom slot: legend anchored to the card bottom, left-aligned, full width.

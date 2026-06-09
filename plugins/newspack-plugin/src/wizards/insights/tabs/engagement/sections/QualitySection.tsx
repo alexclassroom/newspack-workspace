@@ -11,23 +11,19 @@ import { __ } from '@wordpress/i18n';
  * Internal dependencies
  */
 import type { InsightsWindow } from '../../../api/audience';
-import type { DateRange } from '../../../state/useDateRange';
 import Scorecard from '../../components/Scorecard';
-import DateScope from '../../components/DateScope';
 
 export interface SectionProps {
 	current: InsightsWindow;
 	previous: InsightsWindow | null;
-	range: DateRange;
 }
 
-const QualitySection = ( { current, previous, range }: SectionProps ) => (
+const QualitySection = ( { current, previous }: SectionProps ) => (
 	<section className="newspack-insights__section" aria-labelledby="newspack-insights-engagement-quality">
 		<h2 id="newspack-insights-engagement-quality" className="newspack-insights__section-heading">
 			{ __( 'Overall engagement quality', 'newspack-plugin' ) }
 		</h2>
 		<p className="newspack-insights__section-caption">{ __( 'How deeply readers engage.', 'newspack-plugin' ) }</p>
-		<DateScope range={ range } />
 		<div className="newspack-insights__metric-grid">
 			<Scorecard
 				label={ __( 'Avg Pages per Session', 'newspack-plugin' ) }

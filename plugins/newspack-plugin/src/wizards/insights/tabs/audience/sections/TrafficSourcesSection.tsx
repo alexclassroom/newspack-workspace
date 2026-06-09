@@ -11,9 +11,7 @@ import { __ } from '@wordpress/i18n';
  * Internal dependencies
  */
 import type { InsightsWindow } from '../../../api/audience';
-import type { DateRange } from '../../../state/useDateRange';
 import ChartCard from '../../components/ChartCard';
-import DateScope from '../../components/DateScope';
 import MetricTable from '../../components/MetricTable';
 import { toSeries } from '../../components/metrics';
 import PieChart from '../viz/PieChart';
@@ -21,16 +19,14 @@ import PieChart from '../viz/PieChart';
 export interface SectionProps {
 	current: InsightsWindow;
 	previous: InsightsWindow | null;
-	range: DateRange;
 }
 
-const TrafficSourcesSection = ( { current, range }: SectionProps ) => (
+const TrafficSourcesSection = ( { current }: SectionProps ) => (
 	<section className="newspack-insights__section" aria-labelledby="newspack-insights-audience-traffic">
 		<h2 id="newspack-insights-audience-traffic" className="newspack-insights__section-heading">
 			{ __( 'Traffic sources', 'newspack-plugin' ) }
 		</h2>
 		<p className="newspack-insights__section-caption">{ __( 'Where your readers come from.', 'newspack-plugin' ) }</p>
-		<DateScope range={ range } />
 		{ /* Channel breakdown (left ~40%) reads as a unit with the campaigns
 		     driving each channel (right ~60%) — NPPD-1649 fix #3. */ }
 		<div className="newspack-insights__traffic-grid">
