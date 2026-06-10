@@ -1,3 +1,10 @@
+## [2.22.3](https://github.com/Automattic/newspack-theme/compare/v2.22.2...v2.22.3) (2026-06-10)
+
+
+### Bug Fixes
+
+* allow wide/full alignment inside content wrappers ([46a9275](https://github.com/Automattic/newspack-theme/commit/46a92756000691148314a1153cc1999b2aadeb6f))
+
 ## [2.22.3-hotfix-wide-width-everlit-wrapper.1](https://github.com/Automattic/newspack-theme/compare/v2.22.2...v2.22.3-hotfix-wide-width-everlit-wrapper.1) (2026-06-10)
 
 
