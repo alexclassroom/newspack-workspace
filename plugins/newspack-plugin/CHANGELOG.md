@@ -1,3 +1,10 @@
+## newspack [6.43.3](https://github.com/Automattic/newspack-workspace/compare/newspack@6.43.2...newspack@6.43.3) (2026-06-19)
+
+
+### Bug Fixes
+
+* **woocommerce:** scope payment notice to recoverable statuses ([#301](https://github.com/Automattic/newspack-workspace/issues/301)) ([1f55c11](https://github.com/Automattic/newspack-workspace/commit/1f55c117bff9626fe5bb8ab53e2937cec2f40083))
+
 ## newspack [6.43.2](https://github.com/Automattic/newspack-workspace/compare/newspack@6.43.1...newspack@6.43.2) (2026-06-19)
 
 
