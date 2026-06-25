@@ -11,6 +11,8 @@ namespace Newspack\Tests\Data_Events\Connectors;
 use Newspack\Data_Events\Connectors\Contact_Sync_Connector;
 
 /**
+ * Test the Contact_Sync_Connector class.
+ *
  * @group data-events-connectors
  */
 class Newspack_Test_Contact_Sync_Connector extends \WP_UnitTestCase {
