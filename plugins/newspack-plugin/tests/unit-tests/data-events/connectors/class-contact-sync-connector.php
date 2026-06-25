@@ -39,7 +39,8 @@ class Newspack_Test_Contact_Sync_Connector extends \WP_UnitTestCase {
 	 * `$contact` array that has no `metadata` key (which is allowed by the
 	 * contact contract — see Newspack_Newsletters_Contacts::subscribe()),
 	 * the handler must not throw `array_merge(): Argument #1 must be of type
-	 * array, null given` under PHP 8+. See class-contact-sync-connector.php:292.
+	 * array, null given` under PHP 8+. This guards the metadata merge in
+	 * Contact_Sync_Connector::newsletter_updated().
 	 */
 	public function test_newsletter_updated_tolerates_missing_metadata() {
 		$data = [
