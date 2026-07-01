@@ -1,3 +1,10 @@
+## newspack [6.44.3](https://github.com/Automattic/newspack-workspace/compare/newspack@6.44.2...newspack@6.44.3) (2026-07-01)
+
+
+### Bug Fixes
+
+* **oauth:** verify Google token audience on sign-in ([9aa30b9](https://github.com/Automattic/newspack-workspace/commit/9aa30b98495db08d968b2dc2ae0e4bb96fb28aef))
+
 ## newspack [6.44.2](https://github.com/Automattic/newspack-workspace/compare/newspack@6.44.1...newspack@6.44.2) (2026-06-30)
 
 
