@@ -1,3 +1,10 @@
+## newspack [6.44.6](https://github.com/Automattic/newspack-workspace/compare/newspack@6.44.5...newspack@6.44.6) (2026-07-02)
+
+
+### Bug Fixes
+
+* **salesforce:** verify WooCommerce webhook signature ([80ab615](https://github.com/Automattic/newspack-workspace/commit/80ab615129ab7004fe4811dfe3ea8fc5c106b107))
+
 ## newspack [6.44.5](https://github.com/Automattic/newspack-workspace/compare/newspack@6.44.4...newspack@6.44.5) (2026-07-02)
 
 
