@@ -1,3 +1,10 @@
+## newspack [6.44.5](https://github.com/Automattic/newspack-workspace/compare/newspack@6.44.4...newspack@6.44.5) (2026-07-02)
+
+
+### Bug Fixes
+
+* **group-subscription:** validate invite before creating an account ([ee44068](https://github.com/Automattic/newspack-workspace/commit/ee440684908c11eb7b174b4ee40031ca9140312d))
+
 ## newspack [6.44.4](https://github.com/Automattic/newspack-workspace/compare/newspack@6.44.3...newspack@6.44.4) (2026-07-02)
 
 
