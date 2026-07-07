@@ -1,3 +1,10 @@
+## newspack [6.44.9](https://github.com/Automattic/newspack-workspace/compare/newspack@6.44.8...newspack@6.44.9) (2026-07-06)
+
+
+### Bug Fixes
+
+* **reader-activation:** load RAS scripts after commons (NPPM-2951) ([#414](https://github.com/Automattic/newspack-workspace/issues/414)) ([d2dab16](https://github.com/Automattic/newspack-workspace/commit/d2dab162e8ff59c99b3b676ee13ca20bb3a79d96))
+
 ## newspack [6.44.8](https://github.com/Automattic/newspack-workspace/compare/newspack@6.44.7...newspack@6.44.8) (2026-07-06)
 
 
