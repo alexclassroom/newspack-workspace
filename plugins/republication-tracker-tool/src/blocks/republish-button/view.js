@@ -14,16 +14,12 @@ let currentTrigger = null;
  * @return {HTMLElement|null} The active textarea element.
  */
 function getActiveTextarea() {
-	const activeTextarea = document.querySelector(
-		'.republish-content.republish-content--active textarea'
-	);
+	const activeTextarea = document.querySelector( '.republish-content.republish-content--active textarea' );
 	if ( activeTextarea ) {
 		return activeTextarea;
 	}
 	// Fallback to the original textarea if no tabs are present.
-	return document.querySelector(
-		'#republication-tracker-tool-shareable-content'
-	);
+	return document.querySelector( '#republication-tracker-tool-shareable-content' );
 }
 
 /**
@@ -32,31 +28,21 @@ function getActiveTextarea() {
  * @param {HTMLElement} modal The modal element.
  */
 function initTabSwitching( modal ) {
-	const tabButtons = modal.querySelectorAll(
-		'.republish-format-tabs__button'
-	);
+	const tabButtons = modal.querySelectorAll( '.republish-format-tabs__button' );
 	const tabContents = modal.querySelectorAll( '.republish-content' );
-	const mainCopyButton = modal.querySelector(
-		'.republication-tracker-tool__copy-button--main'
-	);
+	const mainCopyButton = modal.querySelector( '.republication-tracker-tool__copy-button--main' );
 
-	tabButtons.forEach( ( button ) => {
-		button.addEventListener( 'click', ( e ) => {
+	tabButtons.forEach( button => {
+		button.addEventListener( 'click', e => {
 			e.preventDefault();
 			const targetTab = button.getAttribute( 'data-tab' );
 
 			// Update active states.
-			tabButtons.forEach( ( btn ) =>
-				btn.classList.remove( 'republish-format-tabs__button--active' )
-			);
-			tabContents.forEach( ( content ) =>
-				content.classList.remove( 'republish-content--active' )
-			);
+			tabButtons.forEach( btn => btn.classList.remove( 'republish-format-tabs__button--active' ) );
+			tabContents.forEach( content => content.classList.remove( 'republish-content--active' ) );
 
 			button.classList.add( 'republish-format-tabs__button--active' );
-			const targetContent = modal.querySelector(
-				`[data-tab-content="${ targetTab }"]`
-			);
+			const targetContent = modal.querySelector( `[data-tab-content="${ targetTab }"]` );
 			if ( targetContent ) {
 				targetContent.classList.add( 'republish-content--active' );
 			}
@@ -73,8 +59,8 @@ function initTabSwitching( modal ) {
 	} );
 
 	// Initialize copy buttons for individual plain text fields.
-	modal.querySelectorAll( '.plain-text-field__button' ).forEach( ( btn ) => {
-		btn.addEventListener( 'click', ( e ) => {
+	modal.querySelectorAll( '.plain-text-field__button' ).forEach( btn => {
+		btn.addEventListener( 'click', e => {
 			e.preventDefault();
 			const target = btn.getAttribute( 'data-target' );
 			if ( window.ClipboardUtils && target ) {
@@ -86,13 +72,10 @@ function initTabSwitching( modal ) {
 	// Bind main copy button via data attribute.
 	const copyActiveBtn = modal.querySelector( '[data-copy-active]' );
 	if ( copyActiveBtn ) {
-		copyActiveBtn.addEventListener( 'click', ( e ) => {
+		copyActiveBtn.addEventListener( 'click', e => {
 			e.preventDefault();
 			if ( window.ClipboardUtils ) {
-				ClipboardUtils.copyFromElement(
-					getActiveTextarea(),
-					copyActiveBtn
-				);
+				ClipboardUtils.copyFromElement( getActiveTextarea(), copyActiveBtn );
 			}
 		} );
 	}
@@ -104,16 +87,14 @@ function initTabSwitching( modal ) {
  * @param {HTMLElement} modal The modal element.
  */
 function stripCaptions( modal ) {
-	const shareable = modal.querySelector(
-		'#republication-tracker-tool-shareable-content'
-	);
+	const shareable = modal.querySelector( '#republication-tracker-tool-shareable-content' );
 	if ( ! shareable ) {
 		return;
 	}
 	const html = shareable.textContent;
 	const parser = new DOMParser();
 	const doc = parser.parseFromString( html, 'text/html' );
-	doc.querySelectorAll( '.wp-caption' ).forEach( ( el ) => el.remove() );
+	doc.querySelectorAll( '.wp-caption' ).forEach( el => el.remove() );
 	shareable.innerHTML = doc.body.innerHTML;
 }
 
@@ -126,16 +107,14 @@ function trapFocus( modal ) {
 	const focusableSelector =
 		'a[href]:not([disabled]), button:not([disabled]), textarea:not([disabled]), input[type="text"]:not([disabled]), select:not([disabled])';
 
-	modal.addEventListener( 'keydown', ( e ) => {
+	modal.addEventListener( 'keydown', e => {
 		if ( e.key !== 'Tab' ) {
 			return;
 		}
 		// Recompute visible focusable elements on each Tab so tab switching
 		// (which hides controls like the main copy button) doesn't leave
 		// stale references that let focus escape the modal.
-		const focusableEls = Array.from(
-			modal.querySelectorAll( focusableSelector )
-		).filter( ( el ) => el.offsetParent !== null );
+		const focusableEls = Array.from( modal.querySelectorAll( focusableSelector ) ).filter( el => el.offsetParent !== null );
 		if ( ! focusableEls.length ) {
 			return;
 		}
@@ -179,9 +158,7 @@ function initModal( modal ) {
 	}
 	initialized = true;
 
-	const modalContent = modal.querySelector(
-		'#republication-tracker-tool-modal-content'
-	);
+	const modalContent = modal.querySelector( '#republication-tracker-tool-modal-content' );
 	const closeBtn = modal.querySelector( '.republication-tracker-tool-close' );
 
 	// Move modal to body once.
@@ -200,7 +177,7 @@ function initModal( modal ) {
 
 	// Prevent clicks inside modal content from closing modal.
 	if ( modalContent ) {
-		modalContent.addEventListener( 'click', ( e ) => e.stopPropagation() );
+		modalContent.addEventListener( 'click', e => e.stopPropagation() );
 	}
 
 	// Click outside modal content closes modal.
@@ -208,14 +185,14 @@ function initModal( modal ) {
 
 	// Close button.
 	if ( closeBtn ) {
-		closeBtn.addEventListener( 'click', ( e ) => {
+		closeBtn.addEventListener( 'click', e => {
 			e.stopPropagation();
 			closeModal( modal );
 		} );
 	}
 
 	// Escape key.
-	document.addEventListener( 'keydown', ( e ) => {
+	document.addEventListener( 'keydown', e => {
 		if ( e.key === 'Escape' && modal.style.display !== 'none' ) {
 			closeModal( modal );
 		}
@@ -232,9 +209,7 @@ function showModal( modal, triggerButton ) {
 	initModal( modal );
 	currentTrigger = triggerButton;
 
-	const modalContent = modal.querySelector(
-		'#republication-tracker-tool-modal-content'
-	);
+	const modalContent = modal.querySelector( '#republication-tracker-tool-modal-content' );
 
 	modal.style.display = '';
 	if ( modalContent ) {
@@ -256,20 +231,16 @@ domReady( () => {
 	}
 
 	// Find all block trigger buttons.
-	document
-		.querySelectorAll( '[data-modal-trigger="republish"]' )
-		.forEach( ( button ) => {
-			button.addEventListener( 'click', ( e ) => {
-				e.preventDefault();
-				showModal( modal, button );
-			} );
+	document.querySelectorAll( '[data-modal-trigger="republish"]' ).forEach( button => {
+		button.addEventListener( 'click', e => {
+			e.preventDefault();
+			showModal( modal, button );
 		} );
+	} );
 
 	// Auto-open via URL hash.
 	if ( window.location.hash === '#show-republish' ) {
-		const firstTrigger = document.querySelector(
-			'[data-modal-trigger="republish"]'
-		);
+		const firstTrigger = document.querySelector( '[data-modal-trigger="republish"]' );
 		showModal( modal, firstTrigger );
 	}
 } );

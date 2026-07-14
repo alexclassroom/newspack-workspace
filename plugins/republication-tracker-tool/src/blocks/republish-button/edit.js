@@ -47,26 +47,13 @@ function RepublishButtonEdit( { attributes, setAttributes } ) {
 	return (
 		<>
 			<InspectorControls>
-				<PanelBody
-					title={ __(
-						'Display Settings',
-						'republication-tracker-tool'
-					) }
-				>
+				<PanelBody title={ __( 'Display Settings', 'republication-tracker-tool' ) }>
 					<ToggleControl
 						__nextHasNoMarginBottom
-						label={ __(
-							'Show license badge',
-							'republication-tracker-tool'
-						) }
+						label={ __( 'Show license badge', 'republication-tracker-tool' ) }
 						checked={ showLicense }
-						onChange={ ( val ) =>
-							setAttributes( { showLicense: val } )
-						}
-						help={ __(
-							'Display the site’s configured Creative Commons license badge below the button.',
-							'republication-tracker-tool'
-						) }
+						onChange={ val => setAttributes( { showLicense: val } ) }
+						help={ __( 'Display the site’s configured Creative Commons license badge below the button.', 'republication-tracker-tool' ) }
 					/>
 				</PanelBody>
 			</InspectorControls>
@@ -76,18 +63,10 @@ function RepublishButtonEdit( { attributes, setAttributes } ) {
 						<RichText
 							tagName="span"
 							value={ buttonText }
-							onChange={ ( val ) =>
-								setAttributes( { buttonText: val } )
-							}
-							placeholder={ __(
-								'Republish This Story',
-								'republication-tracker-tool'
-							) }
+							onChange={ val => setAttributes( { buttonText: val } ) }
+							placeholder={ __( 'Republish This Story', 'republication-tracker-tool' ) }
 							allowedFormats={ [] }
-							aria-label={ __(
-								'Button text',
-								'republication-tracker-tool'
-							) }
+							aria-label={ __( 'Button text', 'republication-tracker-tool' ) }
 						/>
 					</div>
 				</div>
@@ -95,18 +74,9 @@ function RepublishButtonEdit( { attributes, setAttributes } ) {
 			{ showLicense && (
 				<div className="wp-block-republication-tracker-tool-republish-button__license">
 					{ licenseData ? (
-						<img
-							alt={ licenseData.description }
-							src={ licenseData.badge }
-							style={ { borderWidth: 0 } }
-						/>
+						<img alt={ licenseData.description } src={ licenseData.badge } style={ { borderWidth: 0 } } />
 					) : (
-						<em>
-							{ __(
-								'No Creative Commons license is configured.',
-								'republication-tracker-tool'
-							) }
-						</em>
+						<em>{ __( 'No Creative Commons license is configured.', 'republication-tracker-tool' ) }</em>
 					) }
 				</div>
 			) }
