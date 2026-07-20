@@ -444,11 +444,6 @@ domReady( () => {
 		if ( shouldPromptRegistration() ) {
 			ev.preventDefault();
 
-			const priceSummary = checkoutData.price_summary;
-			const content = priceSummary
-				? `<div class="order-details-summary ${ CLASS_PREFIX }__box ${ CLASS_PREFIX }__box--text-center"><p><strong>${ priceSummary }</strong></p></div>`
-				: '';
-
 			// Generate cart asynchroneously.
 			const cartReq = generateCart( checkoutData );
 
@@ -499,7 +494,6 @@ domReady( () => {
 						title: newspackBlocksModal.labels.register_modal_title,
 					},
 				},
-				content,
 				trigger: ev.submitter,
 				closeOnSuccess: isModalCheckout,
 			} );

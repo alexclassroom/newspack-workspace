@@ -218,8 +218,6 @@ final class Modal_Checkout {
 		// Make the current cart price available to the JavaScript.
 		add_action( 'wp_ajax_get_cart_total', [ __CLASS__, 'get_cart_total_js' ] );
 		add_action( 'wp_ajax_nopriv_get_cart_total', [ __CLASS__, 'get_cart_total_js' ] );
-		add_action( 'wp_ajax_get_cart_product_summary', [ __CLASS__, 'get_cart_product_summary_js' ] );
-		add_action( 'wp_ajax_nopriv_get_cart_product_summary', [ __CLASS__, 'get_cart_product_summary_js' ] );
 
 		// Wrap required checkbox text in a span so it works nicely with the Newspack UI grid layout.
 		add_filter( 'woocommerce_form_field_checkbox', [ __CLASS__, 'wrap_required_checkbox_text' ], 10, 4 );
@@ -1671,56 +1669,12 @@ final class Modal_Checkout {
 	 * @return bool
 	 */
 	public static function should_show_order_details() {
+		// The transaction details table is always shown for any non-empty cart. Simple
+		// single-item carts previously hid it and relied on the static price-summary card
+		// above the form; that card was removed, so the real, deal-accurate order details
+		// must always be visible. Guard against a missing cart (early hooks / edge AJAX).
 		$cart = \WC()->cart;
-		if ( $cart->is_empty() ) {
-			return false;
-		}
-		if ( ! empty( $cart->get_applied_coupons() ) ) {
-			return true;
-		}
-		if ( \wc_tax_enabled() && ! $cart->display_prices_including_tax() ) {
-			return true;
-		}
-		if ( 1 < $cart->get_cart_contents_count() ) {
-			return true;
-		}
-		if ( ! empty( $cart->get_fees() ) ) {
-			return true;
-		}
-		if ( method_exists( 'WC_Subscriptions_Switcher', 'cart_contains_switches' ) && \WC_Subscriptions_Switcher::cart_contains_switches( 'any' ) ) {
-			return true;
-		}
-		if ( $cart->needs_shipping_address() ) {
-			$shipping       = \WC()->shipping;
-			$packages       = $shipping->get_packages();
-			$totals         = $cart->get_totals();
-			$shipping_rates = [];
-
-			// Find all the shipping rates that apply to the current transaction.
-			foreach ( $packages as $package ) {
-				if ( ! empty( $package['rates'] ) ) {
-					foreach ( $package['rates'] as $rate_key => $rate ) {
-						$shipping_rates[ $rate_key ] = $rate;
-					}
-				}
-			}
-
-			// Show details if shipping requires a fee or if there are multiple shipping rates to choose from.
-			if ( (float) $totals['total'] !== (float) $totals['subtotal'] || 1 < count( array_values( $shipping_rates ) ) ) {
-				return true;
-			}
-		}
-
-		if ( class_exists( 'WC_Subscriptions_Cart' ) && \WC_Subscriptions_Cart::cart_contains_subscription() ) {
-			return true;
-		}
-
-		// Show details if the cart contains a subscription renewal.
-		if ( function_exists( 'wcs_cart_contains_renewal' ) && \wcs_cart_contains_renewal() ) {
-			return true;
-		}
-
-		return false;
+		return $cart && ! $cart->is_empty();
 	}
 
 	/**
@@ -1981,112 +1935,6 @@ final class Modal_Checkout {
 	}
 
 	/**
-	 * Get validated cart item context for the modal checkout product summary.
-	 *
-	 * @param \WC_Cart $cart Cart object.
-	 *
-	 * @return array|null
-	 */
-	private static function get_cart_product_summary_context( $cart ) {
-		if ( ! $cart || 1 !== $cart->get_cart_contents_count() ) {
-			return null;
-		}
-		$cart_item_key = array_key_first( $cart->get_cart() );
-		$cart_item     = $cart->get_cart_item( $cart_item_key );
-
-		// phpcs:disable WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- WooCommerce hooks.
-		$product    = apply_filters( 'woocommerce_cart_item_product', $cart_item['data'], $cart_item, $cart_item_key );
-		$is_visible = $product && $product->exists() && $cart_item['quantity'] > 0 && apply_filters( 'woocommerce_checkout_cart_item_visible', true, $cart_item, $cart_item_key );
-		// phpcs:enable
-
-		return [
-			'cart_item_key' => $cart_item_key,
-			'cart_item'     => $cart_item,
-			'product'       => $product,
-			'is_visible'    => $is_visible,
-		];
-	}
-
-	/**
-	 * Get the cart product summary shown at the top of modal checkout.
-	 *
-	 * @param \WC_Cart|null $cart    Cart object.
-	 * @param array|null    $context Validated cart item context.
-	 */
-	private static function get_cart_product_summary( $cart = null, $context = null ) {
-		if ( ! $cart ) {
-			if ( ! function_exists( 'WC' ) ) {
-				return '';
-			}
-			$cart = \WC()->cart;
-		}
-		$context = $context ? $context : self::get_cart_product_summary_context( $cart );
-		if ( ! $context || ! $context['is_visible'] ) {
-			return '';
-		}
-
-		$cart_item_key    = $context['cart_item_key'];
-		$cart_item        = $context['cart_item'];
-		$product          = $context['product'];
-		$allowed_html     = self::get_cart_product_summary_allowed_html();
-		// phpcs:disable WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- WooCommerce hooks.
-		$product_name     = apply_filters(
-			'woocommerce_cart_item_name',
-			$product->get_name(),
-			$cart_item,
-			$cart_item_key
-		);
-		$product_subtotal = apply_filters(
-			'woocommerce_cart_item_subtotal',
-			$cart->get_product_subtotal( $product, $cart_item['quantity'] ),
-			$cart_item,
-			$cart_item_key
-		);
-		// phpcs:enable
-
-		$summary = $product_name . ': ';
-		if ( function_exists( 'wc_get_formatted_cart_item_data' ) ) {
-			$summary .= wc_get_formatted_cart_item_data( $cart_item );
-		}
-		$summary .= $product_subtotal;
-		return wp_kses( $summary, $allowed_html );
-	}
-
-	/**
-	 * Get allowed HTML for the modal checkout product summary.
-	 *
-	 * @return array Allowed HTML tags and attributes.
-	 */
-	private static function get_cart_product_summary_allowed_html() {
-		$allowed_html = wp_kses_allowed_html( 'post' );
-
-		$allowed_html['bdi'] = [
-			'class' => true,
-			'dir'   => true,
-		];
-
-		if ( ! isset( $allowed_html['span'] ) ) {
-			$allowed_html['span'] = [];
-		}
-		$allowed_html['span']['class'] = true;
-
-		if ( ! isset( $allowed_html['small'] ) ) {
-			$allowed_html['small'] = [];
-		}
-		$allowed_html['small']['class'] = true;
-
-		return $allowed_html;
-	}
-
-	/**
-	 * Get the updated cart product summary for JavaScript.
-	 */
-	public static function get_cart_product_summary_js() {
-		echo self::get_cart_product_summary(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-		wp_die();
-	}
-
-	/**
 	 * Get the updated price for updating the "Place order" button.
 	 */
 	public static function get_cart_total_js() {
@@ -2112,22 +1960,23 @@ final class Modal_Checkout {
 		if ( 1 !== $cart->get_cart_contents_count() ) {
 			return;
 		}
-		$summary_context = self::get_cart_product_summary_context( $cart );
-		$class_prefix    = self::get_class_prefix();
+		$cart_item_key = array_key_first( $cart->get_cart() );
+		$cart_item = $cart->get_cart_item( $cart_item_key );
 		?>
-			<div class="<?php echo esc_attr( "order-details-summary {$class_prefix}__box {$class_prefix}__box--text-center" ); ?>">
 			<?php
-			if ( $summary_context && $summary_context['is_visible'] ) :
+			// phpcs:disable WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- WooCommerce hooks.
+			$_product = apply_filters( 'woocommerce_cart_item_product', $cart_item['data'], $cart_item, $cart_item_key );
+			// Hidden data carrier only — the visible price-summary card was removed. The modal
+			// dialog (modal.js) still reads this element's data-checkout for the RAS
+			// checkout_completed event and post-auth checkout routing. It is intentionally not
+			// gated on woocommerce_checkout_cart_item_visible (it carries data, not a visible
+			// row), so the JS anchor and analytics survive a plugin hiding the cart item.
+			if ( $_product && $_product->exists() && $cart_item['quantity'] > 0 ) :
 				?>
-				<p id="modal-checkout-product-details" data-checkout='<?php echo wp_json_encode( Checkout_Data::get_checkout_data( $cart ) ); ?>'>
-					<strong>
-						<?php echo self::get_cart_product_summary( $cart, $summary_context ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
-					</strong>
-				</p>
+				<p id="modal-checkout-product-details" <?php Checkout_Data::print_data_checkout_attr( Checkout_Data::get_checkout_data( $cart ) ); ?> hidden></p>
 				<?php
 			endif;
 			?>
-			</div>
 		<?php
 	}
 
